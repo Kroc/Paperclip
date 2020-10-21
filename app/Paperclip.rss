@@ -1,0 +1,799 @@
+// this four-letter name does not have to be
+// unique between ALL applications, only
+// between EPOC32's resource file and our own
+//
+NAME KROC
+
+#include <eikdef.rh>
+#include <eiklabel.rh>
+#include <eiktbar.rh>
+#include <eikmenu.rh>
+#include <eikctrls.hrh>
+#include <eikspace.rh>
+#include <eikclock.rh>
+#include <eikbutb.hrh>
+#include <eikcmbut.rh>
+#include <eikmfne.rh>		// for NUMBER_EDITOR
+#include <eikon.rsg>
+#include <eikon.mbg>		// for EMbmEikonDarrow
+
+// NB: this spacing size was taken from Word,
+//     it doesn't appear in the EIKON sources
+#define KWStdToolbandSpacer						10
+
+#include "Paperclip.hrh"
+#include "..\mbm\Paperclip.mbg"
+
+RESOURCE RSS_SIGNATURE { }
+
+RESOURCE TBUF { buf=""; }
+
+RESOURCE EIK_APP_INFO
+{
+	menubar=r_paperclip_menubar;
+
+	hotkeys=r_paperclip_editor_hotkeys;
+
+	// "toolbar" here means the bar down the right-hand side
+	// of the screen that includes the clock
+	toolbar=r_paperclip_toolbar;
+	
+	toolband=r_paperclip_editor_toolband;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+RESOURCE TOOLBAR r_paperclip_toolbar
+{
+	breadth=KEikStdToolBarWidth;
+    controls=
+	{
+		TBAR_CTRL
+		{ 
+			id=EPaperclipCmdProjectName;
+			type=EEikCtFileNameLabel; 
+			flags=EEikToolBarCtrlHasSetMinLength;
+			length=KEikStdFileNameLabelHeight;
+		},
+		//
+		// "Editor" button to switch to the text-editor view
+		//
+		TBAR_BUTTON
+		{
+			id=EPaperclipCmdEditorView;
+			behavior=EEikButLatches;
+			
+			layout=EEikCmdButExcessToText;
+			bmpid=EMbmPaperclipEditor; bmpmask=EMbmPaperclipEditorMask;
+			bmpfile="*";
+
+			flags=EEikToolBarCtrlHasSetMinLength;
+			length=KEikStdToolBarButtonHeight;
+			txt="Editor";
+		},
+		//
+		// "Files" button to switch to the file-browser view
+		//
+		TBAR_BUTTON
+		{
+			id=EPaperclipCmdFilesView;
+			behavior=EEikButLatches;
+			
+			layout=EEikCmdButExcessToText;
+			bmpid=EMbmPaperclipSearch; bmpmask=EMbmPaperclipSearchMask;
+			bmpfile="*";
+
+			flags=EEikToolBarCtrlHasSetMinLength;
+			length=KEikStdToolBarButtonHeight;
+			txt=" Files";
+		},
+		//
+		// "Search" button to switch to the find-in-files view
+		//
+		TBAR_BUTTON
+		{
+			id=EPaperclipCmdSearchView;
+			
+			// we want the view to change immediately upon
+			// button-down and not wait for the release
+			behavior=EEikButReportOnPointerDown|EEikButLatches;
+
+			layout=EEikCmdButExcessToText;
+			bmpid=EMbmPaperclipSearch; bmpmask=EMbmPaperclipSearchMask;
+			bmpfile="*";
+			
+			flags=EEikToolBarCtrlHasSetMinLength;
+			length=KEikStdToolBarButtonHeight;
+			txt="Search";
+		},
+		//
+		// "Config" button to switch to the project-config view
+		//
+		TBAR_BUTTON
+		{
+			id=EPaperclipCmdConfigView;
+			
+			// we want the view to change immediately upon
+			// button-down and not wait for the release
+			behavior=EEikButReportOnPointerDown|EEikButLatches;
+
+			layout=EEikCmdButExcessToText;
+			bmpid=EMbmPaperclipSearch; bmpmask=EMbmPaperclipSearchMask;
+			bmpfile="*";
+
+			flags=EEikToolBarCtrlHasSetMinLength;
+			length=KEikStdToolBarButtonHeight;
+			txt="Config";
+		},
+
+		// EIKON: include the standard clock on the bottom
+		//
+		TBAR_CTRL
+		{
+			type=EEikCtSpacer;
+			flags=EEikToolBarCtrlHasSetMinLength|EEikToolBarCtrlIsStretchable;
+			length=0;
+			control=SPACER;
+		},
+		TBAR_CTRL
+		{
+			type=EEikCtClock;
+			control=CLOCK {
+				digitalresourceid=R_EIK_DIGITAL_CLOCK;
+				analogresourceid=R_EIK_ANALOG_CLOCK;
+			};
+		},
+		TBAR_CTRL
+		{
+			type=EEikCtSpacer;
+			flags=EEikToolBarCtrlHasSetMinLength;
+			length=KEikStdGapBelowClock;
+			control=SPACER;
+		}
+	};
+}
+
+RESOURCE MENU_PANE r_example_view_menu
+{
+	items=
+	{
+        MENU_ITEM
+		{
+			command=EExampleCmdSwitchView;
+			cascade=r_example_switchview_menu;
+			txt="Switch View";
+		}
+    };
+}
+
+RESOURCE MENU_PANE r_example_switchview_menu
+{
+	items=
+	{
+		MENU_ITEM
+		{
+			command=EExampleCmdSwitchToCircleView;
+			txt="Circle";
+			flags=EEikMenuItemRadioStart;
+		},
+		MENU_ITEM
+		{
+			command=EExampleCmdSwitchToSquareView;
+			txt="Square";
+			flags=EEikMenuItemRadioEnd;
+		}
+	};
+}
+
+///////////////////////////////////////////////////////////////////////////////
+
+RESOURCE HOTKEYS r_paperclip_editor_hotkeys
+{
+	control=
+	{
+		// file:
+		HOTKEY { key='n'; command=EPaperclipCmdNewFile; },
+		HOTKEY { key='o'; command=EPaperclipCmdOpenFile; },
+		HOTKEY { key='s'; command=EPaperclipCmdSaveFile; },
+		HOTKEY { key='e'; command=EPaperclipCmdCloseFile; },
+		// edit:
+		HOTKEY { key='z'; command=EPaperclipCmdUndo; },
+		HOTKEY { key='y'; command=EPaperclipCmdRedo; },
+		HOTKEY { key='a'; command=EPaperclipCmdSelectAll; },
+		HOTKEY { key='w'; command=EPaperclipCmdSelectWord; },
+		HOTKEY { key='l'; command=EPaperclipCmdSelectLine; },
+		HOTKEY { key='x'; command=EPaperclipCmdCut; },
+		HOTKEY { key='c'; command=EPaperclipCmdCopy; },
+		HOTKEY { key='v'; command=EPaperclipCmdPaste; },
+		// find:
+		HOTKEY { key='f'; command=EPaperclipCmdFind; },
+		HOTKEY { key='j'; command=EPaperclipCmdFindNext; },
+		HOTKEY { key='g'; command=EPaperclipCmdGoTo; },
+		HOTKEY { key='h'; command=EPaperclipCmdReplace; },
+		// view:
+		HOTKEY { key='t'; command=EPaperclipCmdShowToolbar; },
+		HOTKEY { key='m'; command=EPaperclipCmdZoomIn; },
+		// tools:
+		HOTKEY { key='k'; command=EPaperclipCmdPreferences; }
+	};
+	shift_control=
+	{
+		// project:
+		HOTKEY { key='n'; command=EPaperclipCmdNewProject; },
+		HOTKEY { key='o'; command=EPaperclipCmdOpenProject; },
+		HOTKEY { key='e'; command=EEikCmdExit; },
+		// file:
+		HOTKEY { key='s'; command=EPaperclipCmdSaveFileAs; },
+		// edit
+		HOTKEY { key='c'; command=EPaperclipCmdInsertSymbol; },
+		// find:
+		HOTKEY { key='f'; command=EPaperclipCmdFindSelected; },
+		HOTKEY { key='j'; command=EPaperclipCmdFindPrevious; },
+		// view:
+		HOTKEY { key='t'; command=EPaperclipCmdShowToolband; },
+		HOTKEY { key='m'; command=EPaperclipCmdZoomOut; }
+	};
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+// when the app initialises, the default menu is a cut-down version
+// designed for when there is no project or file loaded
+//
+RESOURCE MENU_BAR r_paperclip_menubar
+{
+	titles=
+	{
+		MENU_TITLE { txt="Project"; menu_pane=r_paperclip_menu_project; }
+	};
+}
+
+RESOURCE MENU_PANE r_paperclip_menu_project
+{
+	items=
+	{
+		MENU_ITEM
+		{
+			command=EPaperclipCmdNewProject;
+			txt="New Poject…";
+		},
+		MENU_ITEM
+		{
+			command=EPaperclipCmdOpenProject;
+			flags=EEikMenuItemSeparatorAfter;
+			txt="Open Poject…";
+		},
+		MENU_ITEM
+		{
+			command=EEikCmdExit;
+			txt="Close";
+		}
+    };
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+RESOURCE MENU_BAR r_paperclip_menubar_editor
+{
+	titles=
+	{
+		MENU_TITLE { txt="Project";	menu_pane=r_paperclip_project_menu; },
+		MENU_TITLE { txt="File";	menu_pane=r_paperclip_file_menu; },
+		MENU_TITLE { txt="Edit";	menu_pane=r_paperclip_edit_menu; },
+		MENU_TITLE { txt="Find";	menu_pane=r_paperclip_find_menu; },
+		MENU_TITLE { txt="View";	menu_pane=r_paperclip_view_menu; },
+		MENU_TITLE { txt="Tools";	menu_pane=r_paperclip_tools_menu; }
+	};
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+RESOURCE MENU_PANE r_paperclip_project_menu
+{
+	items=
+	{
+		MENU_ITEM
+		{
+			command=EPaperclipCmdNewProject;
+			txt="New Poject…";
+		},
+		MENU_ITEM
+		{
+			command=EPaperclipCmdOpenProject;
+			flags=EEikMenuItemSeparatorAfter;
+			txt="Open Poject…";
+		},
+		MENU_ITEM
+		{
+			command=EPaperclipCmdAddFileToProject;
+			txt="Add file to project…";
+		},
+		MENU_ITEM
+		{
+			command=EPaperclipCmdSaveAllFiles;
+			flags=EEikMenuItemSeparatorAfter;
+			txt="Save All Open Files";
+		},
+		MENU_ITEM
+		{
+			command=EPaperclipCmdCloseAllFiles;
+			txt="Close All Open Files";
+		},
+		MENU_ITEM
+		{
+			command=EEikCmdExit;
+			txt="Close Project";
+		}
+    };
+}
+
+RESOURCE MENU_PANE r_paperclip_file_menu
+{
+	items=
+	{
+		MENU_ITEM
+		{
+			command=EPaperclipCmdNewFile;
+			txt="New File";
+		},
+		MENU_ITEM
+		{
+			command=EPaperclipCmdOpenFile;
+			flags=EEikMenuItemSeparatorAfter;
+			txt="Open File…";
+		},
+		MENU_ITEM
+		{
+			//command=EPaperclipCmdSaveFile;
+			cascade=r_paperclip_save_menu;
+			flags=EEikMenuItemSeparatorAfter;
+			txt="Save File";
+		},
+		MENU_ITEM
+		{
+			command=EPaperclipRemoveFileFromProject;
+			flags=EEikMenuItemDimmed;
+			txt="Remove from project";
+		},
+		MENU_ITEM
+		{
+			command=EPaperclipCmdFileProperties;
+			flags=EEikMenuItemSeparatorAfter|EEikMenuItemDimmed;
+			txt="Properties";
+		},
+		MENU_ITEM
+		{
+			command=EPaperclipCmdCloseFile;
+			flags=EEikMenuItemDimmed;
+			txt="Close File";
+		}
+    };
+}
+
+RESOURCE MENU_PANE r_paperclip_save_menu
+{
+	items=
+	{
+		MENU_ITEM
+		{
+			command=EPaperclipCmdSaveFile;
+			txt="Save";
+		},
+		MENU_ITEM
+		{
+			command=EPaperclipCmdSaveFileAs;
+			txt="Save As…";
+		},
+		MENU_ITEM
+		{
+			command=EPaperclipRevertToSaved;
+			txt="Revert to saved";
+		}
+	};
+}
+
+RESOURCE MENU_PANE r_paperclip_edit_menu
+{
+	items=
+	{
+		MENU_ITEM
+		{
+			command=EPaperclipCmdUndo;
+			flags=EEikMenuItemDimmed;
+			txt="Undo";
+		},
+		MENU_ITEM
+		{
+			command=EPaperclipCmdRedo;
+			flags=EEikMenuItemSeparatorAfter|EEikMenuItemDimmed;
+			txt="Redo";
+		},
+		MENU_ITEM
+		{
+			cascade=r_paperclip_select_menu;
+			flags=EEikMenuItemSeparatorAfter;
+			txt="Select";
+		},
+		MENU_ITEM
+		{
+			command=EPaperclipCmdCut;
+			txt="Cut";
+		},
+		MENU_ITEM
+		{
+			command=EPaperclipCmdCopy;
+			txt="Copy";
+		},
+		MENU_ITEM
+		{
+			command=EPaperclipCmdPaste;
+			flags=EEikMenuItemSeparatorAfter;
+			txt="Paste";
+		},
+		MENU_ITEM
+		{
+			command=EPaperclipCmdInsertSymbol;
+			txt="Insert symbol…";
+		}
+    };
+}
+
+RESOURCE MENU_PANE r_paperclip_select_menu
+{
+	items=
+	{
+		MENU_ITEM
+		{
+			command=EPaperclipCmdSelectAll;
+			txt="All";
+		},
+		MENU_ITEM
+		{
+			command=EPaperclipCmdSelectWord;
+			txt="Current Word";
+		},
+		MENU_ITEM
+		{
+			command=EPaperclipCmdSelectLine;
+			txt="Current Line";
+		},
+		MENU_ITEM
+		{
+			command=EPaperclipCmdSelectParagraph;
+			txt="Current Paragraph";
+		}
+	};
+}
+
+RESOURCE MENU_PANE r_paperclip_find_menu
+{
+	items=
+	{
+		MENU_ITEM
+		{
+			command=EPaperclipCmdFind;
+			txt="Find…";
+		},
+		MENU_ITEM
+		{
+			command=EPaperclipCmdFindSelected;
+			txt="Find Selected";
+		},
+		MENU_ITEM
+		{
+			command=EPaperclipCmdFindNext;
+			txt="Find Next";
+		},
+		MENU_ITEM
+		{
+			command=EPaperclipCmdFindPrevious;
+			txt="Find Previous";
+		},
+		MENU_ITEM
+		{
+			command=EPaperclipCmdReplace;
+			flags=EEikMenuItemSeparatorAfter;
+			txt="Replace…";
+		},
+		MENU_ITEM
+		{
+			command=EPaperclipCmdGoTo;
+			txt="Go To…";
+		}
+    };
+}
+
+RESOURCE MENU_PANE r_paperclip_view_menu
+{
+	items=
+	{
+		MENU_ITEM
+		{
+			cascade=r_paperclip_toolbars_menu;
+			flags=EEikMenuItemSeparatorAfter;
+			txt="Toolbars";
+		},
+		MENU_ITEM
+		{
+			command=EPaperclipCmdZoomIn;
+			txt="Zoom in";
+		},
+		MENU_ITEM
+		{
+			command=EPaperclipCmdZoomOut;
+			txt="Zoom out";
+		}
+    };
+}
+
+RESOURCE MENU_PANE r_paperclip_toolbars_menu
+{
+	items=
+	{
+		MENU_ITEM
+		{
+			command=EPaperclipCmdShowToolbar;
+			flags=EEikMenuItemCheckBox|EEikMenuItemSymbolOn;
+			txt="Show Toolbar";
+		},
+		MENU_ITEM
+		{
+			command=EPaperclipCmdShowToolband;
+			flags=EEikMenuItemCheckBox|EEikMenuItemSymbolOn;
+			txt="Show Toolband";
+		}
+	};
+}
+
+RESOURCE MENU_PANE r_paperclip_tools_menu
+{
+	items=
+	{
+		MENU_ITEM
+		{
+			command=EPaperclipCmdPreferences;
+			flags=EEikMenuItemSeparatorAfter;
+			txt="Preferences…";
+		},
+		MENU_ITEM
+		{
+			command=EPaperclipCmdSpellCheck;
+			txt="Spell Check…";
+		},
+		MENU_ITEM
+		{
+			command=EPaperclipCmdWordCount;
+			txt="Word Count";
+		}
+    };
+}
+
+
+/////////////////////////////////////////////////
+//
+// Resources for the "circle" view.
+//
+/////////////////////////////////////////////////
+
+RESOURCE MENU_BAR r_example_menubar_circle
+{
+    titles=
+    {
+        MENU_TITLE { menu_pane=r_example_view_menu; txt="View"; },
+		MENU_TITLE { menu_pane=r_example_circle_menu; txt="Circle"; }
+	};
+}
+
+RESOURCE MENU_PANE r_example_circle_menu
+{
+	items=
+	{
+		MENU_ITEM { command=EExampleCmdA; txt="Command A";},
+  		MENU_ITEM { command=EExampleCmdB; txt="Command B";}
+    };
+}
+
+
+RESOURCE TOOLBAND r_paperclip_editor_toolband
+{
+	controls=
+	{
+		TBAR_BUTTON
+		{
+			flags=EEikToolBarCtrlHasSetMinLength;
+			length=EEikStdTwoStateIconicToolBandButtonWidth;
+			bmpid=EMbmPaperclipSave; bmpmask=EMbmPaperclipSaveMask;
+			bmpfile="*";
+		},
+		TBAR_BUTTON 
+		{
+			id=EPaperclipCmdOpenFiles;
+			flags=EEikToolBarCtrlHasSetMinLength|EEikToolBarCtrlIsStretchable;
+			length=EEikStdLongTextPopoutToolBandButtonWidth;
+			behavior=EEikButReportOnPointerDown;
+			layout=EEikCmdButTextLeftPictureRight|EEikCmdButExcessToText;
+			txt="<open-files>";
+			bmpid=EMbmEikonDarrow; bmpmask=EMbmEikonDarrow;
+			//bmpid=EMbmEikonCalbut2; bmpmask=EMbmEikonCalbut2;
+		},
+		TBAR_CTRL {
+			type=EEikCtSpacer;
+			flags=EEikToolBarCtrlHasSetMinLength;
+			length=KWStdToolbandSpacer;
+			control=SPACER { color=EEikSpacerDitheredGray; };
+		},
+		TBAR_BUTTON
+		{
+			id=EPaperclipCmdUndo;
+			flags=EEikToolBarCtrlHasSetMinLength;
+			length=EEikStdTwoStateIconicToolBandButtonWidth;
+			bmpid=EMbmPaperclipUndo; bmpmask=EMbmPaperclipUndoMask;
+			bmpfile="*";
+		},
+		TBAR_BUTTON
+		{
+			id=EPaperclipCmdFind;
+			flags=EEikToolBarCtrlHasSetMinLength;
+			length=EEikStdTwoStateIconicToolBandButtonWidth;
+			bmpid=EMbmPaperclipFind; bmpmask=EMbmPaperclipFindMask;
+			bmpfile="*";
+		},
+		TBAR_CTRL {
+			type=EEikCtSpacer;
+			flags=EEikToolBarCtrlHasSetMinLength;
+			length=KWStdToolbandSpacer;
+			control=SPACER { color=EEikSpacerDitheredGray; };
+		},
+		TBAR_BUTTON
+		{
+			flags=EEikToolBarCtrlHasSetMinLength;
+			length=EEikStdTwoStateIconicToolBandButtonWidth;
+			behavior=EEikButLatches;
+			txt="W";
+		},
+		TBAR_BUTTON
+		{
+			flags=EEikToolBarCtrlHasSetMinLength;
+			length=EEikStdIconicPopoutToolBandButtonWidth;
+			behavior=EEikButReportOnPointerDown;
+			layout=EEikCmdButTextLeftPictureRight|EEikCmdButExcessToText;
+			bmpid=EMbmPaperclipEllipsis; bmpmask=EMbmPaperclipEllipsis;
+			bmpfile="*";
+			txt="100";
+		},
+		TBAR_BUTTON
+		{
+			//flags=EEikToolBarCtrlHasSetMinLength;
+			//length=EEikStdTwoStateIconicToolBandButtonWidth;
+			layout=EEikCmdButTextLeftPictureRight|EEikCmdButExcessToText;
+			bmpid=EMbmPaperclipEllipsis; bmpmask=EMbmPaperclipEllipsis;
+			bmpfile="*";
+			txt="TAB: 8";
+		},
+		// we can't(?) align the text on a button to the right,
+		// so we use a label instead
+		TBAR_CTRL
+		{
+			type=EEikCtLabel;
+			flags=EEikToolBarCtrlIsStretchable;
+			flags=EEikToolBarCtrlHasSetMinLength;
+			length=EEikStdShortTextPopoutToolBandButtonWidth;
+			control=LABEL
+			{
+				horiz_align=EEikLabelAlignHRight;
+				vert_align=EEikLabelAlignVCenter;
+				standard_font=EEikLabelFontLegend;
+				txt="65535, 999";
+			};
+		},
+		TBAR_CTRL {
+			type=EEikCtSpacer;
+			flags=EEikToolBarCtrlHasSetMinLength;
+			length=KWStdToolbandSpacer;
+			control=SPACER {};
+		},
+		TBAR_CTRL
+		{ 
+			type=EEikCtFileNameLabel; 
+			id=EPaperclipCmdProjectName;
+			flags=EEikToolBarCtrlHasSetMinLength;
+			length=KEikStdFileNameLabelWidth;
+		}
+	};
+}
+
+
+
+RESOURCE TOOLBAND r_example_circle_toolband
+{
+    controls=
+    {
+        TBAR_BUTTON
+        {
+			//id=EExampleCmd1;
+            flags=EEikToolBarCtrlHasSetMinLength;
+            length=EEikStdLongTextPopoutToolBandButtonWidth;
+            txt="Command 1";
+        },
+        TBAR_BUTTON
+        {
+			//id=EExampleCmd2;
+            flags=EEikToolBarCtrlHasSetMinLength;
+            length=EEikStdLongTextPopoutToolBandButtonWidth;
+            txt="Command 2";
+        },
+        TBAR_BUTTON
+        {
+			//id=EExampleCmd3;
+            flags=EEikToolBarCtrlHasSetMinLength;
+            length=EEikStdShortTextPopoutToolBandButtonWidth;
+            txt="Cmd 3";
+        },
+        TBAR_BUTTON
+        {
+			//id=EExampleCmd4;
+            flags=EEikToolBarCtrlHasSetMinLength;
+            length=EEikStdShortTextPopoutToolBandButtonWidth;
+            txt="Cmd 4";
+        }
+    };
+}
+
+/////////////////////////////////////////////////
+//
+// Resources for the "square" view.
+//
+/////////////////////////////////////////////////
+RESOURCE MENU_BAR r_example_menubar_square
+{
+    titles=
+    {
+        MENU_TITLE { menu_pane=r_example_view_menu; txt="View"; },
+        MENU_TITLE { menu_pane=r_example_square_menu; txt="Square"; }
+    };
+}
+
+RESOURCE MENU_PANE r_example_square_menu
+{
+	items=
+	{
+		MENU_ITEM { command=EExampleCmdX; txt="Command X"; },
+  		MENU_ITEM { command=EExampleCmdY; txt="Command Y"; }
+    };
+}
+
+RESOURCE TOOLBAND r_example_square_toolband
+{
+    breadth=KEikStdToolBandHeight;
+    controls=
+    {
+        TBAR_BUTTON
+        {
+			//id=EExampleCmd5;
+            flags=EEikToolBarCtrlHasSetMinLength;
+            length=EEikStdShortTextPopoutToolBandButtonWidth;
+            txt="Cmd 5";
+        },
+        TBAR_BUTTON
+        {
+			//id=EExampleCmd6;
+            flags=EEikToolBarCtrlHasSetMinLength;
+            length=EEikStdShortTextPopoutToolBandButtonWidth;
+            txt="Cmd 6";
+        },
+        TBAR_BUTTON
+        {
+			//id=EExampleCmd7;
+            flags=EEikToolBarCtrlHasSetMinLength;
+            length=EEikStdLongTextPopoutToolBandButtonWidth;
+            txt="Command 7";
+        },
+        TBAR_BUTTON
+        {
+			//id=EExampleCmd8;
+            flags=EEikToolBarCtrlHasSetMinLength;
+            length=EEikStdLongTextPopoutToolBandButtonWidth;
+            txt="Command 8";
+        }
+    };
+}

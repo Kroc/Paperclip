@@ -1,0 +1,16 @@
+TARGET		Paperclip.app
+TARGETTYPE	APP
+UID            	0x1000006c 0x1bcda100
+UNICODEUID     	0x100039ce 0x1dcda100
+TARGETPATH	\system\apps\Paperclip
+PROJECT	       	Paperclip
+SUBPROJECT	app
+SOURCE	       	Paperclip.cpp Application.cpp Document.cpp AppUI.cpp Model.cpp
+SOURCE		View.cpp ViewEditor.cpp ViewFiles.cpp
+RESOURCE	Paperclip.rss
+USERINCLUDE 	.
+SYSTEMINCLUDE  	\EPOC32\Include
+LIBRARY	       	euser.lib
+LIBRARY		apparc.lib ws32.lib
+LIBRARY		cone.lib eikon.lib gdi.lib
+LIBRARY		etext.lib

@@ -1,0 +1,12 @@
+/hPaperclip.mbg Paperclip.mbm
+/4editor.bmp
+/2editorMask.bmp
+/4search.bmp
+/2searchMask.bmp
+/2ellipsis.bmp
+/4save.bmp
+/2saveMask.bmp
+/4find.bmp
+/2findMask.bmp
+/4undo.bmp
+/2undoMask.bmp

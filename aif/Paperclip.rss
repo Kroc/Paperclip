@@ -1,0 +1,37 @@
+#include <aiftool.rh>
+
+RESOURCE AIF_DATA
+{
+	// UID:
+	// (this is just my pattern, not official)
+	//
+	// 0x1.......	= public app. (0x01... for development)
+	// 0x.b......	= narrow, i.e ASCII ("byte") UID
+	// 0x.d......	= unicode ("double") UID
+	// 0x..cd....	= "Camen Design", personal identifier
+	// 0x....a...	= 'App' UID
+	// 0x....d...	= 'Document' UID
+	// 0x.....100	= unique part
+	//
+#ifdef	_UNICODE
+	app_uid=0x1dcda100;
+#else
+	app_uid=0x1bcda100;
+#endif
+
+	caption_list=
+	{
+		CAPTION { code=ELangEnglish; caption="Paperclip"; }
+	};
+
+	num_icons=5;
+
+	embeddability=KAppNotEmbeddable;
+	hidden=KAppNotHidden;
+	newfile=KAppDoesNotSupportNewFile;
+
+	datatype_list=
+	{
+		DATATYPE { priority=EDataTypePriorityHigh; type="text/plain"; }
+	};
+}

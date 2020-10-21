@@ -1,0 +1,74 @@
+enum TPaperclipMenuCommands
+{
+	EPaperclipCmdDummy=100,
+
+	// the current project name displayed in the EIKON
+	// task-switcher in the top-right of the screen:
+	EPaperclipCmdProjectName,
+
+	// the "Editor" button in the toolbar,
+	// to switch to the text-editor view
+	EPaperclipCmdEditorView,
+	// the "Files" button in the toolbar,
+	// to switch to the file-browser view
+	EPaperclipCmdFilesView,
+	// the "Search" button in the toolbar,
+	// to switch to the search/replace view
+	EPaperclipCmdSearchView,
+	// the "Settings" button in the toolbar,
+	// to switch to the project-settings view
+	EPaperclipCmdConfigView,
+
+	EExampleCmdA,
+	EExampleCmdB,
+	EExampleCmdX,
+	EExampleCmdY,
+	EExampleCmdSwitchView,
+	EExampleCmdSwitchToCircleView,
+	EExampleCmdSwitchToSquareView,
+
+	EPaperclipCmdOpenFiles,
+
+	// project:
+	EPaperclipCmdNewProject,
+	EPaperclipCmdOpenProject,
+	EPaperclipCmdAddFileToProject,
+	EPaperclipCmdSaveAllFiles,
+	EPaperclipCmdCloseAllFiles,
+	// file:
+	EPaperclipCmdNewFile,
+	EPaperclipCmdOpenFile,
+	EPaperclipCmdSaveFile,
+	EPaperclipCmdSaveFileAs,
+	EPaperclipRevertToSaved,
+	EPaperclipRemoveFileFromProject,
+	EPaperclipCmdFileProperties,
+	EPaperclipCmdCloseFile,
+	// edit:
+	EPaperclipCmdUndo,
+	EPaperclipCmdRedo,
+	EPaperclipCmdSelectAll,
+	EPaperclipCmdSelectWord,
+	EPaperclipCmdSelectLine,
+	EPaperclipCmdSelectParagraph,
+	EPaperclipCmdCut,
+	EPaperclipCmdCopy,
+	EPaperclipCmdPaste,
+	EPaperclipCmdInsertSymbol,
+	// find:
+	EPaperclipCmdFind,
+	EPaperclipCmdFindSelected,
+	EPaperclipCmdFindNext,
+	EPaperclipCmdFindPrevious,
+	EPaperclipCmdReplace,
+	EPaperclipCmdGoTo,
+	// view:
+	EPaperclipCmdShowToolbar,
+	EPaperclipCmdShowToolband,
+	EPaperclipCmdZoomIn,
+	EPaperclipCmdZoomOut,
+	// tools:
+	EPaperclipCmdPreferences,
+	EPaperclipCmdSpellCheck,
+	EPaperclipCmdWordCount
+};

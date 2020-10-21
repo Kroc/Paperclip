@@ -1,0 +1,15 @@
+# files that get generated and don't need to be in the repository:
+*.WINS
+*.MARM
+*.UID.CPP
+
+# Visual C++ 6 files:
+# these have to be re-created any time the MMP file changes
+*.001
+*.dsp
+*.dsw
+*.ncb
+*.opt
+*.plg
+
+MayRewriteHdr.bat

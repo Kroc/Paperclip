@@ -1,0 +1,3 @@
+# files that get generated and don't need to be in the repository:
+*.mbm
+*.mbg
