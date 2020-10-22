@@ -1,7 +1,6 @@
 #ifndef __APPUI_H
 #define __APPUI_H
 
-// enums:
 #include <eikcmds.hrh>			// EEikCmdExit &c.
 #include <eikmenu.hrh>			// menu-items
 
@@ -11,7 +10,6 @@
 #include <eikfnlab.h>			// file-name label
 #include <eikmenub.h>			// menu-bar
 #include <eikedwin.h>			// text editor
-#include <eikgted.h>
 
 #include "Paperclip.h"
 #include "ViewEditor.h"

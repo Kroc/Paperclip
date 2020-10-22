@@ -12,4 +12,5 @@
 *.opt
 *.plg
 
+# temporary file generated during build
 MayRewriteHdr.bat

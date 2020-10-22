@@ -63,6 +63,7 @@ enum TPaperclipMenuCommands
 	EPaperclipCmdReplace,
 	EPaperclipCmdGoTo,
 	// view:
+	EPaperclipCmdMode,
 	EPaperclipCmdShowToolbar,
 	EPaperclipCmdShowToolband,
 	EPaperclipCmdZoomIn,

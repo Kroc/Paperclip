@@ -4,11 +4,11 @@ void CPaperclipViewFiles::ConstructL(
 	const TRect& aRect,
 	CPaperclipModel* aModel
 ){
-	iModel=aModel;
+	iModel = aModel;
 
     CreateWindowL();
-    Window().SetShadowDisabled(ETrue);
-    SetRectL(aRect);
+    Window().SetShadowDisabled( ETrue );
+    SetRectL( aRect );
     ActivateL();
 }
 
@@ -24,8 +24,8 @@ void CPaperclipViewFiles::Draw(
 	CWindowGc& gc = SystemGc();
 	gc.Clear();
 
-	TRect drawRect=Rect();
-	gc.DrawRect(drawRect);
+	//TRect drawRect=Rect();
+	//gc.DrawRect(drawRect);
 }
 
 void CPaperclipViewFiles::HandlePointerEventL(

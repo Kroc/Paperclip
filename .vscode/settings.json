@@ -1,0 +1,19 @@
+{
+    "files.exclude": {
+        "**/*.ncb": true,   // Visual C++ IDE
+        "**/*.OPT": true,   // Visual C++ IDE
+        "**/*.plg": true,   // Visual C++ IDE (build log)
+        "**/*.dsp": true,   // Visual C++ project file
+        "**/*.001": true,   // previous project file (VC5)
+        "**/*.DSW": true,   // Visual C++ workspace file
+
+        "**/*.MARM": true,  // ARM makefile
+        "**/*.WINS": true,  // emulator makefile
+
+        "**/*.mbm": true,   // general EPOC32 graphic file
+        "**/*.aif": true,   // application metadata / icon file
+    },
+    "[cpp]" : {
+        "editor.rulers": [80]
+    }
+}

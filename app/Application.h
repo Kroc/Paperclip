@@ -2,6 +2,7 @@
 #define __APPLICATION_H
 
 #include <eikapp.h>				// for CEikApplication
+
 #include "Paperclip.h"
 
 // UID of app

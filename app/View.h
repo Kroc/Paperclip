@@ -1,10 +1,11 @@
 #ifndef __VIEW_H
 #define __VIEW_H
 
+#include "Model.h"
+
 #include <coecntrl.h>
 #include <coeccntx.h>
-
-#include "Model.h"
+#include <eikbordr.h>
 
 class CPaperclipView
 	: public CCoeControl,
@@ -13,9 +14,9 @@ class CPaperclipView
 public:
 	void ConstructL(const TRect& aRect, CPaperclipModel* aModel);
 	void ConstructViewL();
+
 	void SetModel(CPaperclipModel* aModel){ iModel=aModel; }
 
-private:
 	// CCoeControl::
 	void Draw(const TRect& aRect) const;
 	void HandlePointerEventL(const TPointerEvent& aPointerEvent);
@@ -23,7 +24,7 @@ private:
 	void HandleControlEventL(CCoeControl* aControl, TCoeEvent aEventType);
 
 protected:
-	CPaperclipModel *iModel;
+	CPaperclipModel* iModel;
 };
 
 #endif

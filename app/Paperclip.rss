@@ -30,7 +30,8 @@ RESOURCE TBUF { buf=""; }
 
 RESOURCE EIK_APP_INFO
 {
-	menubar=r_paperclip_menubar;
+	//menubar=r_paperclip_menubar;
+	menubar=r_paperclip_menubar_editor;
 
 	hotkeys=r_paperclip_editor_hotkeys;
 
@@ -211,6 +212,7 @@ RESOURCE HOTKEYS r_paperclip_editor_hotkeys
 		HOTKEY { key='g'; command=EPaperclipCmdGoTo; },
 		HOTKEY { key='h'; command=EPaperclipCmdReplace; },
 		// view:
+		HOTKEY { key='q'; command=EPaperclipCmdMode; },
 		HOTKEY { key='t'; command=EPaperclipCmdShowToolbar; },
 		HOTKEY { key='m'; command=EPaperclipCmdZoomIn; },
 		// tools:
@@ -509,6 +511,12 @@ RESOURCE MENU_PANE r_paperclip_view_menu
 	{
 		MENU_ITEM
 		{
+			command=EPaperclipCmdMode;
+			cascade=r_paperclip_mode_menu;
+			txt="Mode";
+		},
+		MENU_ITEM
+		{
 			cascade=r_paperclip_toolbars_menu;
 			flags=EEikMenuItemSeparatorAfter;
 			txt="Toolbars";
@@ -524,6 +532,33 @@ RESOURCE MENU_PANE r_paperclip_view_menu
 			txt="Zoom out";
 		}
     };
+}
+
+RESOURCE MENU_PANE r_paperclip_mode_menu
+{
+	items=
+	{
+		MENU_ITEM
+		{
+			flags=EEikMenuItemRadioStart|EEikMenuItemSymbolOn;
+			txt="Editor";
+		},
+		MENU_ITEM
+		{
+			flags=EEikMenuItemRadioMiddle;
+			txt="Files";
+		},
+		MENU_ITEM
+		{
+			flags=EEikMenuItemRadioMiddle;
+			txt="Search";
+		},
+		MENU_ITEM
+		{
+			flags=EEikMenuItemRadioEnd;
+			txt="Config";
+		}
+	};
 }
 
 RESOURCE MENU_PANE r_paperclip_toolbars_menu
