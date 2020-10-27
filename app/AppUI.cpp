@@ -1,17 +1,17 @@
 #include "AppUI.h"
 #include "Document.h"
 
-#include <eikbctrl.h>
-#include <eikbordr.h>
-#include <eikedwin.h>
-#include <eikedwin.hrh>			// for the EEikEdwin* constants
+#include "HEikon.h"
+
 
 CPaperclipAppUi::CPaperclipAppUi()
+//==============================================================================
 {
 	__DECLARE_NAME(_S("CPaperclipAppUi"));
 }
 
 void CPaperclipAppUi::ConstructL()
+//==============================================================================
 {
 	// EIKON: construct the UI elements defined in
 	// the resource file (i.e. toolbar / toolband)
@@ -19,7 +19,7 @@ void CPaperclipAppUi::ConstructL()
 
 	// from the app-document, get a reference to the model (internal state),
 	// we need to pass this onto the views so that they can access that state
-	iModel = ((CPaperclipDocument*)iDocument)->Model();
+	iModel = ((CPaperclipDocument*) iDocument)->Model();
 	
 	iAppViewEditor = new(ELeave) CPaperclipViewEditor;
 	iAppViewEditor->ConstructL( ClientRect(), iModel );
@@ -33,7 +33,7 @@ void CPaperclipAppUi::ConstructL()
 	
 	// EIKON: the application view must be on the control stack
 	// so that it can receive key press events
-	iAppView=iAppViewEditor;
+	iAppView = iAppViewEditor;
 	AddToStackL( iAppView );
 	
 	// Create the toolbands for the two views.
@@ -48,26 +48,25 @@ void CPaperclipAppUi::ConstructL()
 	iSquareToolBand = new(ELeave) CEikToolBar;
 	// zero iToolBand, otherwise ClientRect()
 	// passed to ConstructL() will be wrong
-	iToolBand=0;
+	iToolBand = 0;
 	iSquareToolBand->ConstructL(
 		this, R_EXAMPLE_SQUARE_TOOLBAND, ClientRect()
 	);
 	iSquareToolBand->MakeVisible( EFalse );
 	// Set iToolBand back so that the "circle" toolband is 
 	// displayed at the beginning.
-	iToolBand=iCircleToolBand;
+	iToolBand = iCircleToolBand;
 
 	// display application name on toolbar
-	CEikFileNameLabel* filenameLabel =
-		(CEikFileNameLabel*)iToolBar->ControlById( EPaperclipCmdProjectName )
-	;
-	filenameLabel->UpdateL();
+	UpdateFileNameLabelL();
 
 	// make the toolbar reflect the selected view
 	UpdateToolbarL();
 }
 
+
 CPaperclipAppUi::~CPaperclipAppUi()
+//==============================================================================
 {
 	delete iAppViewEditor;
     delete iAppViewFiles;
@@ -81,9 +80,33 @@ CPaperclipAppUi::~CPaperclipAppUi()
 	delete iSquareToolBand;
 }
 
+// the "file name label" is the task-switcher in the top-right of the screen
+// provided by EIKON. in this case, the "file name" is not the current text-
+// file being edited, but rather the Project file for this app instance
+//
+void CPaperclipAppUi::UpdateFileNameLabelL()
+//==============================================================================
+{
+	CEikFileNameLabel* label;
+	
+	label = STATIC_CAST( CEikFileNameLabel*,
+		iToolBar->ControlById( EPaperclipCmdProjectName )
+	);
+	label->UpdateL();
+	label->DrawNow();
+
+	label = STATIC_CAST( CEikFileNameLabel*,
+		iToolBand->ControlById( EPaperclipCmdProjectName )
+	);
+	label->UpdateL();
+	label->DrawNow();
+}
+
 void CPaperclipAppUi::HandleCommandL(
 	TInt aCommand
-){
+)
+//==============================================================================
+{
 	switch (aCommand)
 	{
 	// "Editor" button on the toolbar,
@@ -106,6 +129,7 @@ void CPaperclipAppUi::HandleCommandL(
 }
 
 void CPaperclipAppUi::CmdSetViewEditorL()
+//==============================================================================
 {
 	// don't change to self
 	if (iViewType == EViewEditor) return;
@@ -118,7 +142,7 @@ void CPaperclipAppUi::CmdSetViewEditorL()
 	iAppView->MakeVisible( EFalse );
 	
 	// switch to the editor view
-	iAppView=iAppViewEditor;
+	iAppView = iAppViewEditor;
 	iAppView->MakeVisible( ETrue );
 	AddToStackL( iAppView );
 	iAppView->DrawNow();
@@ -137,19 +161,20 @@ void CPaperclipAppUi::CmdSetViewEditorL()
 }
 
 void CPaperclipAppUi::CmdSetViewFilesL()
+//==============================================================================
 {
 	// don't change to self
-	if (iViewType==EViewFiles) return;
+	if (iViewType == EViewFiles) return;
 	
 	// set the member variable
-	iViewType=EViewFiles;
+	iViewType = EViewFiles;
 
 	// deconstruct the current view
 	RemoveFromStack( iAppView );
 	iAppView->MakeVisible( EFalse );
 	
 	// switch to the files view
-	iAppView=iAppViewFiles;
+	iAppView = iAppViewFiles;
 	iAppView->MakeVisible( ETrue );
 	AddToStackL( iAppView );
 	iAppView->DrawNow();
@@ -168,6 +193,7 @@ void CPaperclipAppUi::CmdSetViewFilesL()
 }
 
 void CPaperclipAppUi::UpdateToolbarL()
+//==============================================================================
 {
 	CEikButtonBase* button;
 	
@@ -193,6 +219,7 @@ void CPaperclipAppUi::UpdateToolbarL()
 }
 
 void CPaperclipAppUi::CmdViewSelectionPopoutL()
+//==============================================================================
 {
 	// Calculate the position to display the popup menu.
 	TPoint point(
@@ -223,7 +250,9 @@ void CPaperclipAppUi::CmdViewSelectionPopoutL()
 void CPaperclipAppUi::DynInitMenuPaneL(
 	TInt aMenuId,
 	CEikMenuPane* aMenuPane
-){
+)
+//==============================================================================
+{
 /*	if (aMenuId==R_EXAMPLE_SWITCHVIEW_MENU)
 	{
 		// Set the state of the radio button symbol to reflect which view is
@@ -234,4 +263,24 @@ void CPaperclipAppUi::DynInitMenuPaneL(
 			aMenuPane->SetItemButtonState(EExampleCmdSwitchToSquareView,EEikMenuItemSymbolOn);
 	}
 */
+}
+
+void CPaperclipAppUi::HandleControlEventL(
+	CCoeControl* aControl,
+	TCoeEvent aEventType
+)
+//==============================================================================
+{}
+
+
+// when the application receives a key-press,
+// we need to pass that on to the current view
+//
+void CPaperclipAppUi::HandleKeyEventL(
+	const TKeyEvent& aKeyEvent,
+	TEventCode aType
+)
+//==============================================================================
+{
+	this->iAppView->OfferKeyEventL( aKeyEvent, aType );
 }

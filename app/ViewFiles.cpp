@@ -1,4 +1,4 @@
-#include "ViewFiles.h"
+#include "View.h"
 
 void CPaperclipViewFiles::ConstructL(
 	const TRect& aRect,
@@ -32,4 +32,11 @@ void CPaperclipViewFiles::HandlePointerEventL(
 	const TPointerEvent& //aPointerEvent
 ){
 	DrawNow();
+}
+
+TKeyResponse CPaperclipViewFiles::OfferKeyEventL(
+	const TKeyEvent& aKeyEvent,
+	TEventCode aType
+){
+	return EKeyWasNotConsumed;
 }

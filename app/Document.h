@@ -1,14 +1,11 @@
 #ifndef __DOCUMENT_H
 #define __DOCUMENT_H
 
-#include "AppUI.h"
+#include "HApp.h"
 #include "Model.h"
 
-#include <eikdoc.h>				// for CEikDocument
-
-class CPaperclipDocument;
-
-class CPaperclipDocument : public CEikDocument
+class CPaperclipDocument
+	: public CEikDocument
 {
 public:
 	// construct/destruct

@@ -1,4 +1,5 @@
 #include "Document.h"
+#include "AppUI.h"
 
 CPaperclipDocument::CPaperclipDocument(
 	CEikApplication& aApp		// EIKON application reference
@@ -9,8 +10,8 @@ CPaperclipDocument::CPaperclipDocument(
 CPaperclipDocument* CPaperclipDocument::NewL(
 	CEikApplication& aApp		// EIKON application reference
 ){
-	CPaperclipDocument* self=new (ELeave) CPaperclipDocument(aApp);
-	CleanupStack::PushL(self);
+	CPaperclipDocument* self = new (ELeave) CPaperclipDocument(aApp);
+	CleanupStack::PushL( self );
 	self->ConstructL();
 	self->ResetModelL();
 	CleanupStack::Pop(); // self

@@ -1,34 +1,30 @@
 #ifndef __APPUI_H
 #define __APPUI_H
 
-#include <eikcmds.hrh>			// EEikCmdExit &c.
-#include <eikmenu.hrh>			// menu-items
+#include "HApp.h"
 
-#include <eikappui.h>			// CEikAppUi
-#include <eiktbar.h>			// toolbar/band
-#include <eikbutb.h>			// buttons
-#include <eikfnlab.h>			// file-name label
-#include <eikmenub.h>			// menu-bar
-#include <eikedwin.h>			// text editor
+#include "HPaperclip.h"
 
-#include "Paperclip.h"
 #include "ViewEditor.h"
 #include "ViewFiles.h"
 
-class CPaperclipAppUi : public CEikAppUi
+class CPaperclipAppUi
+	: public CEikAppUi,
+	  public MCoeControlObserver
 {
 public:
-	// CEikAppUi:
+	//--------------------------------------------------------------------------
 	CPaperclipAppUi();			// constructor
 	~CPaperclipAppUi();			// destructor
+
+	// CEikAppUi::
     void ConstructL();
 
 private:
-	// CEikAppUi:
-	void HandleCommandL(TInt aCommand);
-	
-	// CPaperclipAppUi:
-	//
+	//--------------------------------------------------------------------------
+	// CPaperclipAppUi::
+	void UpdateFileNameLabelL();
+
 	void CmdSetViewEditorL();
 	void CmdSetViewFilesL();
 
@@ -39,11 +35,18 @@ private:
 	void CmdViewSelectionPopoutL();
 
 private:
-	// MEikMenuObserver:
-	void DynInitMenuPaneL(TInt aMenuId,CEikMenuPane* aMenuPane);
+	//--------------------------------------------------------------------------
+	// CEikAppUi::
+	void HandleCommandL(TInt aCommand);
+	// CCoeAppUi::
+	void HandleKeyEventL(const TKeyEvent& aKeyEvent, TEventCode aType);
+	// MEikMenuObserver::
+	void DynInitMenuPaneL(TInt aMenuId, CEikMenuPane* aMenuPane);
+	// MCoeControlObserver::
+	virtual void HandleControlEventL(CCoeControl* aControl, TCoeEvent aEventType);
 
 private:
-	// view type
+	//--------------------------------------------------------------------------
 	enum TViewType {
 			EViewEditor,
 			EViewFiles,
@@ -58,11 +61,9 @@ private:
 	// (currently selected view)
 	CCoeControl* iAppView;
 	
-	// Toolband
 	CEikToolBar* iCircleToolBand;
 	CEikToolBar* iSquareToolBand;
 
-	// Model
 	CPaperclipModel *iModel;
 
 	CEikGlobalTextEditor* iTextEditor;

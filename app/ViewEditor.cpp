@@ -1,5 +1,4 @@
-#include "ViewEditor.h"
-#include <eikedwin.hrh>			// for the EEikEdwin* constants
+#include "View.h"
 
 void CPaperclipViewEditor::ConstructL(
 	const TRect& aRect,
@@ -35,8 +34,9 @@ void CPaperclipViewEditor::ConstructL(
 		EEikFontControlSize,
 		EEikMonospaceFontsOnly
 	);
-	//iTextEditor->SetObserver(this);
-	//iTextEditor->SetEdwinObserver(this);
+	iTextEditor->SetObserver( this );
+	iTextEditor->SetEdwinObserver( this );
+	
 	iTextEditor->CreateScrollBarFrameL();
 	iTextEditor->ScrollBarFrame()->SetScrollBarVisibilityL(
 		CEikScrollBarFrame::EOff,
@@ -56,6 +56,8 @@ void CPaperclipViewEditor::ConstructL(
 	iTextEditor->SetRectL( Rect() );
 	iTextEditor->SetAdjacent( ECoeAdjTop | ECoeAdjRight );
 	iTextEditor->ActivateL();
+
+	//iTextEditor->TextView()->SetParagraphFillTextOnly( ETrue );
 	iTextEditor->SetFocus( ETrue );
 }
 
@@ -85,3 +87,34 @@ void CPaperclipViewEditor::HandlePointerEventL(
 ){/*
 	DrawNow();
 */}
+
+void CPaperclipViewEditor::HandleControlEventL(
+	CCoeControl* aControl,
+	TCoeEvent aEventType
+){
+}
+
+void CPaperclipViewEditor::HandleEdwinEventL(
+	CEikEdwin* aEdwin,
+	TEdwinEvent aEventType
+){/*
+	if (aEdwin==iRichEd && (aEventType==MEikEdwinObserver::EEventFormatChanged || 
+							aEventType==MEikEdwinObserver::EEventNavigation))
+	{
+		if (aEventType==MEikEdwinObserver::EEventFormatChanged)
+		{
+			SetPaginationOutOfDate(ETrue);
+			SetDocChanged();
+		}
+		if (iToolBar->IsVisible() || iToolBand->IsVisible())
+			iToolBarUpdate->Start(CWordToolBarUpdate::EFullUpdate)
+		;
+	}
+*/}
+
+TKeyResponse CPaperclipViewEditor::OfferKeyEventL(
+	const TKeyEvent& aKeyEvent,
+	TEventCode aType
+){
+	return iTextEditor->OfferKeyEventL( aKeyEvent, aType );
+}

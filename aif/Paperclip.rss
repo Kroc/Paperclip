@@ -9,7 +9,7 @@ RESOURCE AIF_DATA
 	// 0x.b......	= narrow, i.e ASCII ("byte") UID
 	// 0x.d......	= unicode ("double") UID
 	// 0x..cd....	= "Camen Design", personal identifier
-	// 0x....a...	= 'App' UID
+	// 0x....a...	= 'App' UID, or
 	// 0x....d...	= 'Document' UID
 	// 0x.....100	= unique part
 	//
@@ -32,6 +32,6 @@ RESOURCE AIF_DATA
 
 	datatype_list=
 	{
-		DATATYPE { priority=EDataTypePriorityHigh; type="text/plain"; }
+		DATATYPE { priority=EDataTypePriorityNormal; type="text/plain"; }
 	};
 }

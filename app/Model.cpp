@@ -11,8 +11,8 @@ CPaperclipModel::CPaperclipModel()
 //
 CPaperclipModel* CPaperclipModel::NewL()
 {
-	CPaperclipModel* self=new(ELeave) CPaperclipModel();
-	CleanupStack::PushL(self);
+	CPaperclipModel* self = new(ELeave) CPaperclipModel();
+	CleanupStack::PushL( self );
 
 	self->ConstructL();
 	
@@ -22,25 +22,29 @@ CPaperclipModel* CPaperclipModel::NewL()
 
 void CPaperclipModel::ConstructL()
 {
-	// Create a default usable Normal style (the default layers)
+	// Create a default usable Normal style (the default layers);
+	// this snippet taken from the Psion Word source code
+	// TODO: example the plain-text mode of Word for what formats it uses
 	CParaFormat		paraFormat;
 	TParaFormatMask paraFormatMask;
-	paraFormat.iSpaceAfterInTwips=100;
-	paraFormatMask.SetAttrib(EAttSpaceAfter);
-	paraFormat.iHorizontalAlignment=CParaFormat::ELeftAlign;
-	paraFormatMask.SetAttrib(EAttAlignment);
-	iParaFormatLayer=CParaFormatLayer::NewL(&paraFormat,paraFormatMask);
+	paraFormat.iSpaceAfterInTwips = 100;
+	paraFormatMask.SetAttrib( EAttSpaceAfter );
+	paraFormat.iHorizontalAlignment = CParaFormat::ELeftAlign;
+	paraFormatMask.SetAttrib( EAttAlignment );
+	// the paragraph format is kept in the model
+	this->iParaFormatLayer=CParaFormatLayer::NewL( &paraFormat,paraFormatMask );
 	//
 	TCharFormat		charFormat;
 	TCharFormatMask charFormatMask;
 	TInt typefaceAttributes = TTypeface::EProportional | TTypeface::ESerif;
-	charFormat.iFontSpec.iTypeface.SetAttributes(typefaceAttributes);
+	charFormat.iFontSpec.iTypeface.SetAttributes( typefaceAttributes );
 	charFormat.iFontSpec.iHeight = 200;
-	charFormatMask.SetAttrib(EAttFontTypeface);
-	charFormatMask.SetAttrib(EAttFontHeight);
-	iCharFormatLayer=CCharFormatLayer::NewL(charFormat,charFormatMask);
+	charFormatMask.SetAttrib( EAttFontTypeface );
+	charFormatMask.SetAttrib( EAttFontHeight );
+	// the character format is kept in the model
+	this->iCharFormatLayer=CCharFormatLayer::NewL( charFormat,charFormatMask );
 
-	iGlobalText = CGlobalText::NewL(
+	this->iGlobalText = CGlobalText::NewL(
 		iParaFormatLayer,
 		iCharFormatLayer,
 		CEditableText::ESegmentedStorage,
@@ -57,4 +61,4 @@ CPaperclipModel::~CPaperclipModel()
 
 void CPaperclipModel::Reset()
 {
-};
+}

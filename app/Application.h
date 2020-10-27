@@ -1,9 +1,7 @@
 #ifndef __APPLICATION_H
 #define __APPLICATION_H
 
-#include <eikapp.h>				// for CEikApplication
-
-#include "Paperclip.h"
+#include "HApp.h"
 
 // UID of app
 //
@@ -14,10 +12,11 @@ const TUid KUidPaperclipApp={ 0x1bcda100 };
 #endif
 
 
-class CPaperclipApplication : public CEikApplication
+class CPaperclipApplication
+	: public CEikApplication
 {
 private:
-	// from CApaApplication
+	// CApaApplication::
 	CApaDocument* CreateDocumentL();
 	TUid AppDllUid() const;
 };

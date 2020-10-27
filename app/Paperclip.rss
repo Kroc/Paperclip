@@ -540,21 +540,25 @@ RESOURCE MENU_PANE r_paperclip_mode_menu
 	{
 		MENU_ITEM
 		{
+			command=EPaperclipCmdEditorView;
 			flags=EEikMenuItemRadioStart|EEikMenuItemSymbolOn;
 			txt="Editor";
 		},
 		MENU_ITEM
 		{
+			command=EPaperclipCmdFilesView;
 			flags=EEikMenuItemRadioMiddle;
 			txt="Files";
 		},
 		MENU_ITEM
 		{
+			command=EPaperclipCmdSearchView;
 			flags=EEikMenuItemRadioMiddle;
 			txt="Search";
 		},
 		MENU_ITEM
 		{
+			command=EPaperclipCmdConfigView;
 			flags=EEikMenuItemRadioEnd;
 			txt="Config";
 		}

@@ -1,15 +1,12 @@
 #ifndef __MODEL_H
 #define __MODEL_H
 
-#include <eikedwin.h>
+#include "HEikon.h"
+
 #include <txtetext.h>			// CPlainText
 #include <txtglobl.h>			// CGlobalText
-#include <txtfmlyr.h>			// CParaFormatLayer
+#include <txtfmlyr.h>			// CParaFormatLayer, CCharFormatLayer
 
-
-// TODO: does the model have to derive from CBase?
-//		 (CWordModel does)
-//
 class CPaperclipModel : CBase
 {
 public:
