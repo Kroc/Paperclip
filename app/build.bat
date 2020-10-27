@@ -1,7 +1,7 @@
 @ECHO OFF
 CD %~dp0
 
-ECHO Cleaning Build Artefacts...
+ECHO * Cleaning Build Artefacts...
 
 REM # remove shared build artefacts
 DEL /F /S /Q "\EPOC32\BUILD\Paperclip\WINSD\DEB\*.*"  >NUL 2>NUL
@@ -24,32 +24,39 @@ DEL /F /Q "\EPOC32\Release\MARM\UREL\Paperclip.*" >NUL 2>NUL
 REM # remove app from the WINS EPOC "ROM" (Z:)
 RMDIR /S /Q "\EPOC32\Release\WINS\Deb\Z\System\Apps\Paperclip\" >NUL 2>NUL
 
-ECHO Make work directories...
+ECHO * Make work directories...
 CMD /C makmake -makework Paperclip wins
 CMD /C makmake -makework Paperclip marm
 
-ECHO Generate AIF file...
-CALL ..\aif\conv.bat
+ECHO * Generate AIF file...
+ECHO -------------------------------------------------------------------------------
+CALL ..\aif\build.bat
+ECHO -------------------------------------------------------------------------------
 
-ECHO Genearte Application MBM file...
-CALL ..\mbm\conv.bat
+ECHO * Genearte Application MBM file...
+ECHO -------------------------------------------------------------------------------
+CALL ..\mbm\build.bat
+ECHO -------------------------------------------------------------------------------
 
-ECHO Generate Resource file...
-CMD /C eikrs Paperclip SC deb
-CMD /C eikrs Paperclip SC rel
+ECHO * Generate Resource file...
+ECHO -------------------------------------------------------------------------------
+CALL ..\rsc\build.bat
+ECHO -------------------------------------------------------------------------------
 
-ECHO Generate NMake File...
+ECHO * Build WINS Debug...
+ECHO ===============================================================================
 CMD /C makmake Paperclip wins
-
-ECHO Build...
-nmake -f PAPERCLIP.WINS deb
+nmake /NOLOGO /S /F PAPERCLIP.WINS deb
 
 ECHO:
 IF ERRORLEVEL 1 PAUSE & EXIT /B 1
 
+ECHO ===============================================================================
+ECHO * Build MARM Release...
+ECHO ===============================================================================
 CMD /C makmake Paperclip marm
-nmake -f PAPERCLIP.MARM rel
+nmake /NOLOGO /S /F PAPERCLIP.MARM rel
 
 IF ERRORLEVEL 1 POPD & PAUSE & EXIT /B 1
 
-\EPOC32\Release\WINS\Deb\EPOC.EXE
+START "" \EPOC32\Release\WINS\Deb\EPOC.EXE
