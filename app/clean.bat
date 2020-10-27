@@ -1,5 +1,5 @@
 @ECHO OFF
-CD %~dp0
+PUSHD %~dp0
 
 ECHO * Cleaning Build Artefacts...
 
@@ -28,35 +28,4 @@ ECHO * Make work directories...
 CMD /C makmake -makework Paperclip wins
 CMD /C makmake -makework Paperclip marm
 
-ECHO * Generate AIF file...
-ECHO -------------------------------------------------------------------------------
-CALL ..\aif\build.bat
-ECHO -------------------------------------------------------------------------------
-
-ECHO * Genearte Application MBM file...
-ECHO -------------------------------------------------------------------------------
-CALL ..\mbm\build.bat
-ECHO -------------------------------------------------------------------------------
-
-ECHO * Generate Resource file...
-ECHO -------------------------------------------------------------------------------
-CALL ..\rsc\build.bat
-ECHO -------------------------------------------------------------------------------
-
-ECHO * Build WINS Debug...
-ECHO ===============================================================================
-CMD /C makmake Paperclip wins
-nmake /NOLOGO /S /F PAPERCLIP.WINS deb
-
-ECHO:
-IF ERRORLEVEL 1 PAUSE & EXIT /B 1
-
-ECHO ===============================================================================
-ECHO * Build MARM Release...
-ECHO ===============================================================================
-CMD /C makmake Paperclip marm
-nmake /NOLOGO /S /F PAPERCLIP.MARM rel
-
-IF ERRORLEVEL 1 POPD & PAUSE & EXIT /B 1
-
-START "" \EPOC32\Release\WINS\Deb\EPOC.EXE
+POPD

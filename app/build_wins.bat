@@ -1,0 +1,9 @@
+@ECHO OFF
+PUSHD %~dp0
+
+CMD /C makmake Paperclip wins
+nmake /NOLOGO /S /F PAPERCLIP.WINS deb
+
+IF ERRORLEVEL 1 POPD & PAUSE & EXIT /B 1
+
+POPD

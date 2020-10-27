@@ -1,0 +1,9 @@
+@ECHO OFF
+PUSHD %~dp0
+
+CMD /C makmake Paperclip marm
+nmake /NOLOGO /S /F PAPERCLIP.MARM rel
+
+IF ERRORLEVEL 1 POPD & PAUSE & EXIT /B 1
+
+POPD
