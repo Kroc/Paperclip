@@ -57,7 +57,6 @@ void CPaperclipViewEditor::ConstructL(
 	iTextEditor->SetAdjacent( ECoeAdjTop | ECoeAdjRight );
 	iTextEditor->ActivateL();
 
-	//iTextEditor->TextView()->SetParagraphFillTextOnly( ETrue );
 	iTextEditor->SetFocus( ETrue );
 }
 

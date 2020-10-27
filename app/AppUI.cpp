@@ -23,6 +23,7 @@ void CPaperclipAppUi::ConstructL()
 	
 	iAppViewEditor = new(ELeave) CPaperclipViewEditor;
 	iAppViewEditor->ConstructL( ClientRect(), iModel );
+
 	iAppViewFiles = new(ELeave) CPaperclipViewFiles;
 	iAppViewFiles->ConstructL( ClientRect(), iModel );
 
