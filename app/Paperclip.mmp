@@ -5,6 +5,9 @@ UNICODEUID      0x100039ce 0x1dcda100
 TARGETPATH      \system\apps\Paperclip
 PROJECT	       	Paperclip
 
+SUBPROJECT      aif
+AIF             Paperclip.aif
+
 SUBPROJECT      rsc
 RESOURCE        Paperclip.rss
 
