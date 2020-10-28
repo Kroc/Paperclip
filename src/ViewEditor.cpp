@@ -3,7 +3,9 @@
 void CPaperclipViewEditor::ConstructL(
 	const TRect& aRect,
 	CPaperclipModel* aModel
-){
+)
+//==============================================================================
+{
 	iModel = aModel;
 
     this->CreateWindowL();
@@ -17,7 +19,7 @@ void CPaperclipViewEditor::ConstructL(
 	//iAppZoom.SetGraphicsDeviceMap(device);
 	//iAppZoom.SetZoomFactor(EZoomOneToOne);
 
-	iTextEditor = new(ELeave) CEikGlobalTextEditor(
+	iTextEditor = new( ELeave ) CEikGlobalTextEditor(
 		TEikBorder::ESingleBlack
 	);
 
@@ -48,6 +50,7 @@ void CPaperclipViewEditor::ConstructL(
 		CEikEdwin::EUseText
 	);
 
+	// TODO: do we need trap / cleanup stack here?
 	CFbsBitmap* lineCursor = iEikonEnv->CreateBitmapL(
 		TPtrC(), EMbmEikonLncusr1
 	);
@@ -61,6 +64,7 @@ void CPaperclipViewEditor::ConstructL(
 }
 
 CPaperclipViewEditor::~CPaperclipViewEditor()
+//==============================================================================
 {
 	delete iTextEditor;
 }

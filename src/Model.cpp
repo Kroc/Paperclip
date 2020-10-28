@@ -10,8 +10,9 @@ CPaperclipModel::CPaperclipModel()
 // static instantiation:
 //
 CPaperclipModel* CPaperclipModel::NewL()
+//==============================================================================
 {
-	CPaperclipModel* self = new(ELeave) CPaperclipModel();
+	CPaperclipModel* self = new( ELeave ) CPaperclipModel();
 	CleanupStack::PushL( self );
 
 	self->ConstructL();
@@ -21,6 +22,7 @@ CPaperclipModel* CPaperclipModel::NewL()
 }
 
 void CPaperclipModel::ConstructL()
+//==============================================================================
 {
 	// Create a default usable Normal style (the default layers);
 	// this snippet taken from the Psion Word source code
@@ -29,7 +31,9 @@ void CPaperclipModel::ConstructL()
 	paraFormat.iHorizontalAlignment = CParaFormat::ELeftAlign;
 	paraFormatMask.SetAttrib( EAttAlignment );
 	// the paragraph format is kept in the model
-	this->iParaFormatLayer=CParaFormatLayer::NewL( &paraFormat, paraFormatMask );
+	iParaFormatLayer = CParaFormatLayer::NewL(
+		&paraFormat, paraFormatMask
+	);
 	//
 	TCharFormat		charFormat;
 	TCharFormatMask charFormatMask;
@@ -40,9 +44,11 @@ void CPaperclipModel::ConstructL()
 	charFormatMask.SetAttrib( EAttFontTypeface );
 	charFormatMask.SetAttrib( EAttFontHeight );
 	// the character format is kept in the model
-	this->iCharFormatLayer=CCharFormatLayer::NewL( charFormat, charFormatMask );
+	iCharFormatLayer = CCharFormatLayer::NewL(
+		charFormat, charFormatMask
+	);
 
-	this->iGlobalText = CGlobalText::NewL(
+	iGlobalText = CGlobalText::NewL(
 		iParaFormatLayer,
 		iCharFormatLayer,
 		CEditableText::ESegmentedStorage,
@@ -51,6 +57,7 @@ void CPaperclipModel::ConstructL()
 }
 
 CPaperclipModel::~CPaperclipModel()
+//==============================================================================
 {
 	delete iCharFormatLayer;
 	delete iParaFormatLayer;

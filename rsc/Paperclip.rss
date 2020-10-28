@@ -1,6 +1,5 @@
-// this four-letter name does not have to be
-// unique between ALL applications, only
-// between EPOC32's resource file and our own
+// this four-letter name does not have to be unique between ALL
+// applications, only between EPOC32's resource files and our own
 //
 NAME KROC
 
@@ -257,13 +256,13 @@ RESOURCE MENU_PANE r_paperclip_menu_project
 		MENU_ITEM
 		{
 			command=EPaperclipCmdNewProject;
-			txt="New Poject…";
+			txt="New Pojectï¿½";
 		},
 		MENU_ITEM
 		{
 			command=EPaperclipCmdOpenProject;
 			flags=EEikMenuItemSeparatorAfter;
-			txt="Open Poject…";
+			txt="Open Pojectï¿½";
 		},
 		MENU_ITEM
 		{
@@ -297,18 +296,18 @@ RESOURCE MENU_PANE r_paperclip_project_menu
 		MENU_ITEM
 		{
 			command=EPaperclipCmdNewProject;
-			txt="New Poject…";
+			txt="New Pojectï¿½";
 		},
 		MENU_ITEM
 		{
 			command=EPaperclipCmdOpenProject;
 			flags=EEikMenuItemSeparatorAfter;
-			txt="Open Poject…";
+			txt="Open Pojectï¿½";
 		},
 		MENU_ITEM
 		{
 			command=EPaperclipCmdAddFileToProject;
-			txt="Add file to project…";
+			txt="Add file to projectï¿½";
 		},
 		MENU_ITEM
 		{
@@ -342,7 +341,7 @@ RESOURCE MENU_PANE r_paperclip_file_menu
 		{
 			command=EPaperclipCmdOpenFile;
 			flags=EEikMenuItemSeparatorAfter;
-			txt="Open File…";
+			txt="Open Fileï¿½";
 		},
 		MENU_ITEM
 		{
@@ -384,7 +383,7 @@ RESOURCE MENU_PANE r_paperclip_save_menu
 		MENU_ITEM
 		{
 			command=EPaperclipCmdSaveFileAs;
-			txt="Save As…";
+			txt="Save Asï¿½";
 		},
 		MENU_ITEM
 		{
@@ -435,7 +434,7 @@ RESOURCE MENU_PANE r_paperclip_edit_menu
 		MENU_ITEM
 		{
 			command=EPaperclipCmdInsertSymbol;
-			txt="Insert symbol…";
+			txt="Insert symbolï¿½";
 		}
     };
 }
@@ -474,7 +473,7 @@ RESOURCE MENU_PANE r_paperclip_find_menu
 		MENU_ITEM
 		{
 			command=EPaperclipCmdFind;
-			txt="Find…";
+			txt="Findï¿½";
 		},
 		MENU_ITEM
 		{
@@ -495,12 +494,12 @@ RESOURCE MENU_PANE r_paperclip_find_menu
 		{
 			command=EPaperclipCmdReplace;
 			flags=EEikMenuItemSeparatorAfter;
-			txt="Replace…";
+			txt="Replaceï¿½";
 		},
 		MENU_ITEM
 		{
 			command=EPaperclipCmdGoTo;
-			txt="Go To…";
+			txt="Go Toï¿½";
 		}
     };
 }
@@ -592,12 +591,12 @@ RESOURCE MENU_PANE r_paperclip_tools_menu
 		{
 			command=EPaperclipCmdPreferences;
 			flags=EEikMenuItemSeparatorAfter;
-			txt="Preferences…";
+			txt="Preferencesï¿½";
 		},
 		MENU_ITEM
 		{
 			command=EPaperclipCmdSpellCheck;
-			txt="Spell Check…";
+			txt="Spell Checkï¿½";
 		},
 		MENU_ITEM
 		{

@@ -12,8 +12,10 @@ CPaperclipDocument* CPaperclipDocument::NewL(
 ){
 	CPaperclipDocument* self = new (ELeave) CPaperclipDocument(aApp);
 	CleanupStack::PushL( self );
+
 	self->ConstructL();
 	self->ResetModelL();
+	
 	CleanupStack::Pop(); // self
 	return self;
 }
