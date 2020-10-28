@@ -49,38 +49,6 @@ RESOURCE EIK_APP_INFO
 
 #include "Paperclip_toolbar.rh"
 
-RESOURCE MENU_PANE r_example_view_menu
-{
-	items=
-	{
-        MENU_ITEM
-		{
-			command=EExampleCmdSwitchView;
-			cascade=r_example_switchview_menu;
-			txt="Switch View";
-		}
-    };
-}
-
-RESOURCE MENU_PANE r_example_switchview_menu
-{
-	items=
-	{
-		MENU_ITEM
-		{
-			command=EExampleCmdSwitchToCircleView;
-			txt="Circle";
-			flags=EEikMenuItemRadioStart;
-		},
-		MENU_ITEM
-		{
-			command=EExampleCmdSwitchToSquareView;
-			txt="Square";
-			flags=EEikMenuItemRadioEnd;
-		}
-	};
-}
-
 ///////////////////////////////////////////////////////////////////////////////
 
 RESOURCE HOTKEYS r_paperclip_editor_hotkeys
@@ -502,32 +470,6 @@ RESOURCE MENU_PANE r_paperclip_tools_menu
     };
 }
 
-
-/////////////////////////////////////////////////
-//
-// Resources for the "circle" view.
-//
-/////////////////////////////////////////////////
-
-RESOURCE MENU_BAR r_example_menubar_circle
-{
-    titles=
-    {
-        MENU_TITLE { menu_pane=r_example_view_menu; txt="View"; },
-		MENU_TITLE { menu_pane=r_example_circle_menu; txt="Circle"; }
-	};
-}
-
-RESOURCE MENU_PANE r_example_circle_menu
-{
-	items=
-	{
-		MENU_ITEM { command=EExampleCmdA; txt="Command A";},
-  		MENU_ITEM { command=EExampleCmdB; txt="Command B";}
-    };
-}
-
-
 RESOURCE TOOLBAND r_paperclip_editor_toolband
 {
 	controls=
@@ -670,29 +612,6 @@ RESOURCE TOOLBAND r_example_circle_toolband
             length=EEikStdShortTextPopoutToolBandButtonWidth;
             txt="Cmd 4";
         }
-    };
-}
-
-/////////////////////////////////////////////////
-//
-// Resources for the "square" view.
-//
-/////////////////////////////////////////////////
-RESOURCE MENU_BAR r_example_menubar_square
-{
-    titles=
-    {
-        MENU_TITLE { menu_pane=r_example_view_menu; txt="View"; },
-        MENU_TITLE { menu_pane=r_example_square_menu; txt="Square"; }
-    };
-}
-
-RESOURCE MENU_PANE r_example_square_menu
-{
-	items=
-	{
-		MENU_ITEM { command=EExampleCmdX; txt="Command X"; },
-  		MENU_ITEM { command=EExampleCmdY; txt="Command Y"; }
     };
 }
 

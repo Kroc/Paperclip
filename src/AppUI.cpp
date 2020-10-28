@@ -225,6 +225,7 @@ void CPaperclipAppUi::UpdateToolbarL()
 	button->DrawNow();
 }
 
+/*
 void CPaperclipAppUi::CmdViewSelectionPopoutL()
 //==============================================================================
 {
@@ -253,6 +254,7 @@ void CPaperclipAppUi::CmdViewSelectionPopoutL()
 	// when the user lifts the pointer outside the menu
 	popup->ClaimPointerGrab();
 }
+*/
 
 void CPaperclipAppUi::DynInitMenuPaneL(
 	TInt aMenuId,
