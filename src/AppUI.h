@@ -47,11 +47,22 @@ private:
 
 private:
 	//--------------------------------------------------------------------------
+	// which toolbar is in use
+	enum TToolbarType {
+		// empty toolbar with no app-specific buttons
+		// (just filename-label and clock)
+		EToolbarEmpty,
+		// the toolbar used when a project is open,
+		// providing buttons to change mode
+		EToolbarMain
+	};
+	TToolbarType iToolbarType;
+	
 	enum TViewType {
-			EViewEditor,
-			EViewFiles,
-			EViewSearch,
-			EViewConfig
+		EViewEditor,
+		EViewFiles,
+		EViewSearch,
+		EViewConfig
 	};
 	TViewType iViewType;
 

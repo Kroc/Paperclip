@@ -23,6 +23,10 @@ NAME KROC
 #include "Paperclip.hrh"
 #include "..\mbm\Paperclip.mbg"
 
+// Latin-1 / Windows-1252 codepoint for ellipsis ("..."),
+// since this will differ if this file is saved as UTF-8 
+#define ELLIPSIS 133
+
 RESOURCE RSS_SIGNATURE { }
 
 RESOURCE TBUF { buf=""; }
@@ -34,124 +38,16 @@ RESOURCE EIK_APP_INFO
 
 	hotkeys=r_paperclip_editor_hotkeys;
 
-	// "toolbar" here means the bar down the right-hand side
-	// of the screen that includes the clock
-	toolbar=r_paperclip_toolbar;
+	// "toolbar" here means the bar down the right-hand
+	// side of the screen that includes the clock
+	toolbar=r_paperclip_toolbar_empty;
 	
 	toolband=r_paperclip_editor_toolband;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-RESOURCE TOOLBAR r_paperclip_toolbar
-{
-	breadth=KEikStdToolBarWidth;
-    controls=
-	{
-		TBAR_CTRL
-		{ 
-			id=EPaperclipCmdProjectName;
-			type=EEikCtFileNameLabel; 
-			flags=EEikToolBarCtrlHasSetMinLength;
-			length=KEikStdFileNameLabelHeight;
-		},
-		//
-		// "Editor" button to switch to the text-editor view
-		//
-		TBAR_BUTTON
-		{
-			id=EPaperclipCmdEditorView;
-			behavior=EEikButLatches;
-			
-			layout=EEikCmdButExcessToText;
-			bmpid=EMbmPaperclipEditor; bmpmask=EMbmPaperclipEditorMask;
-			bmpfile="*";
-
-			flags=EEikToolBarCtrlHasSetMinLength;
-			length=KEikStdToolBarButtonHeight;
-			txt="Editor";
-		},
-		//
-		// "Files" button to switch to the file-browser view
-		//
-		TBAR_BUTTON
-		{
-			id=EPaperclipCmdFilesView;
-			behavior=EEikButLatches;
-			
-			layout=EEikCmdButExcessToText;
-			bmpid=EMbmPaperclipSearch; bmpmask=EMbmPaperclipSearchMask;
-			bmpfile="*";
-
-			flags=EEikToolBarCtrlHasSetMinLength;
-			length=KEikStdToolBarButtonHeight;
-			txt=" Files";
-		},
-		//
-		// "Search" button to switch to the find-in-files view
-		//
-		TBAR_BUTTON
-		{
-			id=EPaperclipCmdSearchView;
-			
-			// we want the view to change immediately upon
-			// button-down and not wait for the release
-			behavior=EEikButReportOnPointerDown|EEikButLatches;
-
-			layout=EEikCmdButExcessToText;
-			bmpid=EMbmPaperclipSearch; bmpmask=EMbmPaperclipSearchMask;
-			bmpfile="*";
-			
-			flags=EEikToolBarCtrlHasSetMinLength;
-			length=KEikStdToolBarButtonHeight;
-			txt="Search";
-		},
-		//
-		// "Config" button to switch to the project-config view
-		//
-		TBAR_BUTTON
-		{
-			id=EPaperclipCmdConfigView;
-			
-			// we want the view to change immediately upon
-			// button-down and not wait for the release
-			behavior=EEikButReportOnPointerDown|EEikButLatches;
-
-			layout=EEikCmdButExcessToText;
-			bmpid=EMbmPaperclipSearch; bmpmask=EMbmPaperclipSearchMask;
-			bmpfile="*";
-
-			flags=EEikToolBarCtrlHasSetMinLength;
-			length=KEikStdToolBarButtonHeight;
-			txt="Config";
-		},
-
-		// EIKON: include the standard clock on the bottom
-		//
-		TBAR_CTRL
-		{
-			type=EEikCtSpacer;
-			flags=EEikToolBarCtrlHasSetMinLength|EEikToolBarCtrlIsStretchable;
-			length=0;
-			control=SPACER;
-		},
-		TBAR_CTRL
-		{
-			type=EEikCtClock;
-			control=CLOCK {
-				digitalresourceid=R_EIK_DIGITAL_CLOCK;
-				analogresourceid=R_EIK_ANALOG_CLOCK;
-			};
-		},
-		TBAR_CTRL
-		{
-			type=EEikCtSpacer;
-			flags=EEikToolBarCtrlHasSetMinLength;
-			length=KEikStdGapBelowClock;
-			control=SPACER;
-		}
-	};
-}
+#include "Paperclip_toolbar.rh"
 
 RESOURCE MENU_PANE r_example_view_menu
 {
@@ -256,13 +152,13 @@ RESOURCE MENU_PANE r_paperclip_menu_project
 		MENU_ITEM
 		{
 			command=EPaperclipCmdNewProject;
-			txt="New Poject�";
+			txt="New Poject"<ELLIPSIS>;
 		},
 		MENU_ITEM
 		{
 			command=EPaperclipCmdOpenProject;
 			flags=EEikMenuItemSeparatorAfter;
-			txt="Open Poject�";
+			txt="Open Poject"<ELLIPSIS>;
 		},
 		MENU_ITEM
 		{
@@ -296,18 +192,18 @@ RESOURCE MENU_PANE r_paperclip_project_menu
 		MENU_ITEM
 		{
 			command=EPaperclipCmdNewProject;
-			txt="New Poject�";
+			txt="New Poject"<ELLIPSIS>;
 		},
 		MENU_ITEM
 		{
 			command=EPaperclipCmdOpenProject;
 			flags=EEikMenuItemSeparatorAfter;
-			txt="Open Poject�";
+			txt="Open Poject"<ELLIPSIS>;
 		},
 		MENU_ITEM
 		{
 			command=EPaperclipCmdAddFileToProject;
-			txt="Add file to project�";
+			txt="Add file to project"<ELLIPSIS>;
 		},
 		MENU_ITEM
 		{
@@ -341,7 +237,7 @@ RESOURCE MENU_PANE r_paperclip_file_menu
 		{
 			command=EPaperclipCmdOpenFile;
 			flags=EEikMenuItemSeparatorAfter;
-			txt="Open File�";
+			txt="Open File"<ELLIPSIS>;
 		},
 		MENU_ITEM
 		{
@@ -383,7 +279,7 @@ RESOURCE MENU_PANE r_paperclip_save_menu
 		MENU_ITEM
 		{
 			command=EPaperclipCmdSaveFileAs;
-			txt="Save As�";
+			txt="Save As"<ELLIPSIS>;
 		},
 		MENU_ITEM
 		{
@@ -434,7 +330,7 @@ RESOURCE MENU_PANE r_paperclip_edit_menu
 		MENU_ITEM
 		{
 			command=EPaperclipCmdInsertSymbol;
-			txt="Insert symbol�";
+			txt="Insert symbol"<ELLIPSIS>;
 		}
     };
 }
@@ -473,7 +369,7 @@ RESOURCE MENU_PANE r_paperclip_find_menu
 		MENU_ITEM
 		{
 			command=EPaperclipCmdFind;
-			txt="Find�";
+			txt="Find"<ELLIPSIS>;
 		},
 		MENU_ITEM
 		{
@@ -494,12 +390,12 @@ RESOURCE MENU_PANE r_paperclip_find_menu
 		{
 			command=EPaperclipCmdReplace;
 			flags=EEikMenuItemSeparatorAfter;
-			txt="Replace�";
+			txt="Replace"<ELLIPSIS>;
 		},
 		MENU_ITEM
 		{
 			command=EPaperclipCmdGoTo;
-			txt="Go To�";
+			txt="Go To"<ELLIPSIS>;
 		}
     };
 }
@@ -591,12 +487,12 @@ RESOURCE MENU_PANE r_paperclip_tools_menu
 		{
 			command=EPaperclipCmdPreferences;
 			flags=EEikMenuItemSeparatorAfter;
-			txt="Preferences�";
+			txt="Preferences"<ELLIPSIS>;
 		},
 		MENU_ITEM
 		{
 			command=EPaperclipCmdSpellCheck;
-			txt="Spell Check�";
+			txt="Spell Check"<ELLIPSIS>;
 		},
 		MENU_ITEM
 		{

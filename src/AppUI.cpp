@@ -17,6 +17,9 @@ void CPaperclipAppUi::ConstructL()
 	// the resource file (i.e. toolbar / toolband)
     BaseConstructL();
 
+	// the resource file will build the empty toolbar to begin with
+	iToolbarType = EToolbarEmpty;
+
 	// from the app-document, get a reference to the model (internal state),
 	// we need to pass this onto the views so that they can access that state
 	iModel = ((CPaperclipDocument*) iDocument)->Model();
@@ -196,6 +199,9 @@ void CPaperclipAppUi::CmdSetViewFilesL()
 void CPaperclipAppUi::UpdateToolbarL()
 //==============================================================================
 {
+	// nothing to update on the empty toolbar
+	if (iToolbarType == EToolbarEmpty) return;
+
 	CEikButtonBase* button;
 	
 	button = STATIC_CAST( CEikButtonBase*,
