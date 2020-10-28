@@ -18,8 +18,9 @@ void CPaperclipAppUi::ConstructL()
     BaseConstructL();
 
 	// the resource file will build the empty toolbar to begin with
-	iToolbarType = EToolbarEmpty;
+	iToolBarType = EToolBarEmpty;
 
+	////////////////////////////////////////////////////////////////////////////
 	// from the app-document, get a reference to the model (internal state),
 	// we need to pass this onto the views so that they can access that state
 	iModel = ((CPaperclipDocument*) iDocument)->Model();
@@ -30,36 +31,36 @@ void CPaperclipAppUi::ConstructL()
 	iAppViewFiles = new(ELeave) CPaperclipViewFiles;
 	iAppViewFiles->ConstructL( ClientRect(), iModel );
 
-	////////////////////////////////////////////////////////////////////////////
 	// begin with the editor view
 	// (the default when opening the application)
 	iAppViewFiles->MakeVisible( EFalse );
-	
+
 	// EIKON: the application view must be on the control stack
 	// so that it can receive key press events
 	iAppView = iAppViewEditor;
 	AddToStackL( iAppView );
+
+	////////////////////////////////////////////////////////////////////////////
+	iToolBar->MakeVisible( EFalse );
 	
-	// Create the toolbands for the two views.
-	// The EIKON framework creates the "circle" toolband when the 
-	// application is started, because it is listed in the 
-	// EIK_APP_INFO resource in the resource file. Therefore we
-	// don't need to create it again. The App UI stores a pointer
-	// to it in iToolBand, so save this as iCircleToolBand.
-	// Then, create another toolband for the "square" view.
-	// This means we've got a pointer to both toolbands.
-	iCircleToolBand = iToolBand;
-	iSquareToolBand = new(ELeave) CEikToolBar;
-	// zero iToolBand, otherwise ClientRect()
-	// passed to ConstructL() will be wrong
+	// the toolband defined in the resource file
+	// will be swapped out, so remember it first
+	iDummyToolBand = iToolBand;
+	iDummyToolBand->MakeVisible( EFalse );
+	// clear the pointer in iToolBand otherwise
+	// the ClientRect() size will be wrong
 	iToolBand = 0;
-	iSquareToolBand->ConstructL(
-		this, R_EXAMPLE_SQUARE_TOOLBAND, ClientRect()
+
+	// create the toolband for the editor view
+	iEditorToolBand = new(ELeave) CEikToolBar; 
+	iEditorToolBand->ConstructL(
+		this, R_PAPERCLIP_EDITOR_TOOLBAND, ClientRect()
 	);
-	iSquareToolBand->MakeVisible( EFalse );
-	// Set iToolBand back so that the "circle" toolband is 
-	// displayed at the beginning.
-	iToolBand = iCircleToolBand;
+	// use the editor toolband for the application
+	iToolBand = iEditorToolBand;
+	iToolBand->MakeVisible( ETrue );
+
+	iToolBar->MakeVisible( ETrue );
 
 	// display application name on toolbar
 	UpdateFileNameLabelL();
@@ -75,13 +76,12 @@ CPaperclipAppUi::~CPaperclipAppUi()
 	delete iAppViewEditor;
     delete iAppViewFiles;
 
-	// Whichever toolband was active when the app was closed down will
+	// whichever toolband was active when the app was closed down will
 	// already have been deleted, because the framework deletes iToolBand.
-	// If we set iToolBand to 0, deleting it again will not cause
-	// an error.
+	// if we set iToolBand to 0, deleting it again will not cause an error
 	iToolBand = 0;
-	delete iCircleToolBand;
-	delete iSquareToolBand;
+	delete iDummyToolBand;
+	delete iEditorToolBand;
 }
 
 // the "file name label" is the task-switcher in the top-right of the screen
@@ -200,7 +200,7 @@ void CPaperclipAppUi::UpdateToolbarL()
 //==============================================================================
 {
 	// nothing to update on the empty toolbar
-	if (iToolbarType == EToolbarEmpty) return;
+	if (iToolBarType == EToolBarEmpty) return;
 
 	CEikButtonBase* button;
 	

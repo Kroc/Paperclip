@@ -1,0 +1,138 @@
+RESOURCE TOOLBAND r_paperclip_toolband_dummy
+//==============================================================================
+{
+	controls=
+	{
+		TBAR_CTRL
+		{
+			type=EEikCtSpacer;
+			flags=EEikToolBarCtrlHasSetMinLength|EEikToolBarCtrlIsStretchable;
+			length=0;
+			control=SPACER;
+		},
+		// EIKON: standard filename-label
+        // (task switcher)
+        //
+		TBAR_CTRL
+		{ 
+			id=EPaperclipCmdProjectName;
+			type=EEikCtFileNameLabel; 
+			flags=EEikToolBarCtrlHasSetMinLength;
+			length=KEikStdFileNameLabelWidth;
+		}
+	};
+}
+
+RESOURCE TOOLBAND r_paperclip_editor_toolband
+//==============================================================================
+{
+	controls=
+	{
+		TBAR_BUTTON
+		{
+			flags=EEikToolBarCtrlHasSetMinLength;
+			length=EEikStdTwoStateIconicToolBandButtonWidth;
+			bmpid=EMbmPaperclipSave; bmpmask=EMbmPaperclipSaveMask;
+			bmpfile="*";
+		},
+		TBAR_BUTTON 
+		{
+			id=EPaperclipCmdOpenFiles;
+			flags=EEikToolBarCtrlHasSetMinLength|EEikToolBarCtrlIsStretchable;
+			length=EEikStdLongTextPopoutToolBandButtonWidth;
+			behavior=EEikButReportOnPointerDown;
+			layout=EEikCmdButTextLeftPictureRight|EEikCmdButExcessToText;
+			txt="<open-files>";
+			bmpid=EMbmEikonDarrow; bmpmask=EMbmEikonDarrow;
+			//bmpid=EMbmEikonCalbut2; bmpmask=EMbmEikonCalbut2;
+		},
+		TBAR_CTRL {
+			type=EEikCtSpacer;
+			flags=EEikToolBarCtrlHasSetMinLength;
+			length=KWStdToolbandSpacer;
+			control=SPACER { color=EEikSpacerDitheredGray; };
+		},
+		TBAR_BUTTON
+		{
+			id=EPaperclipCmdUndo;
+			flags=EEikToolBarCtrlHasSetMinLength;
+			length=EEikStdTwoStateIconicToolBandButtonWidth;
+			bmpid=EMbmPaperclipUndo; bmpmask=EMbmPaperclipUndoMask;
+			bmpfile="*";
+		},
+		TBAR_BUTTON
+		{
+			id=EPaperclipCmdFind;
+			flags=EEikToolBarCtrlHasSetMinLength;
+			length=EEikStdTwoStateIconicToolBandButtonWidth;
+			bmpid=EMbmPaperclipFind; bmpmask=EMbmPaperclipFindMask;
+			bmpfile="*";
+		},
+		TBAR_CTRL {
+			type=EEikCtSpacer;
+			flags=EEikToolBarCtrlHasSetMinLength;
+			length=KWStdToolbandSpacer;
+			control=SPACER { color=EEikSpacerDitheredGray; };
+		},
+		TBAR_BUTTON
+		{
+			flags=EEikToolBarCtrlHasSetMinLength;
+			length=EEikStdTwoStateIconicToolBandButtonWidth;
+			behavior=EEikButLatches;
+			txt="W";
+		},
+		TBAR_BUTTON
+		{
+			flags=EEikToolBarCtrlHasSetMinLength;
+			length=EEikStdIconicPopoutToolBandButtonWidth;
+			behavior=EEikButReportOnPointerDown;
+			layout=EEikCmdButTextLeftPictureRight|EEikCmdButExcessToText;
+			bmpid=EMbmPaperclipEllipsis; bmpmask=EMbmPaperclipEllipsis;
+			bmpfile="*";
+			txt="100";
+		},
+		TBAR_BUTTON
+		{
+			//flags=EEikToolBarCtrlHasSetMinLength;
+			//length=EEikStdTwoStateIconicToolBandButtonWidth;
+			layout=EEikCmdButTextLeftPictureRight|EEikCmdButExcessToText;
+			bmpid=EMbmPaperclipEllipsis; bmpmask=EMbmPaperclipEllipsis;
+			bmpfile="*";
+			txt="TAB: 8";
+		},
+		// we can't(?) align the text on a button to the right,
+		// so we use a label instead
+		TBAR_CTRL
+		{
+			type=EEikCtLabel;
+			flags=EEikToolBarCtrlIsStretchable;
+			flags=EEikToolBarCtrlHasSetMinLength;
+			length=EEikStdShortTextPopoutToolBandButtonWidth;
+			control=LABEL
+			{
+				horiz_align=EEikLabelAlignHRight;
+				vert_align=EEikLabelAlignVCenter;
+				standard_font=EEikLabelFontLegend;
+				txt="65535, 999";
+			};
+		},
+		// since the label is right-aligned the text is against the edge so we
+		// have to insert manual space to mirror the normal left-padding
+		// (6px on Series-5)
+		//
+		// TODO: can find a constant for this somewhere in the SDK?
+		TBAR_CTRL {
+			type=EEikCtSpacer;
+			flags=EEikToolBarCtrlHasSetMinLength;
+			length=6; //KWStdToolbandSpacer;
+			control=SPACER {};
+		},
+		TBAR_CTRL
+		{ 
+			type=EEikCtFileNameLabel; 
+			id=EPaperclipCmdProjectName;
+			flags=EEikToolBarCtrlHasSetMinLength;
+			length=KEikStdFileNameLabelWidth+1;
+		}
+	};
+}

@@ -1,4 +1,5 @@
 RESOURCE TOOLBAR r_paperclip_toolbar_empty
+//==============================================================================
 {
 	breadth=KEikStdToolBarWidth;
     controls=
@@ -14,8 +15,6 @@ RESOURCE TOOLBAR r_paperclip_toolbar_empty
 			length=KEikStdFileNameLabelHeight;
 		},
 
-		// EIKON: include the standard clock on the bottom
-		//
 		TBAR_CTRL
 		{
 			type=EEikCtSpacer;
@@ -23,6 +22,9 @@ RESOURCE TOOLBAR r_paperclip_toolbar_empty
 			length=0;
 			control=SPACER;
 		},
+
+		// EIKON: include the standard clock on the bottom
+		//
 		TBAR_CTRL
 		{
 			type=EEikCtClock;
@@ -42,6 +44,7 @@ RESOURCE TOOLBAR r_paperclip_toolbar_empty
 }
 
 RESOURCE TOOLBAR r_paperclip_toolbar
+//==============================================================================
 {
 	breadth=KEikStdToolBarWidth;
     controls=

@@ -48,15 +48,15 @@ private:
 private:
 	//--------------------------------------------------------------------------
 	// which toolbar is in use
-	enum TToolbarType {
+	enum TToolBarType {
 		// empty toolbar with no app-specific buttons
 		// (just filename-label and clock)
-		EToolbarEmpty,
+		EToolBarEmpty,
 		// the toolbar used when a project is open,
 		// providing buttons to change mode
-		EToolbarMain
+		EToolBarMain
 	};
-	TToolbarType iToolbarType;
+	TToolBarType iToolBarType;
 	
 	enum TViewType {
 		EViewEditor,
@@ -72,8 +72,8 @@ private:
 	// (currently selected view)
 	CCoeControl* iAppView;
 	
-	CEikToolBar* iCircleToolBand;
-	CEikToolBar* iSquareToolBand;
+	CEikToolBar* iDummyToolBand;
+	CEikToolBar* iEditorToolBand;
 
 	CPaperclipModel *iModel;
 
