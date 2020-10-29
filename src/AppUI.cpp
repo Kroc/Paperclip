@@ -22,6 +22,11 @@ void CPaperclipAppUi::ConstructL()
 	// the resource file will build the empty toolbar to begin with
 	iToolBarType = EToolBarEmpty;
 
+	// toolband functionality is incomplete,
+	// so hide from release builds
+	//
+#ifdef _DEBUG
+
 	// an interesting bug/feature of EIKON is that when both a default toolbar
 	// and toolband are defined in the resource file, they will overlap each
 	// other in the top-right corner. the Word source code uses this to provide
@@ -33,7 +38,7 @@ void CPaperclipAppUi::ConstructL()
 	// overlap will not happen as the toolbar is already occupying that space.
 	// whilst we could manually manipulate the toolband's Rect to do what we
 	// want, it's easier to simply hide the toolbar whilst we construct the
-	// the toolband
+	// the toolband to achieve the same effect
 	//
 	iToolBar->MakeVisible( EFalse );
 
@@ -45,11 +50,12 @@ void CPaperclipAppUi::ConstructL()
 	// use the editor toolband for the application
 	iToolBand = iEditorToolBand;
 
-	// update application name on toolbar / toolband
-	UpdateFileNameLabelL();
-
 	iToolBand->MakeVisible( ETrue );
 	iToolBar->MakeVisible( ETrue );
+
+#endif
+	// update application name on toolbar / toolband
+	UpdateFileNameLabelL();
 
 	// views:
 	////////////////////////////////////////////////////////////////////////////
@@ -105,11 +111,16 @@ void CPaperclipAppUi::UpdateFileNameLabelL()
 	label->UpdateL();
 	label->DrawNow();
 
+	// incomplete toolband not present in release builds
+#ifdef _DEBUG
+
 	label = STATIC_CAST( CEikFileNameLabel*,
 		iToolBand->ControlById( EPaperclipCmdProjectName )
 	);
 	label->UpdateL();
 	label->DrawNow();
+
+#endif
 }
 
 void CPaperclipAppUi::HandleCommandL(

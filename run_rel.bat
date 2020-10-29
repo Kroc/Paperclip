@@ -1,0 +1,2 @@
+@ECHO OFF
+START "" \EPOC32\Release\WINS\Rel\EPOC.exe
