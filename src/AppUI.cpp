@@ -64,10 +64,10 @@ void CPaperclipAppUi::ConstructL()
 	iModel = ((CPaperclipDocument*) iDocument)->Model();
 	
 	iAppViewEditor = new(ELeave) CPaperclipViewEditor;
-	iAppViewEditor->ConstructL( this, iModel );
+	iAppViewEditor->ConstructL( ClientRect(), iModel );
 
 	iAppViewFiles = new(ELeave) CPaperclipViewFiles;
-	iAppViewFiles->ConstructL( this, iModel );
+	iAppViewFiles->ConstructL( ClientRect(), iModel );
 
 	// begin with the editor view
 	// (the default when opening the application)
@@ -158,9 +158,8 @@ void CPaperclipAppUi::CmdSetViewEditorL()
 	// set the member variable
 	iViewType=EViewEditor;
 
-	// stop events going to the view by removing it from the stack
+	// deconstruct the current view
 	RemoveFromStack( iAppView );
-	// hide the current view (but keep it loaded)
 	iAppView->MakeVisible( EFalse );
 	
 	// switch to the editor view

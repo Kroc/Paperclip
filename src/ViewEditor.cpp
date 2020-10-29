@@ -1,18 +1,17 @@
 #include "View.h"
 
 void CPaperclipViewEditor::ConstructL(
-	CEikAppUi* aAppUi,
+	const TRect& aRect,
 	CPaperclipModel* aModel
 )
 //==============================================================================
 {
 	iModel = aModel;
-	iAppUi = aAppUi;
 
     this->CreateWindowL();
     this->Window().SetShadowDisabled( ETrue );
 	this->Window().SetBackgroundColor();
-    this->SetRectL( iAppUi->ClientRect() );
+    this->SetRectL( aRect );
 	this->SetBlank();
     this->ActivateL();
 

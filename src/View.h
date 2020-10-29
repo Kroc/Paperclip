@@ -1,7 +1,6 @@
 #ifndef __VIEW_H
 #define __VIEW_H
 
-#include "HApp.h"				// for CEikAppUi
 #include "HEikon.h"
 #include "Model.h"
 
@@ -13,7 +12,9 @@ class CPaperclipView
 {
 public:
 	//--------------------------------------------------------------------------
-	void ConstructL(CEikAppUi* aAppUi, CPaperclipModel* aModel);
+	void ConstructL(const TRect& aRect, CPaperclipModel* aModel);
+
+	void ConstructViewL();
 	void SetModel(CPaperclipModel* aModel){ iModel = aModel; }
 
 	// CCoeControl::
@@ -27,7 +28,6 @@ public:
 protected:
 	//--------------------------------------------------------------------------
 	CPaperclipModel* iModel;
-	CEikAppUi* iAppUi;
 };
 
 
@@ -39,7 +39,9 @@ class CPaperclipViewEditor
 public:
 	//--------------------------------------------------------------------------
 	~CPaperclipViewEditor();
-	void ConstructL(CEikAppUi* aAppUi, CPaperclipModel* aModel);
+	void ConstructL(const TRect& aRect, CPaperclipModel* aModel);
+	
+	void ConstructViewL();
 	void SetModel(CPaperclipModel* aModel){ iModel = aModel; }
 
 	// CCoeControl::
@@ -65,7 +67,9 @@ class CPaperclipViewFiles
 {
 public:
 	//--------------------------------------------------------------------------
-	void ConstructL(CEikAppUi* aAppUi, CPaperclipModel* aModel);
+	void ConstructL(const TRect& aRect, CPaperclipModel* aModel);
+	
+	void ConstructViewL();
 	void SetModel(CPaperclipModel* aModel){ iModel=aModel; }
 
 private:
@@ -74,6 +78,10 @@ private:
 	void Draw(const TRect& /*aRect*/) const;
 	void HandlePointerEventL(const TPointerEvent& aPointerEvent);
 	TKeyResponse OfferKeyEventL(const TKeyEvent& aKeyEvent, TEventCode aType);
+
+private:
+	//--------------------------------------------------------------------------
+	CPaperclipModel *iModel;
 };
 
 #endif
