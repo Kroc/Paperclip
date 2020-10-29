@@ -2,11 +2,8 @@
 #define __APPUI_H
 
 #include "HApp.h"
-
 #include "HPaperclip.h"
-
-#include "ViewEditor.h"
-#include "ViewFiles.h"
+#include "View.h"
 
 class CPaperclipAppUi
 	: public CEikAppUi,

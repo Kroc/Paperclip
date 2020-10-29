@@ -1,14 +1,15 @@
 #include "View.h"
 
 void CPaperclipViewFiles::ConstructL(
-	const TRect& aRect,
+	CEikAppUi* aAppUi,
 	CPaperclipModel* aModel
 ){
 	iModel = aModel;
+	iAppUi = aAppUi;
 
     CreateWindowL();
     Window().SetShadowDisabled( ETrue );
-    SetRectL( aRect );
+    SetRectL( iAppUi->ClientRect() );
     ActivateL();
 }
 
