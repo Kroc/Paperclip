@@ -1,4 +1,4 @@
-RESOURCE TOOLBAND r_paperclip_toolband_dummy
+/*RESOURCE TOOLBAND r_paperclip_toolband_dummy
 //==============================================================================
 {
 	controls=
@@ -21,7 +21,7 @@ RESOURCE TOOLBAND r_paperclip_toolband_dummy
 			length=KEikStdFileNameLabelWidth;
 		}
 	};
-}
+}*/
 
 RESOURCE TOOLBAND r_paperclip_editor_toolband
 //==============================================================================

@@ -72,7 +72,6 @@ private:
 	// (currently selected view)
 	CCoeControl* iAppView;
 	
-	CEikToolBar* iDummyToolBand;
 	CEikToolBar* iEditorToolBand;
 
 	CPaperclipModel *iModel;

@@ -42,7 +42,10 @@ RESOURCE EIK_APP_INFO
 	// side of the screen that includes the clock
 	toolbar=r_paperclip_toolbar_empty;
 	
- 	toolband=r_paperclip_toolband_dummy;
+	// the "toolband" is what we would call a toolbar nowadays,
+	// it runs along the top of the screen. it's typically called
+	// the "Top ToolBar" in user-facing Psion documentation
+// 	toolband=r_paperclip_toolband_dummy;
 }
 
 ////////////////////////////////////////////////////////////////////////////////

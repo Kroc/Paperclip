@@ -13,6 +13,8 @@ CPaperclipAppUi::CPaperclipAppUi()
 void CPaperclipAppUi::ConstructL()
 //==============================================================================
 {
+	// toolbar / toolband:
+	////////////////////////////////////////////////////////////////////////////
 	// EIKON: construct the UI elements defined in
 	// the resource file (i.e. toolbar / toolband)
     BaseConstructL();
@@ -20,6 +22,36 @@ void CPaperclipAppUi::ConstructL()
 	// the resource file will build the empty toolbar to begin with
 	iToolBarType = EToolBarEmpty;
 
+	// an interesting bug/feature of EIKON is that when both a default toolbar
+	// and toolband are defined in the resource file, they will overlap each
+	// other in the top-right corner. the Word source code uses this to provide
+	// the "filename label" (task switched) on BOTH the toolbar & toolband, so
+	// that when on or the other are hidden, a filenmae label remains in the
+	// top-right corner _without_ having to do any runtime manipulation!
+	//
+	// if we change toolbands (or don't have one defined by default), then this
+	// overlap will not happen as the toolbar is already occupying that space.
+	// whilst we could manually manipulate the toolband's Rect to do what we
+	// want, it's easier to simply hide the toolbar whilst we construct the
+	// the toolband
+	//
+	iToolBar->MakeVisible( EFalse );
+
+	// create the toolband for the editor view
+	iEditorToolBand = new(ELeave) CEikToolBar; 
+	iEditorToolBand->ConstructL(
+		this, R_PAPERCLIP_EDITOR_TOOLBAND, ClientRect()
+	);
+	// use the editor toolband for the application
+	iToolBand = iEditorToolBand;
+
+	// update application name on toolbar / toolband
+	UpdateFileNameLabelL();
+
+	iToolBand->MakeVisible( ETrue );
+	iToolBar->MakeVisible( ETrue );
+
+	// views:
 	////////////////////////////////////////////////////////////////////////////
 	// from the app-document, get a reference to the model (internal state),
 	// we need to pass this onto the views so that they can access that state
@@ -40,31 +72,6 @@ void CPaperclipAppUi::ConstructL()
 	iAppView = iAppViewEditor;
 	AddToStackL( iAppView );
 
-	////////////////////////////////////////////////////////////////////////////
-	iToolBar->MakeVisible( EFalse );
-	
-	// the toolband defined in the resource file
-	// will be swapped out, so remember it first
-	iDummyToolBand = iToolBand;
-	iDummyToolBand->MakeVisible( EFalse );
-	// clear the pointer in iToolBand otherwise
-	// the ClientRect() size will be wrong
-	iToolBand = 0;
-
-	// create the toolband for the editor view
-	iEditorToolBand = new(ELeave) CEikToolBar; 
-	iEditorToolBand->ConstructL(
-		this, R_PAPERCLIP_EDITOR_TOOLBAND, ClientRect()
-	);
-	// use the editor toolband for the application
-	iToolBand = iEditorToolBand;
-	iToolBand->MakeVisible( ETrue );
-
-	iToolBar->MakeVisible( ETrue );
-
-	// display application name on toolbar
-	UpdateFileNameLabelL();
-
 	// make the toolbar reflect the selected view
 	UpdateToolbarL();
 }
@@ -80,7 +87,6 @@ CPaperclipAppUi::~CPaperclipAppUi()
 	// already have been deleted, because the framework deletes iToolBand.
 	// if we set iToolBand to 0, deleting it again will not cause an error
 	iToolBand = 0;
-	delete iDummyToolBand;
 	delete iEditorToolBand;
 }
 
