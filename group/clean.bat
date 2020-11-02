@@ -23,6 +23,7 @@ DEL /F /Q "\EPOC32\Release\MARM\UDEB\Paperclip.*" >NUL 2>NUL
 DEL /F /Q "\EPOC32\Release\MARM\UREL\Paperclip.*" >NUL 2>NUL
 REM # remove app from the WINS EPOC "ROM" (Z:)
 RMDIR /S /Q "\EPOC32\Release\WINS\Deb\Z\System\Apps\Paperclip\" >NUL 2>NUL
+RMDIR /S /Q "\EPOC32\Release\WINS\Rel\Z\System\Apps\Paperclip\" >NUL 2>NUL
 
 ECHO * Make work directories...
 CMD /C makmake -makework Paperclip wins
