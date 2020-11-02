@@ -2,11 +2,9 @@
 #define __APPUI_H
 
 #include "HApp.h"
-
 #include "HPaperclip.h"
+#include "View.h"
 
-#include "ViewEditor.h"
-#include "ViewFiles.h"
 
 class CPaperclipAppUi
 	: public CEikAppUi,
@@ -59,6 +57,7 @@ private:
 	TToolBarType iToolBarType;
 	
 	enum TViewType {
+		EViewNone,
 		EViewEditor,
 		EViewFiles,
 		EViewSearch,

@@ -43,20 +43,21 @@ void CPaperclipAppUi::ConstructL()
 	iToolBar->MakeVisible( EFalse );
 
 	// create the toolband for the editor view
-	iEditorToolBand = new(ELeave) CEikToolBar; 
+	iEditorToolBand = new( ELeave ) CEikToolBar; 
 	iEditorToolBand->ConstructL(
 		this, R_PAPERCLIP_EDITOR_TOOLBAND, ClientRect()
 	);
-	// use the editor toolband for the application
+	//TODO: the size/position of the views depends upon there being a toolband
+	//		present, at the moment we keep one visible whilst the views are
+	//		constructed, but it would be better to position the view correctly
+	//		without the toolband having to be present yet
+	//		
+//	iEditorToolBand->MakeVisible( EFalse );
 	iToolBand = iEditorToolBand;
 
-	iToolBand->MakeVisible( ETrue );
 	iToolBar->MakeVisible( ETrue );
 
 #endif
-	// update application name on toolbar / toolband
-	UpdateFileNameLabelL();
-
 	// views:
 	////////////////////////////////////////////////////////////////////////////
 	// from the app-document, get a reference to the model (internal state),
@@ -65,21 +66,17 @@ void CPaperclipAppUi::ConstructL()
 	
 	iAppViewEditor = new(ELeave) CPaperclipViewEditor;
 	iAppViewEditor->ConstructL( ClientRect(), iModel );
+	iAppViewEditor->MakeVisible( EFalse );
 
 	iAppViewFiles = new(ELeave) CPaperclipViewFiles;
 	iAppViewFiles->ConstructL( ClientRect(), iModel );
-
-	// begin with the editor view
-	// (the default when opening the application)
 	iAppViewFiles->MakeVisible( EFalse );
 
-	// EIKON: the application view must be on the control stack
-	// so that it can receive key press events
-	iAppView = iAppViewEditor;
-	AddToStackL( iAppView );
+	iViewType = EViewNone;
+	CmdSetViewEditorL();
 
-	// make the toolbar reflect the selected view
-	UpdateToolbarL();
+	// update application name on toolbar / toolband
+	UpdateFileNameLabelL();
 }
 
 
@@ -114,11 +111,13 @@ void CPaperclipAppUi::UpdateFileNameLabelL()
 	// incomplete toolband not present in release builds
 #ifdef _DEBUG
 
-	label = STATIC_CAST( CEikFileNameLabel*,
-		iToolBand->ControlById( EPaperclipCmdProjectName )
-	);
-	label->UpdateL();
-	label->DrawNow();
+	if (iToolBand){
+		label = STATIC_CAST( CEikFileNameLabel*,
+			iToolBand->ControlById( EPaperclipCmdProjectName )
+		);
+		label->UpdateL();
+		label->DrawNow();
+	};
 
 #endif
 }
@@ -154,31 +153,40 @@ void CPaperclipAppUi::CmdSetViewEditorL()
 {
 	// don't change to self
 	if (iViewType == EViewEditor) return;
-	
-	// set the member variable
-	iViewType=EViewEditor;
+	// whilst making the change, treat as no view
+	iViewType = EViewNone;
 
-	// deconstruct the current view
-	RemoveFromStack( iAppView );
-	iAppView->MakeVisible( EFalse );
-	
+	if (iAppView){
+		// stop events going to the view by removing it from the stack
+		RemoveFromStack( iAppView );
+		// hide the current view (but keep it loaded)
+		iAppView->MakeVisible( EFalse );
+	};
+		
 	// switch to the editor view
 	iAppView = iAppViewEditor;
 	iAppView->MakeVisible( ETrue );
 	AddToStackL( iAppView );
 	iAppView->DrawNow();
 
+#ifdef _DEBUG
+
+	if (iToolBand) iToolBand->MakeVisible( EFalse );
+	iToolBand = iEditorToolBand;
+	iToolBand->MakeVisible( ETrue );
+	iToolBand->DrawNow();
+
+//	// switch menubar and hotkeys
+//	MenuBar()->ChangeMenuBarL(R_PAPERCLIP_HOTKEYS,R_EXAMPLE_MENUBAR_CIRCLE,EFalse);
+	iAppView->SetAdjacent( ECoeAdjTop | ECoeAdjRight );
+#else
+	iAppView->SetAdjacent( ECoeAdjRight );
+#endif
+
+	// remember currently selected view
+	iViewType = EViewEditor;
 	// set the selected button on the toolbar
 	UpdateToolbarL();
-
-/*	// Switch toolband
-	iToolBand->MakeVisible(EFalse);
-	iToolBand=iCircleToolBand;
-	iToolBand->MakeVisible(ETrue);
-	iToolBand->DrawNow();
-	// switch menubar and hotkeys
-	MenuBar()->ChangeMenuBarL(R_PAPERCLIP_HOTKEYS,R_EXAMPLE_MENUBAR_CIRCLE,EFalse);
-*/
 }
 
 void CPaperclipAppUi::CmdSetViewFilesL()
@@ -190,8 +198,9 @@ void CPaperclipAppUi::CmdSetViewFilesL()
 	// set the member variable
 	iViewType = EViewFiles;
 
-	// deconstruct the current view
+	// stop events going to the view by removing it from the stack
 	RemoveFromStack( iAppView );
+	// hide the current view (but keep it loaded)
 	iAppView->MakeVisible( EFalse );
 	
 	// switch to the files view

@@ -57,7 +57,6 @@ void CPaperclipViewEditor::ConstructL(
 	iTextEditor->SetLineCursorBitmapL( lineCursor );
 
 	iTextEditor->SetRectL( Rect() );
-	iTextEditor->SetAdjacent( ECoeAdjTop | ECoeAdjRight );
 	iTextEditor->ActivateL();
 
 	iTextEditor->SetFocus( ETrue );
@@ -67,6 +66,13 @@ CPaperclipViewEditor::~CPaperclipViewEditor()
 //==============================================================================
 {
 	delete iTextEditor;
+}
+
+void CPaperclipViewEditor::SetAdjacent(
+	TInt aAdjacent
+){
+	// the editor view has only one control (the text-editor), for now
+	iTextEditor->SetAdjacent( aAdjacent );
 }
 
 // TODO: ultimately, we probably want to just draw the view

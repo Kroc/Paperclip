@@ -13,10 +13,3 @@ void CPaperclipView::Draw(
 void CPaperclipView::HandlePointerEventL(
 	const TPointerEvent &aPointerEvent
 ){}
-
-TKeyResponse CPaperclipView::OfferKeyEventL(
-	const TKeyEvent& aKeyEvent,
-	TEventCode aType
-){
-	return EKeyWasNotConsumed;
-}

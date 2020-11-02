@@ -12,6 +12,12 @@ void CPaperclipViewFiles::ConstructL(
     ActivateL();
 }
 
+void CPaperclipViewFiles::SetAdjacent(
+	TInt aAdjacent
+){
+	
+}
+
 // TODO: ultimately, we probably want to just draw the view
 // from an already-composited off-screen buffer to save CPU
 // (invalidation may fire multiple times in a row) and also

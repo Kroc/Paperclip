@@ -15,7 +15,7 @@ SUBPROJECT      src
 SOURCE          Paperclip.cpp Application.cpp Document.cpp AppUI.cpp Model.cpp
 SOURCE          View.cpp ViewEditor.cpp ViewFiles.cpp
 
-USERINCLUDE     \Paperclip\app
+USERINCLUDE     \Paperclip\group
 USERINCLUDE     \Paperclip\rsc
 USERINCLUDE     \Paperclip\src
 

@@ -13,14 +13,21 @@ class CPaperclipView
 public:
 	//--------------------------------------------------------------------------
 	void ConstructL(const TRect& aRect, CPaperclipModel* aModel);
-
-	void ConstructViewL();
 	void SetModel(CPaperclipModel* aModel){ iModel = aModel; }
 
 	// CCoeControl::
+	//
+	// note that this is abstract, and can't be implemented at this level
+	// because setting the control borders depends on what controls are
+	// within the view
+	virtual void SetAdjacent(TInt aAdjacent){};
+
 	void Draw(const TRect& aRect) const;
 	void HandlePointerEventL(const TPointerEvent& aPointerEvent);
-	TKeyResponse OfferKeyEventL(const TKeyEvent& aKeyEvent, TEventCode aType);
+
+	TKeyResponse OfferKeyEventL(const TKeyEvent& aKeyEvent, TEventCode aType){
+		return EKeyWasNotConsumed;
+	};
 	
 	// MCoeControlObserver::
 	void HandleControlEventL(CCoeControl* aControl, TCoeEvent aEventType);
@@ -40,11 +47,10 @@ public:
 	//--------------------------------------------------------------------------
 	~CPaperclipViewEditor();
 	void ConstructL(const TRect& aRect, CPaperclipModel* aModel);
-	
-	void ConstructViewL();
 	void SetModel(CPaperclipModel* aModel){ iModel = aModel; }
 
 	// CCoeControl::
+	virtual void SetAdjacent(TInt aAdjacent);
 	void Draw(const TRect& /*aRect*/) const;
 	void HandlePointerEventL(const TPointerEvent& aPointerEvent);
 	TKeyResponse OfferKeyEventL(const TKeyEvent& aKeyEvent, TEventCode aType);
@@ -68,13 +74,12 @@ class CPaperclipViewFiles
 public:
 	//--------------------------------------------------------------------------
 	void ConstructL(const TRect& aRect, CPaperclipModel* aModel);
-	
-	void ConstructViewL();
 	void SetModel(CPaperclipModel* aModel){ iModel=aModel; }
 
 private:
 	//--------------------------------------------------------------------------
 	// CCoeControl::
+	virtual void SetAdjacent(TInt aAdjacent);
 	void Draw(const TRect& /*aRect*/) const;
 	void HandlePointerEventL(const TPointerEvent& aPointerEvent);
 	TKeyResponse OfferKeyEventL(const TKeyEvent& aKeyEvent, TEventCode aType);
