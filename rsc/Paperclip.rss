@@ -33,14 +33,16 @@ RESOURCE TBUF { buf=""; }
 
 RESOURCE EIK_APP_INFO
 {
-	//menubar=r_paperclip_menubar;
-	menubar=r_paperclip_menubar_editor;
+	menubar=r_paperclip_menubar_release;
+//	menubar=r_paperclip_menubar;
+//	menubar=r_paperclip_menubar_editor;
 
 	hotkeys=r_paperclip_editor_hotkeys;
 
 	// "toolbar" here means the bar down the right-hand
 	// side of the screen that includes the clock
-	toolbar=r_paperclip_toolbar_empty;
+//	toolbar=r_paperclip_toolbar_empty;
+	toolbar=r_paperclip_toolbar;
 	
 	// the "toolband" is what we would call a toolbar nowadays,
 	// it runs along the top of the screen. it's typically called
@@ -105,7 +107,29 @@ RESOURCE HOTKEYS r_paperclip_editor_hotkeys
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+// for release builds, the menu consists *only* of implemented features
+//
+RESOURCE MENU_BAR r_paperclip_menubar_release
+{
+	titles=
+	{
+		MENU_TITLE { txt="App"; menu_pane=r_paperclip_menu_app; }
+	};
+}
 
+RESOURCE MENU_PANE r_paperclip_menu_app
+{
+	items=
+	{
+		MENU_ITEM
+		{
+			command=EEikCmdExit;
+			txt="Exit";
+		}
+	};
+}
+
+////////////////////////////////////////////////////////////////////////////////
 // when the app initialises, the default menu is a cut-down version
 // designed for when there is no project or file loaded
 //
@@ -154,8 +178,6 @@ RESOURCE MENU_BAR r_paperclip_menubar_editor
 		MENU_TITLE { txt="Tools";	menu_pane=r_paperclip_tools_menu; }
 	};
 }
-
-////////////////////////////////////////////////////////////////////////////////
 
 RESOURCE MENU_PANE r_paperclip_project_menu
 {
