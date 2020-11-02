@@ -1,0 +1,6 @@
+# files that get generated and don't need to be in the repository:
+**/*.aif
+**/*.mbm
+
+# unrelated junk files
+**/Thumbs.db
