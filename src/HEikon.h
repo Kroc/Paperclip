@@ -9,13 +9,16 @@
 #include <coeccntx.h>
 #include <eikbordr.h>           // control borders
 
-#include <eikcmds.hrh>
-#include <eikmenu.hrh>
+#include <eikmenub.h>			// menu-bar
+#include <eikmenu.hrh>          // menu-bar enums
+#include <eikcmds.hrh>          // built in command enums (e.g. EEikCmdExit)
 
 #include <eiktbar.h>			// toolbar/band
 #include <eikbutb.h>			// buttons
 #include <eikfnlab.h>			// file-name label (task-switcher)
-#include <eikmenub.h>			// menu-bar
+
+#include <eikdialg.h>
+#include <eikdialg.hrh>
 
 #include <eikgted.h>            // global text
 #include <eikedwin.h>			// text editor

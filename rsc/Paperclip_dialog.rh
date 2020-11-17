@@ -1,0 +1,52 @@
+#include <eikdialg.rh>
+#include <eikdialg.hrh>
+
+RESOURCE DIALOG r_paperclip_about_dialog
+////////////////////////////////////////////////////////////////////////////////
+{
+	flags=EEikDialogFlagWait|EEikDialogFlagButtonsRight;
+    buttons=R_EIK_BUTTONS_CONTINUE;
+	title="About";
+	items=
+	{
+		DLG_LINE
+		{
+            type=EEikCtLabel;
+            itemflags=EEikDlgItemSeparatorAfter;
+            control=LABEL
+			{
+				horiz_align=EEikLabelAlignHLeft;
+				txt="Paperclip";
+			};
+		},
+		DLG_LINE
+        {
+            type=EEikCtLabel;
+            control=LABEL
+            {
+                standard_font=EEikLabelFontLegend;
+                horiz_align=EEikLabelAlignHLeft;
+                txt="Kroc Camen, 2020";
+            };
+        },
+		DLG_LINE
+        {
+            type=EEikCtLabel;
+            control=LABEL
+            {
+                //horiz_align=EEikLabelAlignHCenter;
+                txt="";
+            };
+        },
+		DLG_LINE
+        {
+            type=EEikCtLabel;
+            control=LABEL
+            {
+                standard_font=EEikLabelFontAnnotation;
+                horiz_align=EEikLabelAlignHCenter;
+                txt="github.com/Kroc/Paperclip";
+            };
+        }
+	};
+}

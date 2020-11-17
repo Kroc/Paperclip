@@ -16,8 +16,8 @@ NAME KROC
 #include <eikon.rsg>
 #include <eikon.mbg>		// for EMbmEikonDarrow
 
-// NB: this spacing size was taken from Word,
-//     it doesn't appear in the EIKON sources
+// NB: this spacing size was taken from Word, it doesn't appear
+// in the EIKON sources. on the Revo, it'll need to be different!
 #define KWStdToolbandSpacer						10
 
 #include "Paperclip.hrh"
@@ -29,20 +29,21 @@ NAME KROC
 
 RESOURCE RSS_SIGNATURE { }
 
+// TODO: note that this is our default document file-name.
+// when we move to using project files, we'll need to fill this in
 RESOURCE TBUF { buf=""; }
 
 RESOURCE EIK_APP_INFO
 {
-	menubar=r_paperclip_menubar_release;
-//	menubar=r_paperclip_menubar;
+	menubar=r_paperclip_menubar;
 //	menubar=r_paperclip_menubar_editor;
 
-	hotkeys=r_paperclip_editor_hotkeys;
+	hotkeys=r_paperclip_hotkeys_editor;
 
 	// "toolbar" here means the bar down the right-hand
 	// side of the screen that includes the clock
-//	toolbar=r_paperclip_toolbar_empty;
-	toolbar=r_paperclip_toolbar;
+	toolbar=r_paperclip_toolbar_empty;
+//	toolbar=r_paperclip_toolbar;
 	
 	// the "toolband" is what we would call a toolbar nowadays,
 	// it runs along the top of the screen. it's typically called
@@ -54,10 +55,11 @@ RESOURCE EIK_APP_INFO
 
 #include "Paperclip_toolbar.rh"
 #include "Paperclip_toolband.rh"
+#include "Paperclip_dialog.rh"
 
 ///////////////////////////////////////////////////////////////////////////////
 
-RESOURCE HOTKEYS r_paperclip_editor_hotkeys
+RESOURCE HOTKEYS r_paperclip_hotkeys_editor
 {
 	control=
 	{
@@ -107,29 +109,6 @@ RESOURCE HOTKEYS r_paperclip_editor_hotkeys
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// for release builds, the menu consists *only* of implemented features
-//
-RESOURCE MENU_BAR r_paperclip_menubar_release
-{
-	titles=
-	{
-		MENU_TITLE { txt="App"; menu_pane=r_paperclip_menu_app; }
-	};
-}
-
-RESOURCE MENU_PANE r_paperclip_menu_app
-{
-	items=
-	{
-		MENU_ITEM
-		{
-			command=EEikCmdExit;
-			txt="Exit";
-		}
-	};
-}
-
-////////////////////////////////////////////////////////////////////////////////
 // when the app initialises, the default menu is a cut-down version
 // designed for when there is no project or file loaded
 //
@@ -155,6 +134,12 @@ RESOURCE MENU_PANE r_paperclip_menu_project
 			command=EPaperclipCmdOpenProject;
 			flags=EEikMenuItemSeparatorAfter;
 			txt="Open Poject"<ELLIPSIS>;
+		},
+		MENU_ITEM
+		{
+			command=EPaperclipCmdAbout;
+			flags=EEikMenuItemSeparatorAfter;
+			txt="About";
 		},
 		MENU_ITEM
 		{

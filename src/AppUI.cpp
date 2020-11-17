@@ -127,6 +127,8 @@ void CPaperclipAppUi::HandleCommandL(
 )
 //==============================================================================
 {
+	CEikDialog* dialog;
+
 	switch (aCommand)
 	{
 	// "Editor" button on the toolbar,
@@ -140,6 +142,11 @@ void CPaperclipAppUi::HandleCommandL(
     case EPaperclipCmdFilesView:
         CmdSetViewFilesL();
         break;
+
+	case EPaperclipCmdAbout:
+		dialog = new( ELeave ) CEikDialog();
+        dialog->ExecuteLD( R_PAPERCLIP_ABOUT_DIALOG );
+		break;
 
 	// Exit the application
 	case EEikCmdExit: 
@@ -288,16 +295,17 @@ void CPaperclipAppUi::DynInitMenuPaneL(
 )
 //==============================================================================
 {
-/*	if (aMenuId==R_EXAMPLE_SWITCHVIEW_MENU)
+	// remove unimplemented menu items in the release builds:
+	//
+#ifndef	_DEBUG
+
+	if (aMenuId == R_PAPERCLIP_MENU_PROJECT)
 	{
-		// Set the state of the radio button symbol to reflect which view is
-		// currently active.
-		if (iViewType==EViewCircle)
-			aMenuPane->SetItemButtonState(EExampleCmdSwitchToCircleView,EEikMenuItemSymbolOn);
-		else
-			aMenuPane->SetItemButtonState(EExampleCmdSwitchToSquareView,EEikMenuItemSymbolOn);
+		aMenuPane->DeleteMenuItem( EPaperclipCmdNewProject );
+		aMenuPane->DeleteMenuItem( EPaperclipCmdOpenProject );
 	}
-*/
+
+#endif
 }
 
 void CPaperclipAppUi::HandleControlEventL(

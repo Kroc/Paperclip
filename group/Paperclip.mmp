@@ -12,7 +12,7 @@ SUBPROJECT      rsc
 RESOURCE        Paperclip.rss
 
 SUBPROJECT      src
-SOURCE          Paperclip.cpp Application.cpp Document.cpp AppUI.cpp Model.cpp
+SOURCE          Application.cpp Document.cpp AppUI.cpp Model.cpp
 SOURCE          View.cpp ViewEditor.cpp ViewFiles.cpp
 
 USERINCLUDE     \Paperclip\group

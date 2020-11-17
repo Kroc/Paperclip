@@ -19,14 +19,6 @@ enum TPaperclipMenuCommands
 	// to switch to the project-settings view
 	EPaperclipCmdConfigView,
 
-	EExampleCmdA,
-	EExampleCmdB,
-	EExampleCmdX,
-	EExampleCmdY,
-	EExampleCmdSwitchView,
-	EExampleCmdSwitchToCircleView,
-	EExampleCmdSwitchToSquareView,
-
 	EPaperclipCmdOpenFiles,
 
 	// project:
@@ -71,5 +63,7 @@ enum TPaperclipMenuCommands
 	// tools:
 	EPaperclipCmdPreferences,
 	EPaperclipCmdSpellCheck,
-	EPaperclipCmdWordCount
+	EPaperclipCmdWordCount,
+
+	EPaperclipCmdAbout
 };
