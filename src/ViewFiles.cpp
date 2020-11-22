@@ -1,11 +1,11 @@
 #include "View.h"
 
 void CPaperclipViewFiles::ConstructL(
-	const TRect& aRect,
-	CPaperclipModel* aModel
+    const TRect& aRect,
+    CPaperclipModel* aModel
 ){
-	iModel = aModel;
-
+    iModel = aModel;
+    
     CreateWindowL();
     Window().SetShadowDisabled( ETrue );
     SetRectL( aRect );
@@ -13,9 +13,8 @@ void CPaperclipViewFiles::ConstructL(
 }
 
 void CPaperclipViewFiles::SetAdjacent(
-	TInt aAdjacent
+    TInt aAdjacent
 ){
-	
 }
 
 // TODO: ultimately, we probably want to just draw the view
@@ -24,25 +23,25 @@ void CPaperclipViewFiles::SetAdjacent(
 // because this method CANNOT 'Leave'
 //
 void CPaperclipViewFiles::Draw(
-	const TRect& //aRect
-)	const
+    const TRect& //aRect
+)   const
 {
-	CWindowGc& gc = SystemGc();
-	gc.Clear();
-
-	//TRect drawRect=Rect();
-	//gc.DrawRect(drawRect);
+    CWindowGc& gc = SystemGc();
+    gc.Clear();
+    
+    //TRect drawRect=Rect();
+    //gc.DrawRect(drawRect);
 }
 
 void CPaperclipViewFiles::HandlePointerEventL(
-	const TPointerEvent& //aPointerEvent
+    const TPointerEvent& //aPointerEvent
 ){
-	DrawNow();
+    DrawNow();
 }
 
 TKeyResponse CPaperclipViewFiles::OfferKeyEventL(
-	const TKeyEvent& aKeyEvent,
-	TEventCode aType
+    const TKeyEvent& aKeyEvent,
+    TEventCode aType
 ){
-	return EKeyWasNotConsumed;
+    return EKeyWasNotConsumed;
 }
