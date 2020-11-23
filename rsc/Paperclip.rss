@@ -18,7 +18,7 @@ NAME KROC
 
 // NB: this spacing size was taken from Word, it doesn't appear
 // in the EIKON sources. on the Revo, it'll need to be different!
-#define KWStdToolbandSpacer						10
+#define KWStdToolbandSpacer	10
 
 #include "Paperclip.hrh"
 #include "..\mbm\Paperclip.mbg"
@@ -332,11 +332,6 @@ RESOURCE MENU_PANE r_paperclip_select_menu
 		{
 			command=EPaperclipCmdSelectLine;
 			txt="Current Line";
-		},
-		MENU_ITEM
-		{
-			command=EPaperclipCmdSelectParagraph;
-			txt="Current Paragraph";
 		}
 	};
 }

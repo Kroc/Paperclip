@@ -17,9 +17,9 @@ Stare at this mockup for now:
   Source files and scripts to generate the help file for the application
 
 * **mbm/**
-  "Multi BitMap file". The source files and scripts to generate the bitmap bundle that the application uses for its toolbar icons
+  "Multi BitMap" files. The source files and scripts to generate the bitmap bundle that the application uses for its toolbar icons
 
-* **rsc/** The resource file defines the toolbars and menus in the app but is assembled separately from the main executable
+* **rsc/** The resource file defines toolbars, menus and dialogs in the app but is assembled separately from the main executable
 
 * **sis/** Scripts to generate the installer file (_".sis"_) for use on real EPOC32 devices
 
