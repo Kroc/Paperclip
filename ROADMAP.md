@@ -4,11 +4,12 @@ Paperclip uses a feature-based release schedule. Every time a feature is added, 
 
 This release methodology is used to prevent useful features being held back by devlopment delays on big features, typical of 'major' releases. Sometimes a release might be a simple addition to the menu, such as "Select Line", and sometimes a larger, more involved feature such as printing support.
 
-See [HISTORY.md] for a list of feature releases.
+See [HISTORY.md](HISTORY.md) for a list of feature releases.
 
 ## Queued Features ##
 
-Features to be added, but not yet assigned to a release version:
+Features to be added, but not yet assigned to a release version:  
+(The order of this list is no guarantee of when a feature will be implemented)
 
 * Cut / Copy / Paste, Sidebar Clipboard menu
 
@@ -36,17 +37,28 @@ Features to be added, but not yet assigned to a release version:
 
 * Show/hide Toolbar
 * Show/hide Toolband
-  (only useful when Toolband is sufficiently implemented
+  (only useful when Toolband is sufficiently implemented)
+
+* View Whitespace: spaces, tabs, line-endings (depends on SDK)
+
+* Word-wrap, to screen
+* Word-wrap, to column
+* Show / hide scrollbars
 
 * Go To: Line number
 * GO To: ...?
+
+* Edit: Change case (lower / UPPER)
+* Edit: Change case, Title (use my PHP version? Relies on regex)
 
 * Edit: Delete Line
 * Edit: Duplicate Line
 * Edit: Move Line Up
 * Edit: Move Line Down
+
 * Sort Lines, A-Z, Z-A
   Should we include natural sort?
+* Remove empty lines
 
 * Infrared send+receive, Sidebar menu
 
@@ -77,21 +89,20 @@ Features to be added, but not yet assigned to a release version:
 * Help menu
 * Help file - document only released features
 
-* Word Count (how does Word do this?)
-* Spell Check
+* Tools: Word Count (how does Word do this?)
+* Tools: Spell Check
 
 * Print
 * Print: Print preview
 * Print: Page setup
-
-* Recogniser: Can this be done on ER3?
 
 ## Feature Ideas ##
 
 These are features that are currently being debated and might not make it into any release:
 
 * Bracket matching (e.g. Ctrl+B in DSTEdit)
-* Auto-close " ( [ ...
+* Select between brackets (Shift+Ctrl+B in DSTEdit)
+* Auto-close `" ( [ < ... > ] ) "`
 * Indent / unindent line (like VSCode)
 * Auto-indent
 * Wrap-indent (very difficult!)
@@ -104,3 +115,6 @@ These are features that are currently being debated and might not make it into a
 * Wrap ruler (i.e. show a line at col 80)
 * Dictionary / Thesarus lookup
 * Outline features (would require language-type & symbol support)
+* Custom tab-stops, visible Ruler?
+* Recogniser: Can this be done on ER3?
+* Recogniser: Customise recognised file-types
