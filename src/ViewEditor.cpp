@@ -15,10 +15,6 @@ void CPaperclipViewEditor::ConstructL(
     this->SetBlank();
     this->ActivateL();
     
-    //CGraphicsDevice* device=iCoeEnv->ScreenDevice();
-    //iAppZoom.SetGraphicsDeviceMap(device);
-    //iAppZoom.SetZoomFactor(EZoomOneToOne);
-    
     iTextEditor = new( ELeave ) CEikGlobalTextEditor(
         TEikBorder::ESingleBlack
     );
@@ -44,18 +40,20 @@ void CPaperclipViewEditor::ConstructL(
         CEikScrollBarFrame::EOff,
         CEikScrollBarFrame::EAuto
     );
-    //iTextEditor->SetZoomFactorL(&iAppZoom);
     iTextEditor->SetDocumentContentL(
         *iModel->GlobalText(),
         CEikEdwin::EUseText
     );
     
-    // TODO: do we need trap / cleanup stack here?
-    CFbsBitmap* lineCursor = iEikonEnv->CreateBitmapL(
+    // TODO: we will need to recreate this cursor whenever we zoom,
+    //       does it need to be stored in the class?
+    CFbsBitmap* line_cursor = iEikonEnv->CreateBitmapL(
         TPtrC(), EMbmEikonLncusr1
     );
-    iTextEditor->SetLineCursorBitmapL( lineCursor );
-    
+    CleanupStack::PushL( line_cursor );
+    iTextEditor->SetLineCursorBitmapL( line_cursor );
+    CleanupStack::Pop();
+
     iTextEditor->SetRectL( Rect() );
     iTextEditor->ActivateL();
     
@@ -70,7 +68,9 @@ CPaperclipViewEditor::~CPaperclipViewEditor()
 
 void CPaperclipViewEditor::SetAdjacent(
     TInt aAdjacent
-){
+)
+//==============================================================================
+{
     // the editor view has only one control (the text-editor), for now
     iTextEditor->SetAdjacent( aAdjacent );
 }
@@ -124,6 +124,8 @@ void CPaperclipViewEditor::HandleEdwinEventL(
 TKeyResponse CPaperclipViewEditor::OfferKeyEventL(
     const TKeyEvent& aKeyEvent,
     TEventCode aType
-){
+)
+//==============================================================================
+{
     return iTextEditor->OfferKeyEventL( aKeyEvent, aType );
 }

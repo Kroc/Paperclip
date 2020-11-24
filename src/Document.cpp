@@ -8,7 +8,9 @@ CPaperclipDocument::CPaperclipDocument(
 
 CPaperclipDocument* CPaperclipDocument::NewL(
     CEikApplication& aApp		// EIKON application reference
-){
+)
+//==============================================================================
+{
     CPaperclipDocument* self = new( ELeave ) CPaperclipDocument( aApp );
     CleanupStack::PushL( self );
     
@@ -20,6 +22,7 @@ CPaperclipDocument* CPaperclipDocument::NewL(
 }
 
 void CPaperclipDocument::ConstructL()
+//==============================================================================
 {
     // construct the application model (internal state);
     // a pointer to this is passed to the views so that
@@ -29,16 +32,19 @@ void CPaperclipDocument::ConstructL()
 }
 
 CPaperclipDocument::~CPaperclipDocument()
+//==============================================================================
 {
     delete iModel;
 }
 
 void CPaperclipDocument::ResetModelL()
+//==============================================================================
 {
     iModel->Reset();
 }
 
 CEikAppUi* CPaperclipDocument::CreateAppUiL()
+//==============================================================================
 {
     return new( ELeave ) CPaperclipAppUi;
 }

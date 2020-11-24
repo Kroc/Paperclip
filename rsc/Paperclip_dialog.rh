@@ -16,7 +16,7 @@ RESOURCE DIALOG r_paperclip_about_dialog
             control=LABEL
 			{
 				horiz_align=EEikLabelAlignHLeft;
-				txt="Paperclip";
+				txt="Paperclip, v0.1.0";
 			};
 		},
 		DLG_LINE

@@ -64,11 +64,11 @@ void CPaperclipAppUi::ConstructL()
     // we need to pass this onto the views so that they can access that state
     iModel = ((CPaperclipDocument*) iDocument)->Model();
     
-    iAppViewEditor = new(ELeave) CPaperclipViewEditor;
+    iAppViewEditor = new( ELeave ) CPaperclipViewEditor;
     iAppViewEditor->ConstructL( ClientRect(), iModel );
     iAppViewEditor->MakeVisible( EFalse );
     
-    iAppViewFiles = new(ELeave) CPaperclipViewFiles;
+    iAppViewFiles = new( ELeave ) CPaperclipViewFiles;
     iAppViewFiles->ConstructL( ClientRect(), iModel );
     iAppViewFiles->MakeVisible( EFalse );
     
@@ -263,22 +263,25 @@ void CPaperclipAppUi::UpdateToolbarL()
     button = STATIC_CAST( CEikButtonBase*,
         iToolBar->ControlById( EPaperclipCmdEditorView )
     );
-    button->SetState(
-        (iViewType == EViewEditor)
-        ? CEikButtonBase::ESet
-        : CEikButtonBase::EClear
-    );
-    button->DrawNow();
-    
+    if (button){
+        button->SetState(
+            (iViewType == EViewEditor)
+            ? CEikButtonBase::ESet
+            : CEikButtonBase::EClear
+        );
+        button->DrawNow();
+    }
     button = STATIC_CAST( CEikButtonBase*,
         iToolBar->ControlById( EPaperclipCmdFilesView )
     );
-    button->SetState(
-        (iViewType == EViewFiles)
-        ? CEikButtonBase::ESet
-        : CEikButtonBase::EClear
-    );
-    button->DrawNow();
+    if (button){
+        button->SetState(
+            (iViewType == EViewFiles)
+            ? CEikButtonBase::ESet
+            : CEikButtonBase::EClear
+        );
+        button->DrawNow();
+    }
 }
 
 /*

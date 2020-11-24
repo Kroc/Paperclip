@@ -24,25 +24,26 @@ CPaperclipModel* CPaperclipModel::NewL()
 void CPaperclipModel::ConstructL()
 //==============================================================================
 {
-    // Create a default usable Normal style (the default layers);
+    // create a default usable Normal style (the default layers);
     // this snippet taken from the Psion Word source code
     CParaFormat     paraFormat;
     TParaFormatMask paraFormatMask;
     paraFormat.iHorizontalAlignment = CParaFormat::ELeftAlign;
     paraFormatMask.SetAttrib( EAttAlignment );
+
     // the paragraph format is kept in the model
     iParaFormatLayer = CParaFormatLayer::NewL(
         &paraFormat, paraFormatMask
     );
-    //
+
     TCharFormat     charFormat;
     TCharFormatMask charFormatMask;
     TInt typefaceAttributes = TTypeface::ESerif;
-    //charFormat.iFontSpec.iTypeface.
     charFormat.iFontSpec.iTypeface.SetAttributes( typefaceAttributes );
     charFormat.iFontSpec.iHeight = 200;
     charFormatMask.SetAttrib( EAttFontTypeface );
     charFormatMask.SetAttrib( EAttFontHeight );
+
     // the character format is kept in the model
     iCharFormatLayer = CCharFormatLayer::NewL(
         charFormat, charFormatMask
@@ -59,9 +60,9 @@ void CPaperclipModel::ConstructL()
 CPaperclipModel::~CPaperclipModel()
 //==============================================================================
 {
+    delete iGlobalText;
     delete iCharFormatLayer;
     delete iParaFormatLayer;
-    delete iGlobalText;
 }
 
 void CPaperclipModel::Reset()
