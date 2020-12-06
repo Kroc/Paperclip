@@ -2,7 +2,7 @@
 
 Paperclip uses a feature-based release schedule. Every time a feature is added, a release is made.
 
-This release methodology is used to prevent useful features being held back by devlopment delays on big features, typical of 'major' releases. Sometimes a release might be a simple addition to the menu, such as "Select Line", and sometimes a larger, more involved feature such as printing support.
+This release methodology is used to prevent useful features being held back by development delays on big features, typical of 'major' releases. Sometimes a release might be a simple addition to the menu, such as "Select Line", and sometimes a larger, more involved feature such as printing support.
 
 See [HISTORY.md](HISTORY.md) for a list of feature releases.
 
@@ -29,11 +29,13 @@ Features to be added, but not yet assigned to a release version:
 * Select Word
 * Select Line
 * Select Paragraph
-  (is this sufficently different from Select Line?)
+  (is this sufficiently different from Select Line?)
 
 * Insert Symbol
 * Insert Backtick character (Fn+Q?)
 * Insert Pipe character (Fn+K?)
+* Use shift+space for inserting underscore?
+  (or other symbol, e.g. em-dash) via DSTEdit
 
 * Show/hide Toolbar
 * Show/hide Toolband
@@ -46,7 +48,8 @@ Features to be added, but not yet assigned to a release version:
 * Show / hide scrollbars
 
 * Go To: Line number
-* GO To: ...?
+* Bookmarks
+  Which shortcuts should we use for adding / removing and jumping to bookmarks? Ctrl+<n>, Ctrl+Shift+<n>
 
 * Edit: Change case (lower / UPPER)
 * Edit: Change case, Title (use my PHP version? Relies on regex)
@@ -56,8 +59,30 @@ Features to be added, but not yet assigned to a release version:
 * Edit: Move Line Up
 * Edit: Move Line Down
 
+* Find
+  Use SDK / Word's dialog for a first version?
+* Find Toolbar:
+  - Place on bottom of editor
+    (should it be part of AppUI or ViewEditor?)
+  - Show & Hide
+  - Close button
+  - Trap Esc in AppUI to close
+  - Input field
+    (Use combo-box)
+  - Next / prev buttons
+  
+* Replace
+  Use SDK / Word's dialog initially
+  - Extend Find toolband with replace field
+  - Button for whole-word
+  - Button for case-sensitive
+  - Replace & Go button
+  - Repalce all button
+  - Button to switch to Find In Files?
+
 * Sort Lines, A-Z, Z-A
   Should we include natural sort?
+* Sort lines using specific column number (ala DSTEdit)
 * Remove empty lines
 
 * Infrared send+receive, Sidebar menu
@@ -100,8 +125,9 @@ Features to be added, but not yet assigned to a release version:
 
 These are features that are currently being debated and might not make it into any release:
 
-* Bracket matching (e.g. Ctrl+B in DSTEdit)
-* Select between brackets (Shift+Ctrl+B in DSTEdit)
+* Auto numbering / bulleting
+* Bracket matching (e.g. `Ctrl+B` in DSTEdit)
+* Select between brackets (`Shift+Ctrl+B` in DSTEdit)
 * Auto-close `" ( [ < ... > ] ) "`
 * Indent / unindent line (like VSCode)
 * Auto-indent
@@ -110,11 +136,20 @@ These are features that are currently being debated and might not make it into a
 * Convert line-endings (LF / CRLF / CR?)
 * Convert whitespace (Tabs <=> Spaces)
 * Trim leading / trailing whitespace
+* Prefix and unprefix lines: (via DSTEdit)
+  E.g. toggling comment markers, dependant on file's language-type
 * Gutter: Line-numbers
 * Gutter: Bookmark indicator
 * Wrap ruler (i.e. show a line at col 80)
-* Dictionary / Thesarus lookup
+* Dictionary / Thesaurus lookup
 * Outline features (would require language-type & symbol support)
 * Custom tab-stops, visible Ruler?
 * Recogniser: Can this be done on ER3?
 * Recogniser: Customise recognised file-types
+* Spell Checker settings:
+  - Ignore `CamelCase` words
+  - Ignore words with numbers & symbols in the middle, e.g. `dotted.form`, `snake_case`, but *not* words that may begin and end with symbols, e.g. MarkDown's `**bold**`
+  - Ignore content between backticks
+  - Ignore between arbitrary bounds (multi-line), e.g. ```...``` (code blocks) -- language dependent
+  - Ignore *except* between bounds, e.g. spell-check only comments in code! -- language dependent
+  - The user-dictionary is buggy on Series 5 & 5MX, failing beyond a certain size, should we implement our own user dictionary?

@@ -1,3 +1,8 @@
+# ignore anything beginning with "__"
+# (used to hide stuff from the repository)
+__*
+**/__*
+
 # files that get generated and don't need to be in the repository:
 **/*.aif
 **/*.mbm

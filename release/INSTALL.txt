@@ -1,0 +1,133 @@
+Paperclip Installation Instructions:
+
+TL;DR: Copy the "Paperclip_[...].sis" file to your device and open it
+
+
+1.  Compatibility
+2.  Which Installer To Use
+3.  Installation Via Compact Flash
+3.1 Copy Everything to Compact Flash Card
+3.2 Access Compact Flash Card on Device
+3.3 Install the Installer -- For Series 5 Only!
+3.4 Install Paperclip
+
+
+1. Compatibility:
+=============================================================================
+At this time Paperclip has only been tested on Series 5 & 5 MX but should be
+compatible with all EPOC32 devices by Psion (and licensees).
+
+Testing on real hardware is immensely helpful, so if you own any of the
+following devices please send your experiences to kroc@camendesign.com
+
+1.1: Series 5, 5 MX, 5 MX Pro, Ericsson MC218
+-----------------------------------------------------------------------------
+Paperclip has been specifically designed for and tested on the Series 5 &
+5 MX as those are the devices I own.
+
+1.2: Revo, Revo+, Diamond Mako
+-----------------------------------------------------------------------------
+Currently untested. Paperclip does not [yet] adapt to the smaller screen
+resolution, but will in future releases.
+
+1.3: netBook, Series 7
+-----------------------------------------------------------------------------
+Currently untested. Whilst colour icons are provided, no special concessions
+have been made for the larger screen size yet.
+
+1.4: Geofox One, Osaris
+-----------------------------------------------------------------------------
+All bets are off; I can't even emulate these machines! If you have one and
+can test for me, please contact me at kroc@camendesign.com
+
+
+2. Which Installer To Use:
+=============================================================================
+Paperclip comes with separate installation packages for different EPOC32
+devices due to differences in machines which the installer is not smart
+enough to handle (e.g. colour icons cannot be used on mono devices).
+
+Currently, there are only two versions, but this may change in the future
+with features tailored to specific hardware.
+
+Paperclip_mono_v[...].sis
+
+    For monochrome-screen devices: Series 5, 5 MX, 5 MX Pro,
+    Ericsson MC218, Revo, Revo+, Diamond Mako, Osaris, Geofox One
+
+Paperclip_color_v[...].sis
+
+    For colour-screen devices: netBook, Series 7, netPad
+
+
+3. Installation Via Compact Flash:
+=============================================================================
+The easiest method of getting Paperclip onto a physical device is to use the
+Compact Flash slot present on most (but not all!) devices.
+
+This section assumes that you are already proficient at using a Compact
+Flash card to transfer files; read the next section if you want guidance
+on what CF cards to use and compatibility concerns.
+
+3.1 Copy Everything to Compact Flash Card
+-----------------------------------------------------------------------------
+It's easiest to copy all files you've unzipped from the download to your
+Compact Flash card. The location on the card is not important as you do not
+need to retain the installation files after installing Paperclip
+
+3.2 Access Compact Flash Card on Device
+-----------------------------------------------------------------------------
+Place the Compact Flash card in the device and turn it on.
+
+Ensure that you are on the System (file explorer) screen by tapping the
+"System" / EPOC-hand silk-screen icon outside of the screen area.
+
+Navigate to the Compact Flash card, this is typically drive D. If your card
+is formatted with multiple partitions these will be D, E, F... etc.
+
+HINT: You can press Ctrl+Q to cycle through drives on the device
+
+NOTE: The drive letter you see in Windows is not guaranteed to be the same
+as on the device, particularly if your card has multiple partitions!
+
+3.3 Install the Installer -- For Series 5 Only!
+-----------------------------------------------------------------------------
+Not all Series 5 devices have the on-board installer present and so cannot
+run the Paperclip installer package! "Inst_te.exe" will fix that.
+
+This only applies to Series 5 (ER1-ER3) devices. The on-board
+installer is already present on 5 MX and later devices.
+
+Open the "Inst_te.exe" file; nothing visible will happen,
+but you will now be able to install software from the device.
+
+3.4 Install Paperclip
+-----------------------------------------------------------------------------
+Simply open the installation package (".sis") for your device, as listed
+in Section 2; "mono" for monochrome-screen devices and "color" for colour-
+screen devices.
+
+Click through the pages of the installer to complete the installation.
+
+
+4. Compact Flash Buyers Guide:
+=============================================================================
+Compact Flash represents the easiest (and cheapest!) method of transferring
+files between the device and a modern computer, you won't even require
+Windows!
+
+History:    Compact Flash is an old memory-card format that has enjoyed
+            surprising sticking power despite SD (and micro-SD) essentially
+            'winning' the memory-card wars. Compact Flash's larger physical
+            size was not a concern for professional camera users and the
+            format offered far greater speed and capacities than SD in the
+            early days. The offshoot of all of this is that Compact Flash
+            is still commercially available and enjoys a staggering range
+            of compatibility spanning from the early 90s to today
+
+For the PC, you will need a Compact Flash card reader.
+
+A USB Compact Flash reader is easy to use and very cheap. Older PCs from
+the late 90s to the mid 2000s sometimes had multi card readers integrated
+in a standard 3.5" bay. These 3.5" bay adaptors can still be purchased,
+even brand new.
