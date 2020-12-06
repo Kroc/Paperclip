@@ -32,20 +32,13 @@ enum TPaperclipMenuCommands
 	EPaperclipCmdOpenFile,
 	EPaperclipCmdSaveFile,
 	EPaperclipCmdSaveFileAs,
-	EPaperclipRevertToSaved,
 	EPaperclipRemoveFileFromProject,
 	EPaperclipCmdFileProperties,
 	EPaperclipCmdCloseFile,
 	// edit:
-	EPaperclipCmdUndo,
-	EPaperclipCmdRedo,
-	EPaperclipCmdSelectAll,
 	EPaperclipCmdSelectWord,
 	EPaperclipCmdSelectLine,
 	EPaperclipCmdSelectParagraph,
-	EPaperclipCmdCut,
-	EPaperclipCmdCopy,
-	EPaperclipCmdPaste,
 	EPaperclipCmdInsertSymbol,
 	// find:
 	EPaperclipCmdFind,
@@ -58,12 +51,8 @@ enum TPaperclipMenuCommands
 	EPaperclipCmdMode,
 	EPaperclipCmdShowToolbar,
 	EPaperclipCmdShowToolband,
-	EPaperclipCmdZoomIn,
-	EPaperclipCmdZoomOut,
 	// tools:
 	EPaperclipCmdPreferences,
 	EPaperclipCmdSpellCheck,
-	EPaperclipCmdWordCount,
-
-	EPaperclipCmdAbout
+	EPaperclipCmdWordCount
 };

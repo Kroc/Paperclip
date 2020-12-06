@@ -69,14 +69,14 @@ RESOURCE HOTKEYS r_paperclip_hotkeys_editor
 		HOTKEY { key='s'; command=EPaperclipCmdSaveFile; },
 		HOTKEY { key='e'; command=EPaperclipCmdCloseFile; },
 		// edit:
-		HOTKEY { key='z'; command=EPaperclipCmdUndo; },
-		HOTKEY { key='y'; command=EPaperclipCmdRedo; },
-		HOTKEY { key='a'; command=EPaperclipCmdSelectAll; },
+		HOTKEY { key='z'; command=EEikCmdEditUndo; },
+		HOTKEY { key='y'; command=EEikCmdEditRedo; },
+		HOTKEY { key='a'; command=EEikCmdEditSelectAll; },
 		HOTKEY { key='w'; command=EPaperclipCmdSelectWord; },
 		HOTKEY { key='l'; command=EPaperclipCmdSelectLine; },
-		HOTKEY { key='x'; command=EPaperclipCmdCut; },
-		HOTKEY { key='c'; command=EPaperclipCmdCopy; },
-		HOTKEY { key='v'; command=EPaperclipCmdPaste; },
+		HOTKEY { key='x'; command=EEikCmdEditCut; },
+		HOTKEY { key='c'; command=EEikCmdEditCopy; },
+		HOTKEY { key='v'; command=EEikCmdEditPaste; },
 		// find:
 		HOTKEY { key='f'; command=EPaperclipCmdFind; },
 		HOTKEY { key='j'; command=EPaperclipCmdFindNext; },
@@ -85,7 +85,7 @@ RESOURCE HOTKEYS r_paperclip_hotkeys_editor
 		// view:
 		HOTKEY { key='q'; command=EPaperclipCmdMode; },
 		HOTKEY { key='t'; command=EPaperclipCmdShowToolbar; },
-		HOTKEY { key='m'; command=EPaperclipCmdZoomIn; },
+		HOTKEY { key='m'; command=EEikCmdZoomIn; },
 		// tools:
 		HOTKEY { key='k'; command=EPaperclipCmdPreferences; }
 	};
@@ -98,13 +98,13 @@ RESOURCE HOTKEYS r_paperclip_hotkeys_editor
 		// file:
 		HOTKEY { key='s'; command=EPaperclipCmdSaveFileAs; },
 		// edit
-		HOTKEY { key='c'; command=EPaperclipCmdInsertSymbol; },
+		HOTKEY { key='c'; command=EEikCmdInsertSymbol; },
 		// find:
 		HOTKEY { key='f'; command=EPaperclipCmdFindSelected; },
 		HOTKEY { key='j'; command=EPaperclipCmdFindPrevious; },
 		// view:
 		HOTKEY { key='t'; command=EPaperclipCmdShowToolband; },
-		HOTKEY { key='m'; command=EPaperclipCmdZoomOut; }
+		HOTKEY { key='m'; command=EEikCmdZoomOut; }
 	};
 }
 
@@ -137,7 +137,7 @@ RESOURCE MENU_PANE r_paperclip_menu_project
 		},
 		MENU_ITEM
 		{
-			command=EPaperclipCmdAbout;
+			command=EEikCmdHelpAbout;
 			flags=EEikMenuItemSeparatorAfter;
 			txt="About";
 		},
@@ -262,7 +262,7 @@ RESOURCE MENU_PANE r_paperclip_save_menu
 		},
 		MENU_ITEM
 		{
-			command=EPaperclipRevertToSaved;
+			command=EEikCmdFileRevert;
 			txt="Revert to saved";
 		}
 	};
@@ -274,13 +274,13 @@ RESOURCE MENU_PANE r_paperclip_edit_menu
 	{
 		MENU_ITEM
 		{
-			command=EPaperclipCmdUndo;
+			command=EEikCmdEditUndo;
 			flags=EEikMenuItemDimmed;
 			txt="Undo";
 		},
 		MENU_ITEM
 		{
-			command=EPaperclipCmdRedo;
+			command=EEikCmdEditRedo;
 			flags=EEikMenuItemSeparatorAfter|EEikMenuItemDimmed;
 			txt="Redo";
 		},
@@ -292,23 +292,23 @@ RESOURCE MENU_PANE r_paperclip_edit_menu
 		},
 		MENU_ITEM
 		{
-			command=EPaperclipCmdCut;
+			command=EEikCmdEditCut;
 			txt="Cut";
 		},
 		MENU_ITEM
 		{
-			command=EPaperclipCmdCopy;
+			command=EEikCmdEditCopy;
 			txt="Copy";
 		},
 		MENU_ITEM
 		{
-			command=EPaperclipCmdPaste;
+			command=EEikCmdEditPaste;
 			flags=EEikMenuItemSeparatorAfter;
 			txt="Paste";
 		},
 		MENU_ITEM
 		{
-			command=EPaperclipCmdInsertSymbol;
+			command=EEikCmdInsertSymbol;
 			txt="Insert symbol"<ELLIPSIS>;
 		}
     };
@@ -320,7 +320,7 @@ RESOURCE MENU_PANE r_paperclip_select_menu
 	{
 		MENU_ITEM
 		{
-			command=EPaperclipCmdSelectAll;
+			command=EEikCmdEditSelectAll;
 			txt="All";
 		},
 		MENU_ITEM
@@ -392,12 +392,12 @@ RESOURCE MENU_PANE r_paperclip_view_menu
 		},
 		MENU_ITEM
 		{
-			command=EPaperclipCmdZoomIn;
+			command=EEikCmdZoomIn;
 			txt="Zoom in";
 		},
 		MENU_ITEM
 		{
-			command=EPaperclipCmdZoomOut;
+			command=EEikCmdZoomOut;
 			txt="Zoom out";
 		}
     };

@@ -54,7 +54,7 @@ RESOURCE TOOLBAND r_paperclip_editor_toolband
 		},
 		TBAR_BUTTON
 		{
-			id=EPaperclipCmdUndo;
+			id=EEikCmdEditUndo;
 			flags=EEikToolBarCtrlHasSetMinLength;
 			length=EEikStdTwoStateIconicToolBandButtonWidth;
 			bmpid=EMbmPaperclipUndo; bmpmask=EMbmPaperclipUndoMask;

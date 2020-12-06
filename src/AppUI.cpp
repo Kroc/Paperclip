@@ -149,7 +149,7 @@ void CPaperclipAppUi::HandleCommandL(
         CmdSetViewFilesL();
         break;
         
-    case EPaperclipCmdAbout:
+    case EEikCmdHelpAbout:
         //----------------------------------------------------------------------
         // generate a generic dialog...
         dialog = new( ELeave ) CEikDialog;
