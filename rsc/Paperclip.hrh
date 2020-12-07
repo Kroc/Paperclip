@@ -36,6 +36,7 @@ enum TPaperclipMenuCommands
 	EPaperclipCmdFileProperties,
 	EPaperclipCmdCloseFile,
 	// edit:
+	EPaperclipCmdSelect,
 	EPaperclipCmdSelectWord,
 	EPaperclipCmdSelectLine,
 	EPaperclipCmdSelectParagraph,

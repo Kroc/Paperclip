@@ -129,3 +129,21 @@ TKeyResponse CPaperclipViewEditor::OfferKeyEventL(
 {
     return iTextEditor->OfferKeyEventL( aKeyEvent, aType );
 }
+
+TBool CPaperclipViewEditor::CanCut()
+{
+    // cutting is only possible if there's a selection
+    return (iTextEditor->Selection().Length() > 0);
+}
+
+TBool CPaperclipViewEditor::CanCopy()
+{
+    // copying is only possible if there's a selection
+    return (iTextEditor->Selection().Length() > 0);
+}
+
+TBool CPaperclipViewEditor::CanPaste()
+{
+    // nothing prevents pasting, yet
+    return ETrue;
+}

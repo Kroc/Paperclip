@@ -315,23 +315,46 @@ void CPaperclipAppUi::CmdViewSelectionPopoutL()
 }
 */
 
-void CPaperclipAppUi::DynInitMenuPaneL(
-    TInt aMenuId,
-    CEikMenuPane* aMenuPane
+void CPaperclipAppUi::DynInitMenuPaneL
+(
+    TInt aMenuId,               // resource-ID of menu opened
+    CEikMenuPane* aMenuPane     // reference to menu pane object
 )
 //==============================================================================
 {
     // remove unimplemented menu items in the release builds:
     //
-#ifndef _DEBUG
-    
-    if (aMenuId == R_PAPERCLIP_MENU_PROJECT)
+    switch (aMenuId)
     {
+    case R_PAPERCLIP_MENU_PROJECT:
+        //----------------------------------------------------------------------
+#ifndef _DEBUG
         aMenuPane->DeleteMenuItem( EPaperclipCmdNewProject );
         aMenuPane->DeleteMenuItem( EPaperclipCmdOpenProject );
-    }
-
 #endif
+        break;
+
+    case R_PAPERCLIP_EDIT_MENU:
+        //----------------------------------------------------------------------
+#ifndef _DEBUG
+        aMenuPane->DeleteMenuItem( EEikCmdEditUndo );
+        aMenuPane->DeleteMenuItem( EEikCmdEditRedo );
+        aMenuPane->DeleteMenuItem( EPaperclipCmdSelect );
+        aMenuPane->DeleteMenuItem( EEikCmdInsertSymbol );
+#endif
+        // fall through specifically so that we can share the code
+        // for the cut/copy/paste items from the sidebar clipboard menu
+        
+    case R_EIK_SIDEBAR_EDIT_MENU:
+        //----------------------------------------------------------------------
+        // the view can tell us if it's able to cut/copy/paste since each view
+        // will have different controls and current focus
+        //
+        aMenuPane->SetItemDimmed(EEikCmdEditCut, !iAppView->CanCut());
+        aMenuPane->SetItemDimmed(EEikCmdEditCopy, !iAppView->CanCopy());
+        aMenuPane->SetItemDimmed(EEikCmdEditPaste, !iAppView->CanPaste());
+        break;
+    }
 }
 
 void CPaperclipAppUi::HandleControlEventL(

@@ -69,7 +69,7 @@ private:
 	CPaperclipViewEditor* iAppViewEditor;
     CPaperclipViewFiles*  iAppViewFiles;
 	// (currently selected view)
-	CCoeControl* iAppView;
+	CPaperclipView* iAppView;
 	
 	CEikToolBar* iEditorToolBand;
 

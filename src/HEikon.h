@@ -24,6 +24,7 @@
 #include <eikedwin.h>			// text editor
 #include <eikedwin.hrh>			// for the EEikEdwin* constants
 
+#include <eikon.rsg>            // EIKON resource IDs
 #include <eikon.mbg>            // EIKON bitmaps in ROM
 
 #endif

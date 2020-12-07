@@ -116,7 +116,8 @@ RESOURCE MENU_BAR r_paperclip_menubar
 {
 	titles=
 	{
-		MENU_TITLE { txt="Project"; menu_pane=r_paperclip_menu_project; }
+		MENU_TITLE { txt="Project"; menu_pane=r_paperclip_menu_project; },
+        MENU_TITLE { txt="Edit"; menu_pane=r_paperclip_edit_menu; }
 	};
 }
 
@@ -286,6 +287,7 @@ RESOURCE MENU_PANE r_paperclip_edit_menu
 		},
 		MENU_ITEM
 		{
+            command=EPaperclipCmdSelect;
 			cascade=r_paperclip_select_menu;
 			flags=EEikMenuItemSeparatorAfter;
 			txt="Select";
