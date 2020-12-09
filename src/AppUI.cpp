@@ -148,7 +148,22 @@ void CPaperclipAppUi::HandleCommandL(
         //----------------------------------------------------------------------
         CmdSetViewFilesL();
         break;
-        
+    
+	case EEikCmdEditCut:
+		//----------------------------------------------------------------------
+		iAppView->DoCutL();
+		break;
+		    
+	case EEikCmdEditCopy:
+		//----------------------------------------------------------------------
+		iAppView->DoCopyL();
+		break;
+
+	case EEikCmdEditPaste:
+		//----------------------------------------------------------------------
+		iAppView->DoPasteL();
+		break;
+
     case EEikCmdHelpAbout:
         //----------------------------------------------------------------------
         // generate a generic dialog...

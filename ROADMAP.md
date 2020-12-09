@@ -11,8 +11,6 @@ See [HISTORY.md](HISTORY.md) for a list of feature releases.
 Features to be added, but not yet assigned to a release version:  
 (The order of this list is no guarantee of when a feature will be implemented)
 
-* Cut / Copy / Paste, Sidebar Clipboard menu
-
 * Undo, Redo
 
 * Zoom (change font-size only);

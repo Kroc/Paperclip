@@ -4,7 +4,10 @@
 #include "HEikon.h"
 #include "Model.h"
 
-
+// a polymorphic interface is used for Paperclip's application views (edtior /
+// file-browser / search), that is an abstract class defines the common methods
+// between all application views
+//
 class CPaperclipView
 	: public CCoeControl,
 	  public MCoeControlObserver
@@ -17,14 +20,26 @@ public:
     
     // clipboard decorators:
     //
-    // in order to enable/disable menu items, the AppUI will ask the view
-    // if cut/copy/paste is currently possible. the view handles this because
-    // it all depends on what is selected in the view, which may have multiple
-    // controls (e.g. file broswer)
+    // in order to enable/disable menu items, AppUI will ask the applicaiton
+	// view if cut/copy/paste is currently possible. the application view
+	// handles this because it all depends on what is selected in the view,
+	// which may have multiple controls (e.g. file-broswer)
     //
+	// these three methods below have default implementations, meaning that
+	// an application view that does not implement its own versions of these
+	// methods will use this code instead
+	//
+	// `virutal` is required here so that the specific application view's
+	// method is called first (if present) instead of these generic ones
+	//
     virtual TBool CanCut(){ return EFalse; };
     virtual TBool CanCopy(){ return EFalse; };
     virtual TBool CanPaste(){ return EFalse; };
+
+	// methods to enact the clipboard actions
+	virtual void DoCutL() = 0;
+	virtual void DoCopyL() = 0;
+	virtual void DoPasteL() = 0;
 
 	// CCoeControl::
 	//
@@ -32,18 +47,17 @@ public:
 	// because setting the control borders depends on what controls are
 	// within the view
     //
-	virtual void SetAdjacent(TInt aAdjacent){};
+	virtual void SetAdjacent(TInt aAdjacent) = 0;
 
     // CCoeControl::
-	void Draw(const TRect& aRect) const;
-	void HandlePointerEventL(const TPointerEvent& aPointerEvent);
+	virtual void HandlePointerEventL(const TPointerEvent& aPointerEvent) = 0;
 
-	TKeyResponse OfferKeyEventL(const TKeyEvent& aKeyEvent, TEventCode aType){
+	virtual TKeyResponse OfferKeyEventL(const TKeyEvent& aKeyEvent, TEventCode aType){
 		return EKeyWasNotConsumed;
 	};
 	
 	// MCoeControlObserver::
-	void HandleControlEventL(CCoeControl* aControl, TCoeEvent aEventType);
+	virtual void HandleControlEventL(CCoeControl* aControl, TCoeEvent aEventType) = 0;
 
 protected:
 	//--------------------------------------------------------------------------
@@ -68,17 +82,22 @@ public:
     TBool CanCopy();
     TBool CanPaste();
 
+	void DoCutL();
+	void DoCopyL();
+	void DoPasteL();
+
+protected:
+	//--------------------------------------------------------------------------
 	// CCoeControl::
-	virtual void SetAdjacent(TInt aAdjacent);
-	void Draw(const TRect& /*aRect*/) const;
+	void SetAdjacent(TInt aAdjacent);
 	void HandlePointerEventL(const TPointerEvent& aPointerEvent);
 	TKeyResponse OfferKeyEventL(const TKeyEvent& aKeyEvent, TEventCode aType);
 
 	// MCoeControlObserver::
-	virtual void HandleControlEventL(CCoeControl* aControl,TCoeEvent aEventType);
+	void HandleControlEventL(CCoeControl* aControl,TCoeEvent aEventType);
 	
 	// MEikEdwinObserver::
-	virtual void HandleEdwinEventL(CEikEdwin* aEdwin,TEdwinEvent aEventType);
+	void HandleEdwinEventL(CEikEdwin* aEdwin,TEdwinEvent aEventType);
 
 private:
 	//--------------------------------------------------------------------------
@@ -95,13 +114,27 @@ public:
 	void ConstructL(const TRect& aRect, CPaperclipModel* aModel);
 	void SetModel(CPaperclipModel* aModel){ iModel=aModel; }
 
-private:
+	// clipboard decorators:
+    //
+	// default to the abstract implementation
+	// -- returns EFalse automatically
+    //TBool CanCut();
+    //TBool CanCopy();
+    //TBool CanPaste();
+
+	void DoCutL();
+	void DoCopyL();
+	void DoPasteL();
+
+protected:
 	//--------------------------------------------------------------------------
 	// CCoeControl::
-	virtual void SetAdjacent(TInt aAdjacent);
-	void Draw(const TRect& /*aRect*/) const;
+	void SetAdjacent(TInt aAdjacent);
 	void HandlePointerEventL(const TPointerEvent& aPointerEvent);
 	TKeyResponse OfferKeyEventL(const TKeyEvent& aKeyEvent, TEventCode aType);
+
+	// MCoeControlObserver::
+	void HandleControlEventL(CCoeControl* aControl,TCoeEvent aEventType);
 
 private:
 	//--------------------------------------------------------------------------

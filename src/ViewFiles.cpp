@@ -17,20 +17,10 @@ void CPaperclipViewFiles::SetAdjacent(
 ){
 }
 
-// TODO: ultimately, we probably want to just draw the view
-// from an already-composited off-screen buffer to save CPU
-// (invalidation may fire multiple times in a row) and also
-// because this method CANNOT 'Leave'
-//
-void CPaperclipViewFiles::Draw(
-    const TRect& //aRect
-)   const
-{
-    CWindowGc& gc = SystemGc();
-    gc.Clear();
-    
-    //TRect drawRect=Rect();
-    //gc.DrawRect(drawRect);
+void CPaperclipViewFiles::HandleControlEventL(
+    CCoeControl* aControl,
+    TCoeEvent aEventType
+){
 }
 
 void CPaperclipViewFiles::HandlePointerEventL(
@@ -45,3 +35,11 @@ TKeyResponse CPaperclipViewFiles::OfferKeyEventL(
 ){
     return EKeyWasNotConsumed;
 }
+
+//TBool CPaperclipViewFiles::CanCut(){};
+//TBool CPaperclipViewFiles::CanCopy(){};
+//TBool CPaperclipViewFiles::CanPaste(){};
+
+void CPaperclipViewFiles::DoCutL(){};
+void CPaperclipViewFiles::DoCopyL(){};
+void CPaperclipViewFiles::DoPasteL(){};

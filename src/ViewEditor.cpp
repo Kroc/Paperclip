@@ -75,22 +75,6 @@ void CPaperclipViewEditor::SetAdjacent(
     iTextEditor->SetAdjacent( aAdjacent );
 }
 
-// TODO: ultimately, we probably want to just draw the view
-// from an already-composited off-screen buffer to save CPU
-// (invalidation may fire multiple times in a row) and also
-// because this method CANNOT 'Leave'
-//
-void CPaperclipViewEditor::Draw(
-    const TRect& //aRect
-)   const
-{/*
-    CWindowGc& gc = SystemGc();
-    gc.Clear();
-    
-    //TRect drawRect=Rect();
-    //gc.DrawRect(drawRect);
-*/}
-
 void CPaperclipViewEditor::HandlePointerEventL(
     const TPointerEvent& //aPointerEvent
 ){/*
@@ -131,19 +115,40 @@ TKeyResponse CPaperclipViewEditor::OfferKeyEventL(
 }
 
 TBool CPaperclipViewEditor::CanCut()
+//==============================================================================
 {
     // cutting is only possible if there's a selection
     return (iTextEditor->Selection().Length() > 0);
 }
 
 TBool CPaperclipViewEditor::CanCopy()
+//==============================================================================
 {
     // copying is only possible if there's a selection
     return (iTextEditor->Selection().Length() > 0);
 }
 
 TBool CPaperclipViewEditor::CanPaste()
+//==============================================================================
 {
     // nothing prevents pasting, yet
     return ETrue;
 }
+
+void CPaperclipViewEditor::DoCutL()
+//==============================================================================
+{
+	iTextEditor->ClipboardL( CEikEdwin::ECut );
+};
+
+void CPaperclipViewEditor::DoCopyL()
+//==============================================================================
+{
+	iTextEditor->ClipboardL( CEikEdwin::ECopy );
+};
+
+void CPaperclipViewEditor::DoPasteL()
+//==============================================================================
+{
+	iTextEditor->ClipboardL( CEikEdwin::EPaste );
+};
