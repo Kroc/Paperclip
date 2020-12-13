@@ -36,10 +36,9 @@ TKeyResponse CPaperclipViewFiles::OfferKeyEventL(
     return EKeyWasNotConsumed;
 }
 
-//TBool CPaperclipViewFiles::CanCut(){};
-//TBool CPaperclipViewFiles::CanCopy(){};
-//TBool CPaperclipViewFiles::CanPaste(){};
-
-void CPaperclipViewFiles::DoCutL(){};
-void CPaperclipViewFiles::DoCopyL(){};
-void CPaperclipViewFiles::DoPasteL(){};
+void CPaperclipViewFiles::HandleCommandL(
+    TInt aCommand
+)
+//==============================================================================
+{
+}

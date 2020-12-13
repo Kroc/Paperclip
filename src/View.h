@@ -35,11 +35,10 @@ public:
     virtual TBool CanCut(){ return EFalse; };
     virtual TBool CanCopy(){ return EFalse; };
     virtual TBool CanPaste(){ return EFalse; };
+    virtual TBool CanSelect(){ return EFalse; };
 
-	// methods to enact the clipboard actions
-	virtual void DoCutL() = 0;
-	virtual void DoCopyL() = 0;
-	virtual void DoPasteL() = 0;
+    // relevant commands from AppUI will be passed on to the view
+    virtual void HandleCommandL(TInt aCommand) = 0;
 
 	// CCoeControl::
 	//
@@ -75,16 +74,13 @@ public:
 	~CPaperclipViewEditor();
 	void ConstructL(const TRect& aRect, CPaperclipModel* aModel);
 	void SetModel(CPaperclipModel* aModel){ iModel = aModel; }
+    void HandleCommandL(TInt aCommand);
 
     // clipboard decorators:
     //
     TBool CanCut();
     TBool CanCopy();
     TBool CanPaste();
-
-	void DoCutL();
-	void DoCopyL();
-	void DoPasteL();
 
 protected:
 	//--------------------------------------------------------------------------
@@ -113,6 +109,7 @@ public:
 	//--------------------------------------------------------------------------
 	void ConstructL(const TRect& aRect, CPaperclipModel* aModel);
 	void SetModel(CPaperclipModel* aModel){ iModel=aModel; }
+    void HandleCommandL(TInt aCommand);
 
 	// clipboard decorators:
     //
@@ -121,10 +118,6 @@ public:
     //TBool CanCut();
     //TBool CanCopy();
     //TBool CanPaste();
-
-	void DoCutL();
-	void DoCopyL();
-	void DoPasteL();
 
 protected:
 	//--------------------------------------------------------------------------

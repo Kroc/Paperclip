@@ -135,20 +135,28 @@ TBool CPaperclipViewEditor::CanPaste()
     return ETrue;
 }
 
-void CPaperclipViewEditor::DoCutL()
+void CPaperclipViewEditor::HandleCommandL(
+    TInt aCommand
+)
 //==============================================================================
 {
-	iTextEditor->ClipboardL( CEikEdwin::ECut );
-};
+    switch (aCommand){
+    case EEikCmdEditCut:
+        iTextEditor->ClipboardL( CEikEdwin::ECut );
+        break;
+    
+    case EEikCmdEditCopy:
+        iTextEditor->ClipboardL( CEikEdwin::ECopy );
+        break;
 
-void CPaperclipViewEditor::DoCopyL()
-//==============================================================================
-{
-	iTextEditor->ClipboardL( CEikEdwin::ECopy );
-};
+    case EEikCmdEditPaste:
+        iTextEditor->ClipboardL( CEikEdwin::EPaste );
+        break;
 
-void CPaperclipViewEditor::DoPasteL()
-//==============================================================================
-{
-	iTextEditor->ClipboardL( CEikEdwin::EPaste );
-};
+    case EEikCmdEditSelectAll:
+        // this can Leave! possibly because of
+        // some selection meta-data being allocated
+        iTextEditor->SelectAllL();
+        break;
+    }
+}

@@ -292,6 +292,14 @@ RESOURCE MENU_PANE r_paperclip_edit_menu
 			flags=EEikMenuItemSeparatorAfter;
 			txt="Select";
 		},
+        // the items of the select sub-menu are not implemented
+        // yet, so "Select All" is provided here for release builds
+        MENU_ITEM
+        {
+            command=EEikCmdEditSelectAll;
+            flags=EEikMenuItemSeparatorAfter;
+			txt="Select All";
+        },
 		MENU_ITEM
 		{
 			command=EEikCmdEditCut;
