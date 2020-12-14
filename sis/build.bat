@@ -1,7 +1,7 @@
 @ECHO OFF & SETLOCAL ENABLEEXTENSIONS DISABLEDELAYEDEXPANSION
 PUSHD %~dp0
 
-makesis -v "Paperclip.pkg" "Paperclip.sis"
+makesis -v "Paperclip.pkg" "Paperclip.sis" >NUL
 
 REM # return the errorlevel of makesis,
 REM # instead of the POPD

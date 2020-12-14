@@ -1,23 +1,17 @@
 @ECHO OFF
 CD %~dp0
 
-ECHO * Cleaning Build Artefacts...
 CALL "group\clean.bat"
 
 ECHO * Generate AIF file...
-ECHO -------------------------------------------------------------------------------
 CALL "aif\build.bat" bw
-ECHO -------------------------------------------------------------------------------
 
 ECHO * Genearte Application MBM file...
-ECHO -------------------------------------------------------------------------------
 CALL "mbm\build.bat" bw
-ECHO -------------------------------------------------------------------------------
 
 ECHO * Generate Resource file...
-ECHO -------------------------------------------------------------------------------
 CALL "rsc\build.bat"
-ECHO -------------------------------------------------------------------------------
+ECHO:
 
 ECHO * Build WINS Release...
 ECHO ===============================================================================
@@ -30,12 +24,42 @@ START "" \EPOC32\Release\WINS\Rel\EPOC.EXE
 ECHO ===============================================================================
 ECHO * Build MARM Release...
 ECHO ===============================================================================
+ECHO * Generate AIF file (Mono)...
+CALL "aif\build.bat" bw
+
+ECHO * Generate Application MBM file (Mono)...
+CALL "mbm\build.bat" bw
+
+ECHO * Compile Application (Mono)...
+ECHO -------------------------------------------------------------------------------
 CALL "group\build_marm.bat" rel
 IF ERRORLEVEL 1 PAUSE & EXIT /B 1
 ECHO:
 
-ECHO * Build SIS Installer...
-ECHO -------------------------------------------------------------------------------
+ECHO * Build SIS Installer (Mono)...
 CALL "sis\build.bat"
 IF ERRORLEVEL 1 PAUSE & EXIT /B 1
+
 ECHO:
+
+IF EXIST "sis\Paperclip_mono.sis" DEL /Q "sis\Paperclip_mono.sis" >NUL
+REN "sis\Paperclip.sis" "Paperclip_mono.sis" >NUL
+
+ECHO * Generate AIF file (Colour)...
+CALL "aif\build.bat" cl
+
+ECHO * Generate Application MBM file (Colour)...
+CALL "mbm\build.bat" cl
+
+ECHO * Compile Application (Colour)...
+ECHO -------------------------------------------------------------------------------
+CALL "group\build_marm.bat" rel
+IF ERRORLEVEL 1 PAUSE & EXIT /B 1
+ECHO:
+
+ECHO * Build SIS Installer (Colour)...
+CALL "sis\build.bat"
+IF ERRORLEVEL 1 PAUSE & EXIT /B 1
+
+IF EXIST "sis\Paperclip_color.sis" DEL /Q "sis\Paperclip_color.sis" >NUL
+REN "sis\Paperclip.sis" "Paperclip_color.sis" >NUL
