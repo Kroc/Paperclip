@@ -114,25 +114,25 @@ TKeyResponse CPaperclipViewEditor::OfferKeyEventL(
     return iTextEditor->OfferKeyEventL( aKeyEvent, aType );
 }
 
-TBool CPaperclipViewEditor::CanCut()
+TBool CPaperclipViewEditor::CanHandleCommand(
+    TInt aCommand
+)
 //==============================================================================
 {
-    // cutting is only possible if there's a selection
-    return (iTextEditor->Selection().Length() > 0);
-}
+    switch (aCommand){
+    case EEikCmdEditCut:
+    case EEikCmdEditCopy:
+        // cutting/copying is only possible if there's a selection
+        return (iTextEditor->Selection().Length() > 0);
+        break;
 
-TBool CPaperclipViewEditor::CanCopy()
-//==============================================================================
-{
-    // copying is only possible if there's a selection
-    return (iTextEditor->Selection().Length() > 0);
-}
-
-TBool CPaperclipViewEditor::CanPaste()
-//==============================================================================
-{
-    // nothing prevents pasting, yet
-    return ETrue;
+    case EEikCmdEditPaste:
+        // nothing prevents pasting, yet
+        // TODO: cannot paste if clipboard is empty!
+        return ETrue;
+        break;
+    }
+    return EFalse;
 }
 
 void CPaperclipViewEditor::HandleCommandL(

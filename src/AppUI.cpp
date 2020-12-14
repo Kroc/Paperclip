@@ -359,9 +359,15 @@ void CPaperclipAppUi::DynInitMenuPaneL
         // only the view can tell us if it's able to cut/copy/paste since
         // each view will have different controls and current focus
         //
-        aMenuPane->SetItemDimmed(EEikCmdEditCut, !iAppView->CanCut());
-        aMenuPane->SetItemDimmed(EEikCmdEditCopy, !iAppView->CanCopy());
-        aMenuPane->SetItemDimmed(EEikCmdEditPaste, !iAppView->CanPaste());
+        aMenuPane->SetItemDimmed(
+            EEikCmdEditCut, !iAppView->CanHandleCommand( EEikCmdEditCut )
+        );
+        aMenuPane->SetItemDimmed(
+            EEikCmdEditCopy, !iAppView->CanHandleCommand( EEikCmdEditCopy )
+        );
+        aMenuPane->SetItemDimmed(
+            EEikCmdEditPaste, !iAppView->CanHandleCommand( EEikCmdEditPaste )
+        );
         break;
     }
 }

@@ -21,23 +21,17 @@ public:
     // clipboard decorators:
     //
     // in order to enable/disable menu items, AppUI will ask the applicaiton
-	// view if cut/copy/paste is currently possible. the application view
-	// handles this because it all depends on what is selected in the view,
-	// which may have multiple controls (e.g. file-broswer)
-    //
-	// these three methods below have default implementations, meaning that
-	// an application view that does not implement its own versions of these
-	// methods will use this code instead
+	// view if a command is currently possible. the application view handles
+    // this because it may have multiple internal controls (e.g. file-broswer).
+    // for example you cannot cut or copy unless there is a text selection
 	//
 	// `virutal` is required here so that the specific application view's
-	// method is called first (if present) instead of these generic ones
+	// method is called first (if present) instead of this default response
 	//
-    virtual TBool CanCut(){ return EFalse; };
-    virtual TBool CanCopy(){ return EFalse; };
-    virtual TBool CanPaste(){ return EFalse; };
-    virtual TBool CanSelect(){ return EFalse; };
+    virtual TBool CanHandleCommand(TInt aCommand){ return EFalse; };
 
-    // relevant commands from AppUI will be passed on to the view
+    // relevant commands from AppUI will be passed on to the view.
+    // (*must* be implemented)
     virtual void HandleCommandL(TInt aCommand) = 0;
 
 	// CCoeControl::
@@ -51,12 +45,16 @@ public:
     // CCoeControl::
 	virtual void HandlePointerEventL(const TPointerEvent& aPointerEvent) = 0;
 
-	virtual TKeyResponse OfferKeyEventL(const TKeyEvent& aKeyEvent, TEventCode aType){
+	virtual TKeyResponse OfferKeyEventL(
+        const TKeyEvent& aKeyEvent, TEventCode aType
+    ){
 		return EKeyWasNotConsumed;
 	};
 	
 	// MCoeControlObserver::
-	virtual void HandleControlEventL(CCoeControl* aControl, TCoeEvent aEventType) = 0;
+	virtual void HandleControlEventL(
+        CCoeControl* aControl, TCoeEvent aEventType
+    ) = 0;
 
 protected:
 	//--------------------------------------------------------------------------
@@ -74,13 +72,8 @@ public:
 	~CPaperclipViewEditor();
 	void ConstructL(const TRect& aRect, CPaperclipModel* aModel);
 	void SetModel(CPaperclipModel* aModel){ iModel = aModel; }
+    TBool CanHandleCommand(TInt aCommand);
     void HandleCommandL(TInt aCommand);
-
-    // clipboard decorators:
-    //
-    TBool CanCut();
-    TBool CanCopy();
-    TBool CanPaste();
 
 protected:
 	//--------------------------------------------------------------------------
@@ -110,14 +103,6 @@ public:
 	void ConstructL(const TRect& aRect, CPaperclipModel* aModel);
 	void SetModel(CPaperclipModel* aModel){ iModel=aModel; }
     void HandleCommandL(TInt aCommand);
-
-	// clipboard decorators:
-    //
-	// default to the abstract implementation
-	// -- returns EFalse automatically
-    //TBool CanCut();
-    //TBool CanCopy();
-    //TBool CanPaste();
 
 protected:
 	//--------------------------------------------------------------------------
