@@ -369,6 +369,13 @@ void CPaperclipAppUi::DynInitMenuPaneL
             EEikCmdEditPaste, !iAppView->CanHandleCommand( EEikCmdEditPaste )
         );
         break;
+
+	case R_EIK_SIDEBAR_IRDA_MENU:
+		//----------------------------------------------------------------------
+		// the infra-red menu is not supported yet
+		aMenuPane->SetItemDimmed( EEikCmdIrdaSend, ETrue );
+		aMenuPane->SetItemDimmed( EEikCmdIrdaReceive, ETrue );
+		break;
     }
 }
 
