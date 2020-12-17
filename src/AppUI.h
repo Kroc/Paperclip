@@ -74,8 +74,6 @@ private:
 	CEikToolBar* iEditorToolBand;
 
 	CPaperclipModel *iModel;
-
-	CEikGlobalTextEditor* iTextEditor;
 };
 
 #endif

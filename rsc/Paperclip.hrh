@@ -50,6 +50,7 @@ enum TPaperclipMenuCommands
 	EPaperclipCmdGoTo,
 	// view:
 	EPaperclipCmdMode,
+	EPaperclipCmdToolbars,
 	EPaperclipCmdShowToolbar,
 	EPaperclipCmdShowToolband,
 	// tools:

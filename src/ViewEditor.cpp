@@ -44,7 +44,7 @@ void CPaperclipViewEditor::ConstructL(
         *iModel->GlobalText(),
         CEikEdwin::EUseText
     );
-    
+
     // TODO: we will need to recreate this cursor whenever we zoom,
     //       does it need to be stored in the class?
     CFbsBitmap* line_cursor = iEikonEnv->CreateBitmapL(
@@ -56,7 +56,10 @@ void CPaperclipViewEditor::ConstructL(
 
     iTextEditor->SetRectL( Rect() );
     iTextEditor->ActivateL();
-    
+
+	// set beginning zoom-level:
+	ZoomL( EZoomLevelDefault );
+
     iTextEditor->SetFocus( ETrue );
 }
 
@@ -131,7 +134,7 @@ TBool CPaperclipViewEditor::CanHandleCommand(
         // TODO: cannot paste if clipboard is empty!
         return ETrue;
         break;
-    }
+	}
     return EFalse;
 }
 
@@ -141,22 +144,69 @@ void CPaperclipViewEditor::HandleCommandL(
 //==============================================================================
 {
     switch (aCommand){
-    case EEikCmdEditCut:
-        iTextEditor->ClipboardL( CEikEdwin::ECut );
-        break;
-    
-    case EEikCmdEditCopy:
-        iTextEditor->ClipboardL( CEikEdwin::ECopy );
-        break;
+	case EEikCmdEditCut:
+	    iTextEditor->ClipboardL( CEikEdwin::ECut );
+	    break;
+	
+	case EEikCmdEditCopy:
+	    iTextEditor->ClipboardL( CEikEdwin::ECopy );
+	    break;
+	
+	case EEikCmdEditPaste:
+	    iTextEditor->ClipboardL( CEikEdwin::EPaste );
+	    break;
+	
+	case EEikCmdEditSelectAll:
+	    // this can Leave! possibly because of
+	    // some selection meta-data being allocated
+	    iTextEditor->SelectAllL();
+	    break;
+	
+	// sidebar zoom buttons
+	//
+	case EEikCmdZoomIn:
+		switch (iZoomLevel){
+		case EZoomLevel1: ZoomL( EZoomLevel2 ); break;
+		case EZoomLevel2: ZoomL( EZoomLevel3 ); break;
+		case EZoomLevel3: ZoomL( EZoomLevel4 ); break;
+		case EZoomLevel4: ZoomL( EZoomLevel1 ); break;
+		default: ZoomL( EZoomLevelDefault );
+		}
+		break;
 
-    case EEikCmdEditPaste:
-        iTextEditor->ClipboardL( CEikEdwin::EPaste );
-        break;
 
-    case EEikCmdEditSelectAll:
-        // this can Leave! possibly because of
-        // some selection meta-data being allocated
-        iTextEditor->SelectAllL();
-        break;
+	case EEikCmdZoomOut:
+		switch (iZoomLevel){
+		case EZoomLevel1: ZoomL( EZoomLevel4 ); break;
+		case EZoomLevel2: ZoomL( EZoomLevel1 ); break;
+		case EZoomLevel3: ZoomL( EZoomLevel2 ); break;
+		case EZoomLevel4: ZoomL( EZoomLevel3 ); break;
+		default: ZoomL( EZoomLevelDefault );
+		}
+		break;
     }
+}
+
+// apply a zoom-level to the view
+//
+void CPaperclipViewEditor::ZoomL(
+	TZoomLevel aZoomLevel
+)
+//==============================================================================
+{
+	// create a character format to describe the new font-size
+	TCharFormat charFormat;
+	charFormat.iFontSpec.iHeight = aZoomLevel;
+	// set the mask bit to change only font-size
+	TCharFormatMask charFormatMask;
+	charFormatMask.SetAttrib( EAttFontHeight );
+	// apply the format change to the text-editor
+	// (`CGlobalText` uses one format for all text)
+	iTextEditor->ApplyCharFormatL( charFormat, charFormatMask );
+
+	// TODO: set correctly sized line cursor
+
+	// call the super-class implementation;
+	// this just sets the member variable, iZoomLevel
+	CPaperclipView::ZoomL( aZoomLevel );
 }

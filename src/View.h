@@ -18,8 +18,6 @@ public:
 	void ConstructL(const TRect& aRect, CPaperclipModel* aModel);
 	void SetModel(CPaperclipModel* aModel){ iModel = aModel; }
     
-    // clipboard decorators:
-    //
     // in order to enable/disable menu items, AppUI will ask the applicaiton
 	// view if a command is currently possible. the application view handles
     // this because it may have multiple internal controls (e.g. file-broswer).
@@ -33,6 +31,22 @@ public:
     // relevant commands from AppUI will be passed on to the view.
     // (*must* be implemented)
     virtual void HandleCommandL(TInt aCommand) = 0;
+
+	// define the font-sizes (twips) for the zoom-levels
+	enum TZoomLevel {
+		EZoomLevel1 = 140,
+		EZoomLevel2 = 160,
+		EZoomLevel3 = 180,
+		EZoomLevel4 = 220,
+
+		EZoomLevelDefault = EZoomLevel3
+	};
+	virtual void ZoomL(TZoomLevel aZoomLevel){
+		// the deault implementation just sets the member variable;
+		// implementations in subclasses can do this too, or call
+		// `CPaperclipView::ZoomL(...)` to use this code here
+		iZoomLevel = aZoomLevel;
+	};
 
 	// CCoeControl::
 	//
@@ -59,6 +73,7 @@ public:
 protected:
 	//--------------------------------------------------------------------------
 	CPaperclipModel* iModel;
+	TZoomLevel iZoomLevel;		// current zoom-level of view
 };
 
 
@@ -74,6 +89,8 @@ public:
 	void SetModel(CPaperclipModel* aModel){ iModel = aModel; }
     TBool CanHandleCommand(TInt aCommand);
     void HandleCommandL(TInt aCommand);
+
+	void ZoomL(TZoomLevel aZoomLevel);
 
 protected:
 	//--------------------------------------------------------------------------
@@ -116,7 +133,6 @@ protected:
 
 private:
 	//--------------------------------------------------------------------------
-	CPaperclipModel *iModel;
 };
 
 #endif

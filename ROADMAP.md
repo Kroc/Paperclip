@@ -13,9 +13,6 @@ Features to be added, but not yet assigned to a release version:
 
 * Undo, Redo
 
-* Zoom (change font-size only);
-  Zoom Sidebar support
-
 * New File
 * Open [text] file
 * Save [text] file

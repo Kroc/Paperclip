@@ -10,6 +10,7 @@
 class CPaperclipModel : CBase
 {
 public:
+	//--------------------------------------------------------------------------
 	CPaperclipModel();
 	~CPaperclipModel();			// destructor
 
@@ -21,14 +22,16 @@ public:
 	// return the handle to the text-storage object
 	CGlobalText* GlobalText(){ return iGlobalText; };
 
-private:
-	// this is the actual text storage in RAM
-	CGlobalText* iGlobalText;
-	// this if the font/paragraph style used for the text-editor;
+	// this is the font/paragraph style used for the text-editor;
 	// since it's not a rich-text editor, the same style is used
 	// for all text in the editor
 	CParaFormatLayer* iParaFormatLayer;
 	CCharFormatLayer* iCharFormatLayer;
+
+private:
+	//--------------------------------------------------------------------------
+	// this is the actual text storage in RAM
+	CGlobalText* iGlobalText;
 };
 
 #endif

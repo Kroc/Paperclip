@@ -40,15 +40,17 @@ void CPaperclipModel::ConstructL()
     TCharFormatMask charFormatMask;
     TInt typefaceAttributes = TTypeface::ESerif;
     charFormat.iFontSpec.iTypeface.SetAttributes( typefaceAttributes );
-    charFormat.iFontSpec.iHeight = 200;
+    //charFormat.iFontSpec.iHeight = 200;
     charFormatMask.SetAttrib( EAttFontTypeface );
-    charFormatMask.SetAttrib( EAttFontHeight );
+    //charFormatMask.SetAttrib( EAttFontHeight );
 
     // the character format is kept in the model
     iCharFormatLayer = CCharFormatLayer::NewL(
         charFormat, charFormatMask
     );
-    
+
+	// instantiate the text storage object, passing our paragraph
+	// and character formats to be used for all text therein
     iGlobalText = CGlobalText::NewL(
         iParaFormatLayer,
         iCharFormatLayer,

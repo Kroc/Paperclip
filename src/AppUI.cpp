@@ -130,9 +130,7 @@ void CPaperclipAppUi::HandleCommandL(
     TInt aCommand
 )
 //==============================================================================
-{
-    CEikDialog* dialog;
-    
+{   
     switch (aCommand)
     {
     // "Editor" button on the toolbar,
@@ -149,6 +147,8 @@ void CPaperclipAppUi::HandleCommandL(
         CmdSetViewFilesL();
         break;
     
+	case EEikCmdZoomIn:			// sidebar zoom-in button
+	case EEikCmdZoomOut:		// sidebar zoom-out button
 	case EEikCmdEditCut:
 	case EEikCmdEditCopy:
     case EEikCmdEditPaste:
@@ -158,9 +158,9 @@ void CPaperclipAppUi::HandleCommandL(
 		break;
 
     case EEikCmdHelpAbout:
-        //----------------------------------------------------------------------
-        // generate a generic dialog...
-        dialog = new( ELeave ) CEikDialog;
+    {   //----------------------------------------------------------------------
+		// generate a generic dialog...
+        CEikDialog* dialog = new( ELeave ) CEikDialog;
         // the pointer returned is only valid within this method;
         // if this method Leaves, the pointer will be left dangling!
         // we have to push this pointer to the cleanup stack to ensure
@@ -177,8 +177,9 @@ void CPaperclipAppUi::HandleCommandL(
         CleanupStack::Pop();
         
         break;
-        
-    case EEikCmdExit:
+	}
+
+	case EEikCmdExit:
         //----------------------------------------------------------------------
         Exit();
         break;
@@ -369,6 +370,16 @@ void CPaperclipAppUi::DynInitMenuPaneL
             EEikCmdEditPaste, !iAppView->CanHandleCommand( EEikCmdEditPaste )
         );
         break;
+
+
+	case R_PAPERCLIP_VIEW_MENU:
+		//----------------------------------------------------------------------
+#ifndef _DEBUG
+        // for release versions, remove menu items not yet implemented:
+		aMenuPane->DeleteMenuItem( EPaperclipCmdMode );
+		aMenuPane->DeleteMenuItem( EPaperclipCmdToolbars );
+#endif
+		break;
 
 	case R_EIK_SIDEBAR_IRDA_MENU:
 		//----------------------------------------------------------------------
