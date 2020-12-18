@@ -31,20 +31,17 @@ void CPaperclipModel::ConstructL()
     paraFormat.iHorizontalAlignment = CParaFormat::ELeftAlign;
     paraFormatMask.SetAttrib( EAttAlignment );
 
-    // the paragraph format is kept in the model
+    // the paragraph format layer is kept in the model
     iParaFormatLayer = CParaFormatLayer::NewL(
         &paraFormat, paraFormatMask
     );
 
     TCharFormat     charFormat;
     TCharFormatMask charFormatMask;
-    TInt typefaceAttributes = TTypeface::ESerif;
-    charFormat.iFontSpec.iTypeface.SetAttributes( typefaceAttributes );
-    //charFormat.iFontSpec.iHeight = 200;
+    charFormat.iFontSpec.iTypeface.SetAttributes( TTypeface::ESerif );
     charFormatMask.SetAttrib( EAttFontTypeface );
-    //charFormatMask.SetAttrib( EAttFontHeight );
 
-    // the character format is kept in the model
+    // the character format layer is kept in the model
     iCharFormatLayer = CCharFormatLayer::NewL(
         charFormat, charFormatMask
     );

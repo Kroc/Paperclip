@@ -33,7 +33,8 @@ public:
     virtual void HandleCommandL(TInt aCommand) = 0;
 
 	// define the font-sizes (twips) for the zoom-levels
-	enum TZoomLevel {
+	enum TZoomLevel
+	{
 		EZoomLevel1 = 140,
 		EZoomLevel2 = 160,
 		EZoomLevel3 = 180,

@@ -45,15 +45,6 @@ void CPaperclipViewEditor::ConstructL(
         CEikEdwin::EUseText
     );
 
-    // TODO: we will need to recreate this cursor whenever we zoom,
-    //       does it need to be stored in the class?
-    CFbsBitmap* line_cursor = iEikonEnv->CreateBitmapL(
-        TPtrC(), EMbmEikonLncusr1
-    );
-    CleanupStack::PushL( line_cursor );
-    iTextEditor->SetLineCursorBitmapL( line_cursor );
-    CleanupStack::Pop();
-
     iTextEditor->SetRectL( Rect() );
     iTextEditor->ActivateL();
 
@@ -174,7 +165,6 @@ void CPaperclipViewEditor::HandleCommandL(
 		}
 		break;
 
-
 	case EEikCmdZoomOut:
 		switch (iZoomLevel){
 		case EZoomLevel1: ZoomL( EZoomLevel4 ); break;
@@ -204,9 +194,30 @@ void CPaperclipViewEditor::ZoomL(
 	// (`CGlobalText` uses one format for all text)
 	iTextEditor->ApplyCharFormatL( charFormat, charFormatMask );
 
-	// TODO: set correctly sized line cursor
+	// set the bitmap for the line-cursor:
+	//
+	TInt bitmap_id = EMbmEikonLncusr1;
+	switch (aZoomLevel)
+	{
+	case EZoomLevel1:
+	case EZoomLevel2:
+		bitmap_id = EMbmEikonLncusr1;
+		break;
+	case EZoomLevel3:
+		bitmap_id = EMbmEikonLncusr3;
+		break;
+	case EZoomLevel4:
+		bitmap_id = EMbmEikonLncusr4;
+		break;
+	}
+	CFbsBitmap* lineCursor = iEikonEnv->CreateBitmapL( TPtrC(), bitmap_id );
+	CleanupStack::PushL( lineCursor );
+	iTextEditor->SetLineCursorBitmapL( lineCursor );
+	CleanupStack::Pop();
 
 	// call the super-class implementation;
 	// this just sets the member variable, iZoomLevel
 	CPaperclipView::ZoomL( aZoomLevel );
+
+	iTextEditor->DrawNow();
 }
