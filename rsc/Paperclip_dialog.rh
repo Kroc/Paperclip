@@ -7,8 +7,7 @@ RESOURCE DIALOG r_paperclip_about_dialog
 	flags=EEikDialogFlagWait|EEikDialogFlagButtonsRight;
     buttons=R_EIK_BUTTONS_CONTINUE;
 	title="About";
-	items=
-	{
+	items={
 		DLG_LINE
 		{
             type=EEikCtLabel;

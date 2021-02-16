@@ -1,0 +1,91 @@
+// a set of dummy toolbars / menus are provided when the app initialises
+// before any project or file is loaded
+
+RESOURCE TBUF r_paperclip_default_path { buf="C:\\Documents\\"; }
+
+RESOURCE HOTKEYS r_paperclip_hotkeys_default
+//==============================================================================
+{
+    control={
+        HOTKEY { key='e'; command=EPaperclipCmdCloseFile; }
+    };
+}
+
+RESOURCE MENU_BAR r_paperclip_menubar_default
+//==============================================================================
+{
+	titles={
+		MENU_TITLE { txt="File"; menu_pane=r_paperclip_menu_project; },
+        MENU_TITLE { txt="Edit"; menu_pane=r_paperclip_edit_menu; },
+		MENU_TITLE { txt="View"; menu_pane=r_paperclip_view_menu; }
+	};
+}
+
+RESOURCE TOOLBAR r_paperclip_toolbar_default
+//==============================================================================
+{
+	breadth=KEikStdToolBarWidth;
+    controls={
+        // EIKON: standard filename-label
+        // (task switcher)
+        //
+		TBAR_CTRL
+		{ 
+			id=EPaperclipCmdProjectName;
+			type=EEikCtFileNameLabel; 
+			flags=EEikToolBarCtrlHasSetMinLength;
+			length=KEikStdFileNameLabelHeight;
+		},
+
+		TBAR_CTRL
+		{
+			type=EEikCtSpacer;
+			flags=EEikToolBarCtrlHasSetMinLength|EEikToolBarCtrlIsStretchable;
+			length=0;
+			control=SPACER;
+		},
+
+		// EIKON: include the standard clock on the bottom
+		//
+		TBAR_CTRL
+		{
+			type=EEikCtClock;
+			control=CLOCK {
+				digitalresourceid=R_EIK_DIGITAL_CLOCK;
+				analogresourceid=R_EIK_ANALOG_CLOCK;
+			};
+		},
+		TBAR_CTRL
+		{
+			type=EEikCtSpacer;
+			flags=EEikToolBarCtrlHasSetMinLength;
+			length=KEikStdGapBelowClock;
+			control=SPACER;
+		}
+	};
+}
+
+/*RESOURCE TOOLBAND r_paperclip_toolband_empty
+//==============================================================================
+{
+	controls=
+	{
+		TBAR_CTRL
+		{
+			type=EEikCtSpacer;
+			flags=EEikToolBarCtrlHasSetMinLength|EEikToolBarCtrlIsStretchable;
+			length=0;
+			control=SPACER;
+		},
+		// EIKON: standard filename-label
+        // (task switcher)
+        //
+		TBAR_CTRL
+		{ 
+			id=EPaperclipCmdProjectName;
+			type=EEikCtFileNameLabel; 
+			flags=EEikToolBarCtrlHasSetMinLength;
+			length=KEikStdFileNameLabelWidth;
+		}
+	};
+}*/

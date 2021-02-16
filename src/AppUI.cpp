@@ -93,6 +93,14 @@ CPaperclipAppUi::~CPaperclipAppUi()
     delete iEditorToolBand;
 }
 
+void CPaperclipAppUi::HandleModelChangeL()
+//==============================================================================
+{
+	// update the filename present in the task-switcher
+	// (recommended to do in HandelModelChangeL by the SDK)
+	iEikonEnv->UpdateTaskNameL();	
+}
+
 // the "file name label" is the task-switcher in the top-right of the screen
 // provided by EIKON. in this case, the "file name" is not the current text-
 // file being edited, but rather the Project file for this app instance
@@ -133,6 +141,10 @@ void CPaperclipAppUi::HandleCommandL(
 {   
     switch (aCommand)
     {
+	case EEikCmdFileOpen:
+		//----------------------------------------------------------------------
+		CmdFileOpenL();
+
     // "Editor" button on the toolbar,
     // to switch to the text-editor view
     case EPaperclipCmdEditorView:
@@ -260,6 +272,24 @@ void CPaperclipAppUi::CmdSetViewFilesL()
 */
 }
 
+// action to open a file manually,
+// such as a File > Open menu:
+//
+void CPaperclipAppUi::CmdFileOpenL()
+//==============================================================================
+{
+	// TODO: we should set a default directory
+	// (typically "C:\Documents"?)
+	TFileName file_name;
+	
+	CEikFileOpenDialog* dialog = new( ELeave ) CEikFileOpenDialog( &file_name );
+	//dialog->RestrictToNativeDocumentFiles();
+
+	if (dialog->ExecuteLD( R_EIK_DIALOG_FILE_OPEN )){
+		//OpenFileL(filename);
+	}
+}
+
 void CPaperclipAppUi::UpdateToolbarL()
 //==============================================================================
 {
@@ -343,6 +373,12 @@ void CPaperclipAppUi::DynInitMenuPaneL
 
     case R_PAPERCLIP_EDIT_MENU:
         //----------------------------------------------------------------------
+		aMenuPane->SetItemDimmed(
+            EEikCmdEditUndo, !iAppView->CanHandleCommand( EEikCmdEditUndo )
+        );
+		aMenuPane->SetItemDimmed(
+            EEikCmdEditRedo, !iAppView->CanHandleCommand( EEikCmdEditRedo )
+        );
 #ifndef _DEBUG
         // for release versions, remove menu items not yet implemented:
         aMenuPane->DeleteMenuItem( EEikCmdEditUndo );

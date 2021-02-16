@@ -19,6 +19,7 @@
 
 #include <eikdialg.h>
 #include <eikdialg.hrh>
+#include <eikcfdlg.h>			// file dialogs
 
 #include <eikgted.h>            // global text
 #include <eikedwin.h>			// text editor

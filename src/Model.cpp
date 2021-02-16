@@ -4,7 +4,7 @@
 
 CPaperclipModel::CPaperclipModel()
 {
-    __DECLARE_NAME(_S("CPaperclipModel"));
+    __DECLARE_NAME( _S( "CPaperclipModel" ));
 }
 
 // static instantiation:
@@ -64,5 +64,32 @@ CPaperclipModel::~CPaperclipModel()
     delete iParaFormatLayer;
 }
 
-void CPaperclipModel::Reset()
-{}
+TStreamId CPaperclipModel::StoreL(
+	CStreamStore& aStore
+) const
+//==============================================================================
+{
+	// open the data-stream based on the given data-store:
+	// `CreateLC` will open the stream, returning an ID, automatically placing
+	// the stream object on the clean-up stack so that any fail further down
+	// the line will not leave the stream object orphaned
+	//
+	RStoreWriteStream stream;
+    TStreamId stream_id = stream.CreateLC( aStore );
+    
+	ExternalizeL( stream );
+    
+	stream.CommitL();
+	CleanupStack::PopAndDestroy();
+
+    return stream_id;
+}
+
+// write the data-memebers of the model to the data-store
+//
+void CPaperclipModel::ExternalizeL(
+	RWriteStream& aStream
+) const
+//==============================================================================
+{
+}

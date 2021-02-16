@@ -7,6 +7,7 @@ __*
 **/*.aif
 **/*.mbm
 **/*.sis
+**/*.zip
 
 # unrelated junk files
 **/Thumbs.db

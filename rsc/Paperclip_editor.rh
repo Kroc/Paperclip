@@ -1,33 +1,56 @@
-/*RESOURCE TOOLBAND r_paperclip_toolband_dummy
+
+RESOURCE HOTKEYS r_paperclip_hotkeys_editor
 //==============================================================================
 {
-	controls=
-	{
-		TBAR_CTRL
-		{
-			type=EEikCtSpacer;
-			flags=EEikToolBarCtrlHasSetMinLength|EEikToolBarCtrlIsStretchable;
-			length=0;
-			control=SPACER;
-		},
-		// EIKON: standard filename-label
-        // (task switcher)
-        //
-		TBAR_CTRL
-		{ 
-			id=EPaperclipCmdProjectName;
-			type=EEikCtFileNameLabel; 
-			flags=EEikToolBarCtrlHasSetMinLength;
-			length=KEikStdFileNameLabelWidth;
-		}
+	control={
+		// file:
+		HOTKEY { key='n'; command=EPaperclipCmdNewFile; },
+		HOTKEY { key='o'; command=EPaperclipCmdOpenFile; },
+		HOTKEY { key='s'; command=EPaperclipCmdSaveFile; },
+		HOTKEY { key='e'; command=EPaperclipCmdCloseFile; },
+		// edit:
+		HOTKEY { key='z'; command=EEikCmdEditUndo; },
+		HOTKEY { key='y'; command=EEikCmdEditRedo; },
+		HOTKEY { key='a'; command=EEikCmdEditSelectAll; },
+		HOTKEY { key='w'; command=EPaperclipCmdSelectWord; },
+		HOTKEY { key='l'; command=EPaperclipCmdSelectLine; },
+		HOTKEY { key='x'; command=EEikCmdEditCut; },
+		HOTKEY { key='c'; command=EEikCmdEditCopy; },
+		HOTKEY { key='v'; command=EEikCmdEditPaste; },
+		// find:
+		HOTKEY { key='f'; command=EPaperclipCmdFind; },
+		HOTKEY { key='j'; command=EPaperclipCmdFindNext; },
+		HOTKEY { key='g'; command=EPaperclipCmdGoTo; },
+		HOTKEY { key='h'; command=EPaperclipCmdReplace; },
+		// view:
+		HOTKEY { key='q'; command=EPaperclipCmdMode; },
+		HOTKEY { key='t'; command=EPaperclipCmdShowToolbar; },
+		HOTKEY { key='m'; command=EEikCmdZoomIn; },
+		// tools:
+		HOTKEY { key='k'; command=EPaperclipCmdPreferences; }
 	};
-}*/
+	shift_control={
+		// project:
+		HOTKEY { key='n'; command=EPaperclipCmdNewProject; },
+		HOTKEY { key='o'; command=EPaperclipCmdOpenProject; },
+		HOTKEY { key='e'; command=EEikCmdExit; },
+		// file:
+		HOTKEY { key='s'; command=EPaperclipCmdSaveFileAs; },
+		// edit
+		HOTKEY { key='c'; command=EEikCmdInsertSymbol; },
+		// find:
+		HOTKEY { key='f'; command=EPaperclipCmdFindSelected; },
+		HOTKEY { key='j'; command=EPaperclipCmdFindPrevious; },
+		// view:
+		HOTKEY { key='t'; command=EPaperclipCmdShowToolband; },
+		HOTKEY { key='m'; command=EEikCmdZoomOut; }
+	};
+}
 
 RESOURCE TOOLBAND r_paperclip_editor_toolband
 //==============================================================================
 {
-	controls=
-	{
+	controls={
 		TBAR_BUTTON
 		{
 			flags=EEikToolBarCtrlHasSetMinLength;
@@ -134,5 +157,18 @@ RESOURCE TOOLBAND r_paperclip_editor_toolband
 			flags=EEikToolBarCtrlHasSetMinLength;
 			length=KEikStdFileNameLabelWidth+1;
 		}
+	};
+}
+
+RESOURCE MENU_BAR r_paperclip_menubar_editor
+//==============================================================================
+{
+	titles={
+		MENU_TITLE { txt="Project";	menu_pane=r_paperclip_project_menu; },
+		MENU_TITLE { txt="File";	menu_pane=r_paperclip_file_menu; },
+		MENU_TITLE { txt="Edit";	menu_pane=r_paperclip_edit_menu; },
+		MENU_TITLE { txt="Find";	menu_pane=r_paperclip_find_menu; },
+		MENU_TITLE { txt="View";	menu_pane=r_paperclip_view_menu; },
+		MENU_TITLE { txt="Tools";	menu_pane=r_paperclip_tools_menu; }
 	};
 }

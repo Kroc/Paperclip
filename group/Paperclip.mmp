@@ -22,7 +22,7 @@ USERINCLUDE     \Paperclip\src
 SYSTEMINCLUDE   \EPOC32\Include
 
 LIBRARY         euser.lib
-LIBRARY         apparc.lib ws32.lib 
+LIBRARY         apparc.lib estor.lib ws32.lib 
 LIBRARY         cone.lib eikon.lib gdi.lib
 LIBRARY         fbscli.lib
 LIBRARY         etext.lib

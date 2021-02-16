@@ -148,3 +148,4 @@ These are features that are currently being debated and might not make it into a
   - Ignore between arbitrary bounds (multi-line), e.g. ```...``` (code blocks) -- language dependent
   - Ignore *except* between bounds, e.g. spell-check only comments in code! -- language dependent
   - The user-dictionary is buggy on Series 5 & 5MX, failing beyond a certain size, should we implement our own user dictionary?
+* ".editorconfig" support

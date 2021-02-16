@@ -29,113 +29,133 @@ NAME KROC
 
 RESOURCE RSS_SIGNATURE { }
 
-// TODO: note that this is our default document file-name.
-// when we move to using project files, we'll need to fill this in
-RESOURCE TBUF { buf=""; }
+// default file-name created by the application
+RESOURCE TBUF { buf="Paperclip"; }
 
 RESOURCE EIK_APP_INFO
 {
-	menubar=r_paperclip_menubar;
-//	menubar=r_paperclip_menubar_editor;
-
-	hotkeys=r_paperclip_hotkeys_editor;
+	menubar=r_paperclip_menubar_default;
+	hotkeys=r_paperclip_hotkeys_default;
 
 	// "toolbar" here means the bar down the right-hand
 	// side of the screen that includes the clock
-	toolbar=r_paperclip_toolbar_empty;
-//	toolbar=r_paperclip_toolbar;
+	toolbar=r_paperclip_toolbar_default;
 	
 	// the "toolband" is what we would call a toolbar nowadays,
 	// it runs along the top of the screen. it's typically called
 	// the "Top ToolBar" in user-facing Psion documentation
-// 	toolband=r_paperclip_toolband_dummy;
+// 	toolband=r_paperclip_toolband_default;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
-#include "Paperclip_toolbar.rh"
-#include "Paperclip_toolband.rh"
+#include "Paperclip_default.rh"
+#include "Paperclip_editor.rh"
 #include "Paperclip_dialog.rh"
 
-///////////////////////////////////////////////////////////////////////////////
-
-RESOURCE HOTKEYS r_paperclip_hotkeys_editor
+RESOURCE TOOLBAR r_paperclip_toolbar
+//==============================================================================
 {
-	control=
-	{
-		// file:
-		HOTKEY { key='n'; command=EPaperclipCmdNewFile; },
-		HOTKEY { key='o'; command=EPaperclipCmdOpenFile; },
-		HOTKEY { key='s'; command=EPaperclipCmdSaveFile; },
-		HOTKEY { key='e'; command=EPaperclipCmdCloseFile; },
-		// edit:
-		HOTKEY { key='z'; command=EEikCmdEditUndo; },
-		HOTKEY { key='y'; command=EEikCmdEditRedo; },
-		HOTKEY { key='a'; command=EEikCmdEditSelectAll; },
-		HOTKEY { key='w'; command=EPaperclipCmdSelectWord; },
-		HOTKEY { key='l'; command=EPaperclipCmdSelectLine; },
-		HOTKEY { key='x'; command=EEikCmdEditCut; },
-		HOTKEY { key='c'; command=EEikCmdEditCopy; },
-		HOTKEY { key='v'; command=EEikCmdEditPaste; },
-		// find:
-		HOTKEY { key='f'; command=EPaperclipCmdFind; },
-		HOTKEY { key='j'; command=EPaperclipCmdFindNext; },
-		HOTKEY { key='g'; command=EPaperclipCmdGoTo; },
-		HOTKEY { key='h'; command=EPaperclipCmdReplace; },
-		// view:
-		HOTKEY { key='q'; command=EPaperclipCmdMode; },
-		HOTKEY { key='t'; command=EPaperclipCmdShowToolbar; },
-		HOTKEY { key='m'; command=EEikCmdZoomIn; },
-		// tools:
-		HOTKEY { key='k'; command=EPaperclipCmdPreferences; }
-	};
-	shift_control=
-	{
-		// project:
-		HOTKEY { key='n'; command=EPaperclipCmdNewProject; },
-		HOTKEY { key='o'; command=EPaperclipCmdOpenProject; },
-		HOTKEY { key='e'; command=EEikCmdExit; },
-		// file:
-		HOTKEY { key='s'; command=EPaperclipCmdSaveFileAs; },
-		// edit
-		HOTKEY { key='c'; command=EEikCmdInsertSymbol; },
-		// find:
-		HOTKEY { key='f'; command=EPaperclipCmdFindSelected; },
-		HOTKEY { key='j'; command=EPaperclipCmdFindPrevious; },
-		// view:
-		HOTKEY { key='t'; command=EPaperclipCmdShowToolband; },
-		HOTKEY { key='m'; command=EEikCmdZoomOut; }
-	};
-}
+	breadth=KEikStdToolBarWidth;
+    controls={
+		TBAR_CTRL
+		{ 
+			id=EPaperclipCmdProjectName;
+			type=EEikCtFileNameLabel; 
+			flags=EEikToolBarCtrlHasSetMinLength;
+			length=KEikStdFileNameLabelHeight;
+		},
+		//
+		// "Editor" button to switch to the text-editor view
+		//
+		TBAR_BUTTON
+		{
+			id=EPaperclipCmdEditorView;
+			behavior=EEikButLatches;
+			
+			layout=EEikCmdButExcessToText;
+			bmpid=EMbmPaperclipEditor; bmpmask=EMbmPaperclipEditorMask;
+			bmpfile="*";
 
-////////////////////////////////////////////////////////////////////////////////
-// when the app initialises, the default menu is a cut-down version
-// designed for when there is no project or file loaded
-//
-RESOURCE MENU_BAR r_paperclip_menubar
-{
-	titles=
-	{
-		MENU_TITLE { txt="Project"; menu_pane=r_paperclip_menu_project; },
-        MENU_TITLE { txt="Edit"; menu_pane=r_paperclip_edit_menu; },
-		MENU_TITLE { txt="View"; menu_pane=r_paperclip_view_menu; }
+			flags=EEikToolBarCtrlHasSetMinLength;
+			length=KEikStdToolBarButtonHeight;
+			txt="Editor";
+		},
+		//
+		// "Files" button to switch to the file-browser view
+		//
+		TBAR_BUTTON
+		{
+			id=EPaperclipCmdFilesView;
+			behavior=EEikButLatches;
+			
+			layout=EEikCmdButExcessToText;
+			bmpid=EMbmPaperclipSearch; bmpmask=EMbmPaperclipSearchMask;
+			bmpfile="*";
+
+			flags=EEikToolBarCtrlHasSetMinLength;
+			length=KEikStdToolBarButtonHeight;
+			txt=" Files";
+		},
+		//
+		// "Search" button to switch to the find-in-files view
+		//
+		TBAR_BUTTON
+		{
+			id=EPaperclipCmdSearchView;
+			
+			// we want the view to change immediately upon
+			// button-down and not wait for the release
+			behavior=EEikButReportOnPointerDown|EEikButLatches;
+
+			layout=EEikCmdButExcessToText;
+			bmpid=EMbmPaperclipSearch; bmpmask=EMbmPaperclipSearchMask;
+			bmpfile="*";
+			
+			flags=EEikToolBarCtrlHasSetMinLength;
+			length=KEikStdToolBarButtonHeight;
+			txt="Search";
+		},
+		//
+		// EIKON: include the standard clock on the bottom
+		//
+		TBAR_CTRL
+		{
+			type=EEikCtSpacer;
+			flags=EEikToolBarCtrlHasSetMinLength|EEikToolBarCtrlIsStretchable;
+			length=0;
+			control=SPACER;
+		},
+		TBAR_CTRL
+		{
+			type=EEikCtClock;
+			control=CLOCK {
+				digitalresourceid=R_EIK_DIGITAL_CLOCK;
+				analogresourceid=R_EIK_ANALOG_CLOCK;
+			};
+		},
+		TBAR_CTRL
+		{
+			type=EEikCtSpacer;
+			flags=EEikToolBarCtrlHasSetMinLength;
+			length=KEikStdGapBelowClock;
+			control=SPACER;
+		}
 	};
 }
 
 RESOURCE MENU_PANE r_paperclip_menu_project
+//==============================================================================
 {
-	items=
-	{
+	items={
 		MENU_ITEM
 		{
 			command=EPaperclipCmdNewProject;
-			txt="New Poject"<ELLIPSIS>;
+			txt="New Project"<ELLIPSIS>;
 		},
 		MENU_ITEM
 		{
 			command=EPaperclipCmdOpenProject;
 			flags=EEikMenuItemSeparatorAfter;
-			txt="Open Poject"<ELLIPSIS>;
+			txt="Open Project"<ELLIPSIS>;
 		},
 		MENU_ITEM
 		{
@@ -151,25 +171,10 @@ RESOURCE MENU_PANE r_paperclip_menu_project
     };
 }
 
-////////////////////////////////////////////////////////////////////////////////
-
-RESOURCE MENU_BAR r_paperclip_menubar_editor
-{
-	titles=
-	{
-		MENU_TITLE { txt="Project";	menu_pane=r_paperclip_project_menu; },
-		MENU_TITLE { txt="File";	menu_pane=r_paperclip_file_menu; },
-		MENU_TITLE { txt="Edit";	menu_pane=r_paperclip_edit_menu; },
-		MENU_TITLE { txt="Find";	menu_pane=r_paperclip_find_menu; },
-		MENU_TITLE { txt="View";	menu_pane=r_paperclip_view_menu; },
-		MENU_TITLE { txt="Tools";	menu_pane=r_paperclip_tools_menu; }
-	};
-}
-
 RESOURCE MENU_PANE r_paperclip_project_menu
+//==============================================================================
 {
-	items=
-	{
+	items={
 		MENU_ITEM
 		{
 			command=EPaperclipCmdNewProject;
@@ -206,9 +211,9 @@ RESOURCE MENU_PANE r_paperclip_project_menu
 }
 
 RESOURCE MENU_PANE r_paperclip_file_menu
+//==============================================================================
 {
-	items=
-	{
+	items={
 		MENU_ITEM
 		{
 			command=EPaperclipCmdNewFile;
@@ -230,28 +235,26 @@ RESOURCE MENU_PANE r_paperclip_file_menu
 		MENU_ITEM
 		{
 			command=EPaperclipRemoveFileFromProject;
-			flags=EEikMenuItemDimmed;
 			txt="Remove from project";
 		},
 		MENU_ITEM
 		{
 			command=EPaperclipCmdFileProperties;
-			flags=EEikMenuItemSeparatorAfter|EEikMenuItemDimmed;
+			flags=EEikMenuItemSeparatorAfter;
 			txt="Properties";
 		},
 		MENU_ITEM
 		{
 			command=EPaperclipCmdCloseFile;
-			flags=EEikMenuItemDimmed;
 			txt="Close File";
 		}
     };
 }
 
 RESOURCE MENU_PANE r_paperclip_save_menu
+//==============================================================================
 {
-	items=
-	{
+	items={
 		MENU_ITEM
 		{
 			command=EPaperclipCmdSaveFile;
@@ -271,19 +274,18 @@ RESOURCE MENU_PANE r_paperclip_save_menu
 }
 
 RESOURCE MENU_PANE r_paperclip_edit_menu
+//==============================================================================
 {
-	items=
-	{
+	items={
 		MENU_ITEM
 		{
 			command=EEikCmdEditUndo;
-			flags=EEikMenuItemDimmed;
 			txt="Undo";
 		},
 		MENU_ITEM
 		{
 			command=EEikCmdEditRedo;
-			flags=EEikMenuItemSeparatorAfter|EEikMenuItemDimmed;
+			flags=EEikMenuItemSeparatorAfter;
 			txt="Redo";
 		},
 		MENU_ITEM
@@ -326,9 +328,9 @@ RESOURCE MENU_PANE r_paperclip_edit_menu
 }
 
 RESOURCE MENU_PANE r_paperclip_select_menu
+//==============================================================================
 {
-	items=
-	{
+	items={
 		MENU_ITEM
 		{
 			command=EEikCmdEditSelectAll;
@@ -348,9 +350,9 @@ RESOURCE MENU_PANE r_paperclip_select_menu
 }
 
 RESOURCE MENU_PANE r_paperclip_find_menu
+//==============================================================================
 {
-	items=
-	{
+	items={
 		MENU_ITEM
 		{
 			command=EPaperclipCmdFind;
@@ -386,9 +388,9 @@ RESOURCE MENU_PANE r_paperclip_find_menu
 }
 
 RESOURCE MENU_PANE r_paperclip_view_menu
+//==============================================================================
 {
-	items=
-	{
+	items={
 		MENU_ITEM
 		{
 			command=EPaperclipCmdMode;
@@ -416,9 +418,9 @@ RESOURCE MENU_PANE r_paperclip_view_menu
 }
 
 RESOURCE MENU_PANE r_paperclip_mode_menu
+//==============================================================================
 {
-	items=
-	{
+	items={
 		MENU_ITEM
 		{
 			command=EPaperclipCmdEditorView;
@@ -436,20 +438,14 @@ RESOURCE MENU_PANE r_paperclip_mode_menu
 			command=EPaperclipCmdSearchView;
 			flags=EEikMenuItemRadioMiddle;
 			txt="Search";
-		},
-		MENU_ITEM
-		{
-			command=EPaperclipCmdConfigView;
-			flags=EEikMenuItemRadioEnd;
-			txt="Config";
 		}
 	};
 }
 
 RESOURCE MENU_PANE r_paperclip_toolbars_menu
+//==============================================================================
 {
-	items=
-	{
+	items={
 		MENU_ITEM
 		{
 			command=EPaperclipCmdShowToolbar;
@@ -466,9 +462,9 @@ RESOURCE MENU_PANE r_paperclip_toolbars_menu
 }
 
 RESOURCE MENU_PANE r_paperclip_tools_menu
+//==============================================================================
 {
-	items=
-	{
+	items={
 		MENU_ITEM
 		{
 			command=EPaperclipCmdPreferences;

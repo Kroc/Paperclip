@@ -17,6 +17,7 @@ public:
 
 	// CEikAppUi::
     void ConstructL();
+	void HandleModelChangeL();
 
 private:
 	//--------------------------------------------------------------------------
@@ -25,6 +26,7 @@ private:
 
 	void CmdSetViewEditorL();
 	void CmdSetViewFilesL();
+	void CmdFileOpenL();
 
 	// make the buttons on the toolbar (right-side)
 	// reflect the currently selected view
@@ -60,8 +62,7 @@ private:
 		EViewNone,
 		EViewEditor,
 		EViewFiles,
-		EViewSearch,
-		EViewConfig
+		EViewSearch
 	};
 	TViewType iViewType;
 

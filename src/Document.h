@@ -8,6 +8,7 @@ class CPaperclipDocument
 	: public CEikDocument
 {
 public:
+	//--------------------------------------------------------------------------
 	// construct/destruct
 	CPaperclipDocument(CEikApplication& aApp);
 	~CPaperclipDocument();
@@ -15,16 +16,22 @@ public:
 	static CPaperclipDocument* NewL(CEikApplication& aApp);
 	
 	void ConstructL();
-	void ResetModelL();
+	void StoreL(CStreamStore& aStore, CStreamDictionary& aStreamDic) const;
 
+public:
+	//--------------------------------------------------------------------------
 	// method that returns the current model
 	CPaperclipModel* Model(){ return iModel; };
 
 private:
+	//--------------------------------------------------------------------------
 	// EIKON: create application UI
 	CEikAppUi* CreateAppUiL();
+	// is the document empty?
+	TBool IsEmpty() const;
 
 private:
+	//--------------------------------------------------------------------------
 	// the application's model (internal state)
 	CPaperclipModel* iModel;
 };

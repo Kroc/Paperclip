@@ -1,6 +1,7 @@
 #include "Document.h"
 #include "AppUI.h"
 
+
 CPaperclipDocument::CPaperclipDocument(
     CEikApplication& aApp		// EIKON application reference
 ) : CEikDocument(aApp)
@@ -15,7 +16,6 @@ CPaperclipDocument* CPaperclipDocument::NewL(
     CleanupStack::PushL( self );
     
     self->ConstructL();
-    self->ResetModelL();
     
     CleanupStack::Pop(); // self
     return self;
@@ -29,6 +29,15 @@ void CPaperclipDocument::ConstructL()
     // they can access the shared data and methods
     //
     iModel = CPaperclipModel::NewL();
+	
+	// mark the document as dirty (i.e. must be saved)
+	SetChanged( ETrue );
+}
+
+CEikAppUi* CPaperclipDocument::CreateAppUiL()
+//==============================================================================
+{
+    return new( ELeave ) CPaperclipAppUi;
 }
 
 CPaperclipDocument::~CPaperclipDocument()
@@ -37,14 +46,29 @@ CPaperclipDocument::~CPaperclipDocument()
     delete iModel;
 }
 
-void CPaperclipDocument::ResetModelL()
+// request to store the document to disk:
+//
+void CPaperclipDocument::StoreL(
+	CStreamStore& aStore,
+	CStreamDictionary& aStreamDic
+) const
 //==============================================================================
 {
-    iModel->Reset();
+	// defer to the model to actually write the data...
+	TStreamId stream_id = iModel->StoreL( aStore );
+	// write the stream ID, together with a UID, to the stream dictionary
+    aStreamDic.AssignL( KUidPaperclipApp, stream_id );
 }
 
-CEikAppUi* CPaperclipDocument::CreateAppUiL()
+TBool CPaperclipDocument::IsEmpty() const
 //==============================================================================
 {
-    return new( ELeave ) CPaperclipAppUi;
+	// the model contains the actual text content
+	// for us to check if the editor is empty...
+
+	// if the model has not been created yet
+	// the document is, naturally, empty
+	if (!iModel) return ETrue;
+
+	return (iModel->GlobalText()->LdDocumentLength() == 0);
 }

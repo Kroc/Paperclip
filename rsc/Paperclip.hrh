@@ -1,6 +1,6 @@
 enum TPaperclipMenuCommands
 {
-	EPaperclipCmdDummy=100,
+	EPaperclipCmdDummy,
 
 	// the current project name displayed in the EIKON
 	// task-switcher in the top-right of the screen:
@@ -15,9 +15,6 @@ enum TPaperclipMenuCommands
 	// the "Search" button in the toolbar,
 	// to switch to the search/replace view
 	EPaperclipCmdSearchView,
-	// the "Settings" button in the toolbar,
-	// to switch to the project-settings view
-	EPaperclipCmdConfigView,
 
 	EPaperclipCmdOpenFiles,
 

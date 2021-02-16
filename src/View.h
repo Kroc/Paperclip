@@ -26,7 +26,7 @@ public:
 	// `virutal` is required here so that the specific application view's
 	// method is called first (if present) instead of this default response
 	//
-    virtual TBool CanHandleCommand(TInt aCommand){ return EFalse; };
+    virtual TBool CanHandleCommand(TInt /*aCommand*/){ return EFalse; };
 
     // relevant commands from AppUI will be passed on to the view.
     // (*must* be implemented)
@@ -61,7 +61,7 @@ public:
 	virtual void HandlePointerEventL(const TPointerEvent& aPointerEvent) = 0;
 
 	virtual TKeyResponse OfferKeyEventL(
-        const TKeyEvent& aKeyEvent, TEventCode aType
+        const TKeyEvent& /*aKeyEvent*/, TEventCode /*aType*/
     ){
 		return EKeyWasNotConsumed;
 	};

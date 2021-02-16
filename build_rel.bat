@@ -63,3 +63,15 @@ IF ERRORLEVEL 1 PAUSE & EXIT /B 1
 
 IF EXIST "sis\Paperclip_color.sis" DEL /Q "sis\Paperclip_color.sis" >NUL
 REN "sis\Paperclip.sis" "Paperclip_color.sis" >NUL
+
+ECHO:
+ECHO * Make release bundle...
+
+SET "BIN_ZIP=bin\7zip\7za.exe"
+ECHO %BIN_ZIP% a "release\Paperclip.zip" -bso0 -bsp1 -bse0 -tzip -r -mx9 -mfb258 -mpass15 -x!Desktop.ini -x!Thumbs.db -x!.* -- *
+
+PUSHD "release"
+..\%BIN_ZIP% a "Paperclip.zip" -bso0 -bsp1 -bse0 -tzip -r -mx9 -mfb258 -mpass15 -x!Desktop.ini -x!Thumbs.db -x!.* -- *
+POPD
+
+PAUSE
